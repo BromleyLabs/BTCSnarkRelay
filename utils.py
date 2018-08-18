@@ -156,7 +156,7 @@ def deploy(w3, contract_name, path, owner, gas, gas_price):
     contract = w3.eth.contract(abi = abi, bytecode = bytecode)
     txn_hash = contract.constructor().transact({
         'from' : owner, 
-        'gas' : gas, 
+        #'gas' : gas, 
         'gasPrice' : gas_price
     }) 
     return wait_to_be_mined(w3, txn_hash)
