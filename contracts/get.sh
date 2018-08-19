@@ -2,6 +2,7 @@
 
 sudo chown puneet verifier.sol
 sudo chown puneet proof.txt
+#sudo chown puneet verification.key
 cat proof.txt | grep "^A =" > proof_params.txt
 cat proof.txt | grep "^A_p =" >> proof_params.txt
 cat proof.txt | grep "^B =" >> proof_params.txt
