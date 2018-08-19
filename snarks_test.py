@@ -10,7 +10,7 @@ import utils
 from web3.auto import w3
 
 GAS_PRICE = int(2.5*1e9) 
-GAS = int(6*1e6)
+GAS = int(4*1e6)
 ABI = '/home/puneet/crypto/zksnark/contracts/target/Verifier.abi' 
 PROOF = '/home/puneet/crypto/zksnark/contracts/proof_params.txt'
 PATH = '/home/puneet/crypto/zksnark/contracts/target/' 
@@ -54,13 +54,12 @@ def main():
     logger = init_logger('TEST', '/tmp/stride.log')
     utils.logger = logger 
 
-    #status, txn_receipt = deploy(w3, 'Verifier', PATH, 
-    #                             w3.eth.accounts[0], GAS, GAS_PRICE)
-    #if status != 'mined':
-    #    logger.error('Could not deploy')
-    #    return
-    #contract_addr = txn_receipt['contractAddress']
-    contract_addr = 0x82a47F79651C1A80320D79E8995B88ABE10B7875
+    status, txn_receipt = deploy(w3, 'Verifier', PATH, 
+                                 w3.eth.accounts[0], GAS, GAS_PRICE)
+    if status != 'mined':
+        logger.error('Could not deploy')
+        return
+    contract_addr = txn_receipt['contractAddress']
     logger.info('Contract address = %s' % contract_addr)
     tx_params = {'from': w3.eth.accounts[0], 
                  #'gas': GAS, 
@@ -68,7 +67,7 @@ def main():
     _, concise = init_contract(w3, ABI, checksum(w3,contract_addr))
                                
     # Setup
-    #update_verification_params(VERIFY_KEYS, concise, tx_params) 
+    update_verification_params(VERIFY_KEYS, concise, tx_params) 
 
     A, A_p, B, B_p, C, C_p, H, K = read_proof(PROOF)
 
