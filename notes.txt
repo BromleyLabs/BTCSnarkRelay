@@ -1,18 +1,15 @@
 Installation:
-============
+-------------
 > pip install bitstring
 
 ZoKrates:
-To start a new docker session for ZoKrates, goto ~/crypto/ZoKrates and run
 
+- To start a new docker session for ZoKrates, goto ~/crypto/ZoKrates and run
 > docker run -ti --mount src=/home/puneet,target=/home/puneet,type=bind zokrates/zokrates
-
 The above will mount /home/puneet inside docker container.
 
-To attach to existing docker
-
+- To attach to existing docker
 > docker start -a <container-id> 
-
-To get latest container-id run 
-
 > docker ps -a -l
+====================================
+
