@@ -1,15 +1,35 @@
 Installation:
 -------------
+- Install ganache-cli and run it on a separate terminal.  This will be used
+for testing
+
 > pip install bitstring
 
-ZoKrates:
+- Install ZoKrates as https://github.com/JacobEberhardt/ZoKrates
 
 - To start a new docker session for ZoKrates, goto ~/crypto/ZoKrates and run
 > docker run -ti --mount src=/home/puneet,target=/home/puneet,type=bind zokrates/zokrates
-The above will mount /home/puneet inside docker container.
+The above will also mount /home/puneet inside docker container.
 
 - To attach to existing docker
 > docker start -a <container-id> 
 > docker ps -a -l
+
+Inside docker, after mounting /home/puneet
+- copy the 'zokrates' executable from ~/ZoKrates/target/release to /home/puneet/crypto/zksnark/tools  
+
+- copy the libsnark.so to same location
+
 ====================================
+To build all components:
+
+- Copy the libs into /tools dir as given above.
+- export LD_LIBRARY_PATH to /tools dir.
+- chown the exe files to 'puneet'
+- create 'build' dir 
+> cd build 
+> ../compile.sh
+=========
+
+
 
