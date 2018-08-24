@@ -1,4 +1,4 @@
-import "btc_pad.code" as BTCSHA256PAD
+import "./btc_pad.code" as BTCSHA256PAD
 import "./sha256/sha256.code" as SHA256COMPRESS
 import "./sha256/sha256_ex.code" as SHA256COMPRESS_EX
 
