@@ -1,20 +1,20 @@
 //COMPUTE_NEW_TARGET
 //@dev Compute new target value for the current block given previous blocks data
-//@param prev_time Timestamp value in seconds of previous block 
-//@param start_time Timestamp value in seconds of block where difficulty was adjusted
-//@param prev_target Target value computed from nbits of previous block
+//@param prevTime Timestamp value in seconds of previous block 
+//@param startTime Timestamp value in seconds of block where difficulty was adjusted
+//@param prevTarget Target value computed from nbits of previous block
 
-def main(prevtime, starttime, prevtarget):
+def main(prevTime, startTime, prevTarget):
     TARGETSPAN =  14 * 24 * 60 * 60  // 2 weeks 
     TARGETSPANDIV4 =  TARGETSPAN / 4
     TARGETSPANMUL4 =  TARGETSPAN * 4
     UNROUNDEDMAXTARGET = 2**224 - 1 
 
-    actualspan = prevtime - starttime
-    atualspan = if actualspan < TARGETSPANDIV4 then TARGETSPANDIV4 else actualspan fi 
-    atualspan = if TARGETSPANMUL4 < actualspan then TARGETSPANMUL4 else actualspan fi 
+    actualSpan = prevTime - startTime
+    atualspan = if actualSpan < TARGETSPANDIV4 then TARGETSPANDIV4 else actualSpan fi 
+    atualspan = if TARGETSPANMUL4 < actualSpan then TARGETSPANMUL4 else actualSpan fi 
      
-    newtarget = (actualspan * prevtarget) / TARGETSPAN
-    newtarget = if UNROUNDEDMAXTARGET  < actualspan then UNROUNDEDMAXTARGET else newtarget fi 
+    newTarget = (actualSpan * prevTarget) / TARGETSPAN
+    newTarget = if UNROUNDEDMAXTARGET  < actualSpan then UNROUNDEDMAXTARGET else newTarget fi 
 
-    return newtarget
+    return newTarget
