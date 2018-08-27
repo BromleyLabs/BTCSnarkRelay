@@ -1,3 +1,9 @@
+// SHA_COMPRESS_EX 
+//@dev extension of sha256 where the function expends intermedia H0,H1 .. H7
+//value to compute hash of another block.  This is when input value is in 
+//multiple of 512 blocks. After the first block is processed using the regular
+//sha256 code, the rest of the blocks should be processed using this function 
+
 import "./bitwise/32/copy.code" as COPY
 import "./utils/32/add.code" as ADD
 import "./utils/32/compression_round.code" as COMPROUND
