@@ -1,0 +1,32 @@
+//BITS_TO_VALUE24
+//@dev given 24 bits in big-endian format convert them to uint value.
+
+def main(a23, a22, a21, a20, a19, a18, a17, a16, a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0): 
+    
+    val = 0
+    val = val + a0 * 1
+    val = val + a1 * 2
+    val = val + a2 * 4
+    val = val + a3 * 8
+    val = val + a4 * 16
+    val = val + a5 * 32
+    val = val + a6 * 64
+    val = val + a7 * 128
+    val = val + a8 * 256
+    val = val + a9 * 512
+    val = val + a10 * 1024
+    val = val + a11 * 2048
+    val = val + a12 * 4096
+    val = val + a13 * 8192
+    val = val + a14 * 16384
+    val = val + a15 * 32768
+    val = val + a16 * 65536
+    val = val + a17 * 131072
+    val = val + a18 * 262144
+    val = val + a19 * 524288
+    val = val + a20 * 1048576
+    val = val + a21 * 2097152
+    val = val + a22 * 4194304
+    val = val + a23 * 8388608
+
+    return val

@@ -1,0 +1,16 @@
+//BITS_TO_VALUE8
+//@dev given 8 bits convert them to uint value.
+
+def main(a7, a6, a5, a4, a3, a2, a1, a0): 
+    
+    val = 0
+    val = val + a0 * 1
+    val = val + a1 * 2
+    val = val + a2 * 4
+    val = val + a3 * 8
+    val = val + a4 * 16
+    val = val + a5 * 32
+    val = val + a6 * 64
+    val = val + a7 * 128
+
+    return val

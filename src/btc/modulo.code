@@ -1,0 +1,5 @@
+//MODULO
+//@dev Assuming both a > 0, b > 0
+
+def main(a, b):
+    return a - (b * (a/b))

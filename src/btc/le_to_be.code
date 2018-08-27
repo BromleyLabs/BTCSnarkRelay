@@ -1,0 +1,43 @@
+//LE_TO_BE
+//@dev convert 32-bit Little Endian to Big Endian
+
+def main(a31, a30, a29, a28, a27, a26, a25, a24, a23, a22, a21, a20, a19, a18, a17, a16, a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0): 
+
+    b7 = a31 
+    b6 = a30
+    b5 = a29
+    b4 = a28
+    b3 = a27
+    b2 = a26
+    b1 = a25
+    b0 = a24
+
+    b15 = a23
+    b14 = a22
+    b13 = a21
+    b12 = a20
+    b11 = a19
+    b10 = a18
+    b9  = a17
+    b8 = a16 
+
+    b23 = a15
+    b22 = a14
+    b21 = a13
+    b20 = a12
+    b19 = a11
+    b18 = a10
+    b17 = a9
+    b16 = a8
+    
+    b31 = a7
+    b30 = a6
+    b29 = a5
+    b28 = a4
+    b27 = a3
+    b26 = a2
+    b25 = a1
+    b24 = a0
+
+    return b31, b30, b29, b28, b27, b26, b25, b24, b23, b22, b21, b20, b19, b18, b17, b16, b15, b14, b13, b12, b11, b10, b9, b8, b7, b6, b5, b4, b3, b2, b1, b0 
+

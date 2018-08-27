@@ -1,0 +1,28 @@
+//TARGET_FROM_BITS
+//@dev Given nbits of block header convert target value. nbits are in 
+// mantisa-exponent format, little-endian.  The function first converts nbits
+// to big-endian, extracts mantissa and exponent, and then calculates value
+
+import "./le_to_be.code" as BIGENDIAN
+import "./bits_to_value8.code" as BITSTOVALUE8
+import "./bits_to_value24.code" as BITSTOVALUE24
+
+def main(a31, a30, a29, a28, a27, a26, a25, a24, a23, a22, a21, a20, a19, a18, a17, a16, a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0): 
+
+    // Convert to big endian
+    b31, b30, b29, b28, b27, b26, b25, b24, b23, b22, b21, b20, b19, b18, b17, b16, b15, b14, b13, b12, b11, b10, b9, b8, b7, b6, b5, b4, b3, b2, b1, b0 = BIGENDIAN(a31, a30, a29, a28, a27, a26, a25, a24, a23, a22, a21, a20, a19, a18, a17, a16, a15, a14, a13, a12, a11, a10, a9, a8, a7, a6, a5, a4, a3, a2, a1, a0) 
+
+    exp = BITSTOVALUE8(b31, b30, b29, b28, b27, b26, b25, b24)
+
+    mant = BITSTOVALUE24(b23, b22, b21, b20, b19, b18, b17, b16, b15, b14, b13, b12, b11, b10, b9, b8, b7, b6, b5, b4, b3, b2, b1, b0) 
+
+    exp = exp - 3  // See BTC relay code        
+    x = 0
+    val = 1
+    for i in 0..256 do
+        y = if x < exp then 256 else 1 fi
+        val = val * y 
+        x = x + 1
+    endfor 
+
+    return mant * val
