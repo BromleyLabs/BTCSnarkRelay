@@ -19,7 +19,6 @@ Inside docker, after mounting /home/puneet
 - copy the 'zokrates' executable from ~/ZoKrates/target/release to /home/puneet/crypto/zksnark/tools  
 
 - copy the libsnark.so to same location
-
 ====================================
 To build all components:
 
@@ -27,9 +26,10 @@ To build all components:
 - export LD_LIBRARY_PATH to /tools dir.
 - chown the exe files to 'puneet'
 - create 'build' dir 
-> cd build 
+- cd build 
+- Set appropriate witness values in compile.sh
 > ../compile.sh
-=========
+====================================
 
 
 
