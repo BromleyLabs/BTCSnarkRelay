@@ -1,6 +1,6 @@
-import "./btc_pad.code" as BTCSHA256PAD
-import "./sha256/sha256.code" as SHA256COMPRESS
-import "./sha256/sha256_ex.code" as SHA256COMPRESS2
+import "./pad.code" as BTCSHA256PAD
+import "./sha256.code" as SHA256COMPRESS
+import "./sha256_ex.code" as SHA256COMPRESS2
 
 // @dev Function to compute sha256 hash (only once) of a given BTC header and 
 // match it against given input hash.  
