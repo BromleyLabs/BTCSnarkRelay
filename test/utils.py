@@ -1,9 +1,10 @@
-# Various utility functions to run the User and Custodian app.
+# Various utility functions to interact with Ethereum chain.
 #
 # Author: Bon Filey (bonfiley@gmail.com)
 # Copyright 2018 Bromley Labs Inc.
 
 from hexbytes import HexBytes
+from bitstring import BitArray
 from web3 import Web3
 from web3.contract import ConciseContract
 import time
@@ -31,6 +32,15 @@ def init_logger(module_name, file_name):
     logger.addHandler(fh)
     logger.addHandler(ch)
     return logger
+
+def hex_to_bits(hex_str):
+    # hex_str without 0x prefix
+    hx = HexBytes(hex_str)
+    b = bytes(hx)
+    ba = BitArray(b)
+    bits_str = ba.bin
+    bits_list = [x for x in bits_str]
+    return bits_str, bits_list
 
 def init_contract(w3, abi_file, contract_addr):
     abi = open(abi_file, 'rt').read()
