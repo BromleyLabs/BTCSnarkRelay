@@ -304,6 +304,7 @@ def main(h639, h638, h637, h636, h635, h634, h633, h632, h631, h630, h629, h628,
 
     // Check if above hash is > 0 and < target
     r = if hashValue < target then 1 else 0 fi
+    r == 1
 
-    return r
+    return 1 
 
