@@ -1,3 +1,5 @@
+import datetime as dt
+
 DIFFICULTY_ADJUSTMENT_INTERVAL = 2016  # Bitcoin adjusts every 2 weeks
 TARGET_TIMESPAN =  14 * 24 * 60 * 60  # 2 weeks
 TARGET_TIMESPAN_DIV_4 = TARGET_TIMESPAN / 4
