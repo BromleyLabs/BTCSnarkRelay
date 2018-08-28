@@ -14,7 +14,7 @@ def main():
     s = open(sys.argv[1], 'rt').read()   
     d = eval(s)
     out = []
-    for i in range(255, -1, -1):
+    for i in range(0, 256):
         k = '~out_%d' % i
         out.append(d[k])
 
