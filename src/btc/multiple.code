@@ -1,5 +1,11 @@
-//MODULO
-//@dev Assuming both a > 0, b > 0
+//MULTIPLE
+// is a multiple of b. 
 
 def main(a, b):
-    return a - (b * (a/b))
+    y = 0
+    for i in 0..300 do  // Approx. 2 years from now
+        x = if i * b == a then 1 else 0 fi
+        y = y + x 
+    endfor
+
+    return y
