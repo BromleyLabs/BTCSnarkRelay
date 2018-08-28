@@ -3,7 +3,7 @@
 // mantisa-exponent format, little-endian.  The function first converts nbits
 // to big-endian, extracts mantissa and exponent, and then calculates value
 
-import "./le_to_be.code" as BIGENDIAN
+import "./swap4.code" as BIGENDIAN
 import "./bits_to_value8.code" as BITSTOVALUE8
 import "./bits_to_value24.code" as BITSTOVALUE24
 
