@@ -1,0 +1,11 @@
+Input:
+Block number: 125552 
+nbits: 440711666 
+nbits extracted as it is from header (little endian): 0xf2b9441a
+
+witness:
+INPUTS="1 1 1 1 0 0 1 0 1 0 1 1 1 0 0 1 0 1 0 0 0 1 0 0 0 0 0 1 1 0 1 0"
+
+Expected output:
+110438984653392107399822606842181601255647711092336854093004800
+
