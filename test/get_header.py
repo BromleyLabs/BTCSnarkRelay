@@ -5,7 +5,7 @@ import sys
 from hexbytes import HexBytes
 from bitstring import BitArray
 
-HEADERS_FILE = './witness/btc_headers'
+HEADERS_FILE = './data/btc_headers'
 
 def main():
    if len(sys.argv) != 2:
