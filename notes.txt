@@ -30,9 +30,5 @@ To build all components:
 - Set appropriate witness values in compile.sh
 > ../compile.sh
 ====================================
-To convert hex string (withou prefix) to bin:
-hx = HexBytes(hex_str_without_0x_prefix)
-b = bytes(hx)
-ba = BitsArray(b)
-ba.bin -> gives bit string
+Number of inputs should be kept low - each input increases gas by huge amount.
 
