@@ -14,7 +14,6 @@ GAS = int(4*1e6)
 ABI = '/home/puneet/crypto/zksnark/build/contract_build/Verifier.abi' 
 PROOF = '/home/puneet/crypto/zksnark/build/proof_params.txt'
 PATH = '/home/puneet/crypto/zksnark/build/contract_build'
-VERIFY_KEYS = '/home/puneet/crypto/zksnark/build/verification.key'
 LOGFILE = '/tmp/snark.log'
 
 logger = None
@@ -33,18 +32,6 @@ def read_proof(params_file):
     v = locals() 
     return (v['A'], v['A_p'], v['B'], v['B_p'], v['C'], 
             v['C_p'], v['H'], v['K'])
-
-def read_verification_params(filename):
-    exec(open(filename).read())     
-    v = locals()
-    return v['IC']
-
-def update_verification_params(filename, concise, tx):
-    IC = read_verification_params(filename)   
-    for i in range(len(IC)):
-        txn_hash = concise.update_verification_params(i, IC[i][0], IC[i][1], 
-                                                      transact = tx)    
-        status, txn_receipt = wait_to_be_mined(w3, txn_hash)
      
 def main():
     if len(sys.argv) != 1:
@@ -69,13 +56,6 @@ def main():
                                
     A, A_p, B, B_p, C, C_p, H, K = read_proof(PROOF)
 
-    # Setup
-    #update_verification_params(VERIFY_KEYS, concise, tx_params) 
-
-    #hash_input_str = bytes(64) # All zeros
-    #hash_out = get_hash(hash_input_str)
-    #out_bitlist = bytes_to_bitlist(hash_out)
-    #out_bitlist = [1, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0]
     txn_hash = concise.verifyTx(A, A_p, B, B_p, C, C_p, H, K, [1], 
                                 transact = tx_params) 
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
