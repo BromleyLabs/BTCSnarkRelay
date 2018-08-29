@@ -31,4 +31,10 @@ To build all components:
 > ../compile.sh
 ====================================
 Number of inputs should be kept low - each input increases gas by huge amount.
-
+====================================
+In compile.sh the compiler output is redirected to /dev/null otherwise the
+console print process hogs too much CPU.
+====================================
+Note on Prime fields division operation:
+https://github.com/JacobEberhardt/ZoKrates/issues/27
+====================================
