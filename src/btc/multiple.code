@@ -1,5 +1,9 @@
+// Author: Bon Filey (bonfiley@gmail.com) 
+// Copyright (c) Bromley Labs Inc.        
+
 //MULTIPLE
-// is a multiple of b. 
+// is 'a' multiple of 'b'. 'a' is block number
+// Need to hard code the for loop here.
 
 def main(a, b):
     y = 0

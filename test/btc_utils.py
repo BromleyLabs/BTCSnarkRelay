@@ -1,3 +1,8 @@
+# Various functions related to Bitcoin header
+#
+# Author: Bon Filey (bonfiley@gmail.com)
+# Copyright 2018 Bromley Labs Inc.
+
 import datetime as dt
 
 DIFFICULTY_ADJUSTMENT_INTERVAL = 2016  # Bitcoin adjusts every 2 weeks

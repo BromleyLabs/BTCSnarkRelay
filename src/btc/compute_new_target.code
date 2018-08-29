@@ -1,3 +1,6 @@
+// Author: Bon Filey (bonfiley@gmail.com) 
+// Copyright (c) Bromley Labs Inc.        
+
 //COMPUTE_NEW_TARGET
 //@dev Compute new target value for the current block given previous blocks data
 //@param prevTime Timestamp value in seconds of previous block 

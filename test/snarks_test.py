@@ -1,3 +1,7 @@
+# Main script to upload SNARK contract, and send proof for verification. The
+# verification is successfully if generated event can be seen in the 
+# transaction receipt
+
 # Author: Bon Filey (bonfiley@gmail.com)
 # Copyright 2018 Bromley Labs Inc.
 
@@ -11,9 +15,9 @@ from web3.auto import w3
 
 GAS_PRICE = int(2.5*1e9) 
 GAS = int(4*1e6)
-ABI = '/home/puneet/crypto/zksnark/build/contract_build/Verifier.abi' 
-PROOF = '/home/puneet/crypto/zksnark/build/proof_params.txt'
-PATH = '/home/puneet/crypto/zksnark/build/contract_build'
+ABI = '../build/contract_build/Verifier.abi' 
+PROOF = '../build/proof_params.txt'
+PATH = './build/contract_build'
 LOGFILE = '/tmp/snark.log'
 
 logger = None
