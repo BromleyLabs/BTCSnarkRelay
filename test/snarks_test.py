@@ -15,6 +15,7 @@ ABI = '/home/puneet/crypto/zksnark/build/contract_build/Verifier.abi'
 PROOF = '/home/puneet/crypto/zksnark/build/proof_params.txt'
 PATH = '/home/puneet/crypto/zksnark/build/contract_build'
 VERIFY_KEYS = '/home/puneet/crypto/zksnark/build/verification.key'
+LOGFILE = '/tmp/snark.log'
 
 logger = None
 
@@ -51,7 +52,7 @@ def main():
         exit(0)
     global logger
 
-    logger = init_logger('TEST', '/tmp/stride.log')
+    logger = init_logger('TEST', LOGFILE)
     utils.logger = logger 
 
     status, txn_receipt = deploy(w3, 'Verifier', PATH, 
