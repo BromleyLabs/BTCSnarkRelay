@@ -1,7 +1,8 @@
 # Various utility functions to interact with Ethereum chain.
 #
-# Author: Bon Filey (bonfiley@gmail.com)
-# Copyright 2018 Bromley Labs Inc.
+# @author Bon Filey <bon@bromleylabs.io>
+# @author Anurag Gupta <anurag@bromleylabs.io>
+# Copyright (c) Bromley Labs Inc.        
 
 from hexbytes import HexBytes
 from bitstring import BitArray

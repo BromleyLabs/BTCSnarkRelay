@@ -1,5 +1,9 @@
 # Script to extract BTC header from a file that contains multiple such headers
 # in raw format. 
+#
+# @author Bon Filey <bon@bromleylabs.io>
+# @author Anurag Gupta <anurag@bromleylabs.io>
+# Copyright (c) Bromley Labs Inc.        
 
 import sys
 from hexbytes import HexBytes

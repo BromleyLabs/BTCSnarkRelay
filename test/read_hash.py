@@ -2,6 +2,10 @@
 # The output should be saved in a file with {} around start and end so that
 # this python script reads it as a dictionary. Example:
 # {"~out_0": 1, "~out_1": 1, "~out_10": 0, "~out_100": 0, "~out_101": 0, "~out_102": 1, "~out_103": 0, ...... }
+#
+# @author Bon Filey <bon@bromleylabs.io>
+# @author Anurag Gupta <anurag@bromleylabs.io>
+# Copyright (c) Bromley Labs Inc.        
 
 import sys
 from bitstring import BitArray

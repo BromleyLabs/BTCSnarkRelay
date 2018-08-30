@@ -1,5 +1,9 @@
-# Author: Bon Filey (bonfiley@gmail.com)
-# Copyright 2018 Bromley Labs Inc.
+# This script deploys a given contact.  PATH where contract API is present
+# needs to be specified.
+#
+# @author Bon Filey <bon@bromleylabs.io>
+# @author Anurag Gupta <anurag@bromleylabs.io>
+# Copyright (c) Bromley Labs Inc.        
 
 from hexbytes import HexBytes
 import sys
@@ -9,7 +13,7 @@ from web3.auto import w3
 
 GAS_PRICE = int(2.5*1e9) 
 GAS = int(4*1e6)
-PATH = '/home/puneet/crypto/zksnark/contracts/target' 
+PATH = ''  
 
 logger = None
 

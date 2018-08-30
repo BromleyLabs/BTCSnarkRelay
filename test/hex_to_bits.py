@@ -1,4 +1,8 @@
 # Script convert a hex string into bits - returns a string as well as a list 
+#
+# @author Bon Filey <bon@bromleylabs.io>
+# @author Anurag Gupta <anurag@bromleylabs.io>
+# Copyright (c) Bromley Labs Inc.        
 
 import sys
 from utils import *
