@@ -8,17 +8,22 @@
 //@param startTime Timestamp value in seconds of block where difficulty was adjusted
 //@param prevTarget Target value computed from nbits of previous block
 
-def main(prevTime, startTime, prevTarget):
+def main(prevTime, startTime, newTarget, prevTarget):
     TARGETSPAN =  14 * 24 * 60 * 60  // 2 weeks 
     TARGETSPANDIV4 =  TARGETSPAN / 4
     TARGETSPANMUL4 =  TARGETSPAN * 4
     UNROUNDEDMAXTARGET = 2**224 - 1 
 
     actualSpan = prevTime - startTime
-    atualspan = if actualSpan < TARGETSPANDIV4 then TARGETSPANDIV4 else actualSpan fi 
-    atualspan = if TARGETSPANMUL4 < actualSpan then TARGETSPANMUL4 else actualSpan fi 
+    // TODO: temporarily commented out
+    //atualspan = if actualSpan < TARGETSPANDIV4 then TARGETSPANDIV4 else actualSpan fi 
+    //atualspan = if TARGETSPANMUL4 < actualSpan then TARGETSPANMUL4 else actualSpan fi 
      
-    newTarget = (actualSpan * prevTarget) / TARGETSPAN
-    newTarget = if UNROUNDEDMAXTARGET  < actualSpan then UNROUNDEDMAXTARGET else newTarget fi 
+    // It can be verified that the mulitplications below will not cross the 
+    // field limit
+    newTarget * TARGETSPAN == actualSpan * prevTarget
+
+    // TODO: Do we really need to check for the condition below?
+    //newTarget = if UNROUNDEDMAXTARGET  < newTarget then UNROUNDEDMAXTARGET else newTarget fi 
 
     return newTarget
