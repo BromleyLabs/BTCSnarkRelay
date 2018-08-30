@@ -19,7 +19,7 @@ def main(prevTime, startTime, newTarget, prevTarget):
     //atualspan = if actualSpan < TARGETSPANDIV4 then TARGETSPANDIV4 else actualSpan fi 
     //atualspan = if TARGETSPANMUL4 < actualSpan then TARGETSPANMUL4 else actualSpan fi 
      
-    // It can be verified that the mulitplications below will not cross the 
+    // It can be verified that the mulitplications below will not exceed the
     // field limit
     newTarget * TARGETSPAN == actualSpan * prevTarget
 
