@@ -17,12 +17,10 @@ def main(a31, a30, a29, a28, a27, a26, a25, a24, a23, a22, a21, a20, a19, a18, a
     mant = BITSTOVALUE24(b23, b22, b21, b20, b19, b18, b17, b16, b15, b14, b13, b12, b11, b10, b9, b8, b7, b6, b5, b4, b3, b2, b1, b0) 
 
     exp = exp - 3  // See BTC relay code        
-    x = 0
     val = 1
     for i in 0..256 do
-        y = if x < exp then 256 else 1 fi
+        y = if i < exp then 256 else 1 fi
         val = val * y 
-        x = x + 1
     endfor 
 
     return mant * val
