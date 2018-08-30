@@ -1,6 +1,7 @@
 //Main function to verify BTC header given previous header  
 //
-// Author: Bon Filey (bonfiley@gmail.com) 
+// @author Bon Filey <bon@bromleylabs.io>
+// @author Anurag Gupta <anurag@bromleylabs.io>
 // Copyright (c) Bromley Labs Inc.        
 
 import "./get_header_hash.code" as HEADERHASH
@@ -308,19 +309,17 @@ def main(private h639, private h638, private h637, private h636, private h635, p
     mant = BITSTOVALUE24(b23, b22, b21, b20, b19, b18, b17, b16, b15, b14, b13, b12, b11, b10, b9, b8, b7, b6, b5, b4, b3, b2, b1, b0) 
 
     exp = exp - 3  // See BTC relay code        
-    x = 0
     val = 1
     for i in 0..256 do
-        y = if x < exp then 256 else 1 fi
+        y = if i < exp then 256 else 1 fi
         val = val * y 
-        x = x + 1
     endfor 
 
     prevTarget = mant * val
 
-    // Compute new target if applicable  
-    // Check for multiple of 2016 which is the difficulty adjustment interval. 
-    // If multiple, then compute new target otherwise use previous target
+    // Compute new target if applicable - check for multiple of 2016 which 
+    // is the difficulty adjustment interval. If multiple, then compute 
+    // new target otherwise use previous target.
     y = 0
     for i in 0..300 do  // Approx. 2 years from now
         x = if i * 2016 == (prevBlockNumber + 1) then 1 else 0 fi
