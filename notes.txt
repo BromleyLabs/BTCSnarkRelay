@@ -5,10 +5,10 @@ for testing
 
 > pip install bitstring
 
-- Install ZoKrates as https://github.com/JacobEberhardt/ZoKrates
-
+- Build fresh as per build instructions at ZoKrates as https://github.com/JacobEberhardt/ZoKrates
+- IMPORTANT: first modify Docerfile to include --force-yes flat in apt-get command
 - To start a new docker session for ZoKrates, goto ~/crypto/ZoKrates and run
-> docker run -ti --mount src=/home/puneet,target=/home/puneet,type=bind zokrates/zokrates
+> docker run -ti --mount src=/home/puneet,target=/home/puneet,type=bind zokrates
 The above will also mount /home/puneet inside docker container.
 
 - To attach to existing docker
@@ -38,5 +38,13 @@ console print process hogs too much CPU.
 Note on Prime fields division operation:
 https://github.com/JacobEberhardt/ZoKrates/issues/27
 ====================================
+Max number, prime used for finite field arithmetic in ZoKrates
+21888242871839275222246405745257275088548364400416034343698204186575808495617
+===========
+Target multiplication - check whether it exceeds field limit
+Example target from early headers (target expected to be higher earlier)
+target = 26959535291011309493156476344723991336010898738574164086137773096960
+max_span = 4838400
+field_limit = 21888242871839275222246405745257275088548364400416034343698204186575808495617
 
-
+field_limit / (target * max_span) == 167.8
