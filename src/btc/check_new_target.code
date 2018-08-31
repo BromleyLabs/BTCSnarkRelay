@@ -2,11 +2,15 @@
 // @author Anurag Gupta <anurag@bromleylabs.io>
 // Copyright (c) Bromley Labs Inc.        
 
-//COMPUTE_NEW_TARGET
-//@dev Compute new target value for the current block given previous blocks data
+//CHECK_NEW_TARGET
+//@dev Check if new target value for the current block given previous blocks 
+//data is as computed correctly.  This applies to block number that is multiple
+// of 2016. If not, this function just bypasses the check.  'flag' specifies
+// if the block is multiple of 2016.
 //@param prevTime Timestamp value in seconds of previous block 
 //@param startTime Timestamp value in seconds of block where difficulty was adjusted
 //@param prevTarget Target value computed from nbits of previous block
+//@param flag 1 if block number is multiple of 2016, 0 otherwise 
 
 def main(prevTime, startTime, currTarget, prevTarget, flag):
     TARGETSPAN =  14 * 24 * 60 * 60  // 2 weeks 
