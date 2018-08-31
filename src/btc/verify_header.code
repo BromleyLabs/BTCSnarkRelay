@@ -5,7 +5,7 @@
 // Copyright (c) Bromley Labs Inc.        
 
 import "./get_header_hash.code" as HEADERHASH
-import "./compute_new_target.code" as CHECKNEWTARGET 
+import "./check_new_target.code" as CHECKNEWTARGET 
 import "./swap4.code" as BIGENDIAN
 import "./swap32.code" as SWAP
 import "./bits_to_value256.code" as BITSTOVALUE256
