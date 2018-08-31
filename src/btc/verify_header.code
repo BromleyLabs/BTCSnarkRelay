@@ -5,7 +5,7 @@
 // Copyright (c) Bromley Labs Inc.        
 
 import "./get_header_hash.code" as HEADERHASH
-import "./compute_new_target.code" as NEWTARGET 
+import "./compute_new_target.code" as CHECKNEWTARGET 
 import "./swap4.code" as BIGENDIAN
 import "./swap32.code" as SWAP
 import "./bits_to_value256.code" as BITSTOVALUE256
@@ -329,7 +329,7 @@ def main(private h639, private h638, private h637, private h636, private h635, p
 
     currTarget = prevTarget // TODO: Just for testing 
 
-    r = NEWTARGET(prevTime, startTime, currTarget, prevTarget, y)  
+    r = CHECKNEWTARGET(prevTime, startTime, currTarget, prevTarget, y)  
  
     r == 1
 
