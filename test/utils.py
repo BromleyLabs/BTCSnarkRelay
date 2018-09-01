@@ -158,12 +158,10 @@ def unlock_accounts(w3, accounts_list, pwd):
     for a in accounts_list:
         w3.personal.unlockAccount(a, pwd) 
 
-def deploy(w3, contract_name, path, owner, gas, gas_price):
-    logger.info('Deploying contract %s on Ethereum' % contract_name)
-    abi_file = os.path.join(path, contract_name + '.abi')
-    bin_file = os.path.join(path, contract_name + '.bin')
-    abi = open(abi_file, 'rt').read()
-    bytecode = '0x' + open(bin_file, 'rt').read() 
+def deploy(w3, abi_path, bin_path, owner, gas, gas_price):
+    logger.info('Deploying contract %s on Ethereum' % abi_path)
+    abi = open(abi_path, 'rt').read()
+    bytecode = '0x' + open(bin_path, 'rt').read() 
     contract = w3.eth.contract(abi = abi, bytecode = bytecode)
     txn_hash = contract.constructor().transact({
         'from' : owner, 
