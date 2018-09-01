@@ -12,6 +12,41 @@ TARGET_TIMESPAN_DIV_4 = TARGET_TIMESPAN / 4
 TARGET_TIMESPAN_MUL_4 =  TARGET_TIMESPAN * 4
 UNROUNDED_MAX_TARGET =  2**224 - 1 
 
+class BTCBlockHeader:
+    def __init__(self):
+        self.block_number = None  # uint
+        self.version =  None # Rest all values in bytes
+        self.hash_prev = None 
+        self.hash_merkel = None 
+        self.timestamp = None
+        self.nbits = None 
+        self.nonce = None
+
+# @dev Read a block header from a file that contains multiple block headers
+# in raw format - 80 bytes per block.
+# @return All values in sequence of bytes except block number which is integer
+
+def get_header(block_number, headers_file): 
+   all_headers = open(headers_file, 'rb').read()
+   nblocks = int(len(all_headers) / 80 - 1)  
+   if block_number > nblocks - 1 or block_number < 0:
+       print('This block number does not exist')
+       return (None, None)
+
+   start_byte = block_number * 80
+   block_bytes = all_headers[start_byte: start_byte + 80]
+   
+   b = BTCBlockHeader()  
+   b.block_number = block_number
+   b.version = block_bytes[0: 4]   
+   b.hash_prev = block_bytes[4: 4+32]   
+   b.hash_merkel = block_bytes[36 : 36+32] 
+   b.timestamp = block_bytes[68 : 68+4] 
+   b.nbits = block_bytes[72 : 72+4]
+   b.nonce = block_bytes[76 : 76+4]
+
+   return (b, block_bytes)    
+
 # @dev swaps endianness 
 # @param x 32-bit int 
 def swap32(x):
