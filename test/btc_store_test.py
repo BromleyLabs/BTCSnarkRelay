@@ -29,7 +29,7 @@ def get_hash(hash_input):
 
 def main():
     if len(sys.argv) != 1:
-        print('Usage: python snarks_test.py')
+        print('Usage: python %s' % sys.argv[0])
         exit(0)
     global logger
 
@@ -48,15 +48,22 @@ def main():
                  'gasPrice': GAS_PRICE}
     _, concise = init_contract(w3, ABI, checksum(w3,contract_addr))
                                
-    b,_ = get_header(12552, HEADERS_FILE) 
+    test_block = 12552
+    logger.info('Storing block %d' % test_block)
+    b,_ = get_header(test_block, HEADERS_FILE) 
     txn_hash = concise.store_block_header(b.block_number, b.version, 
-                               b.hash_prev, b.hash_merkel, 
-                               int.from_bytes(b.timestamp, 'little'),
-                               int.from_bytes(b.nbits, 'little'),
-                               int.from_bytes(b.nonce, 'little'),
-                               transact = tx_params) 
+                                          b.hash_prev, b.hash_merkel, 
+                                          b.timestamp, b.nbits, b.nonce,
+                                          transact = tx_params) 
+
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
+   
+    logger.info('Get hash of block')
+    txn_hash = concise.get_header_hash(b.block_number, transact = tx_params)
+    status, txn_receipt = wait_to_be_mined(w3, txn_hash)
+    logger.info(txn_receipt)
+
 
 if __name__== '__main__':
     main()
