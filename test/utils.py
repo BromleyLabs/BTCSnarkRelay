@@ -44,6 +44,7 @@ def hex_to_bits(hex_str):
     return bits_str, bits_list
 
 def init_contract(w3, abi_file, contract_addr):
+    contract_addr = checksum(w3,contract_addr)
     abi = open(abi_file, 'rt').read()
     contract = w3.eth.contract(abi = abi, 
                                address = contract_addr) 
@@ -165,10 +166,16 @@ def deploy(w3, abi_path, bin_path, owner, gas, gas_price):
     contract = w3.eth.contract(abi = abi, bytecode = bytecode)
     txn_hash = contract.constructor().transact({
         'from' : owner, 
-        #'gas' : gas, 
+        'gas' : gas, 
         'gasPrice' : gas_price
     }) 
-    return wait_to_be_mined(w3, txn_hash)
+    
+    status, txn_receipt = wait_to_be_mined(w3, txn_hash)
+    if status != 'mined':
+        logger.error('Could not deploy')
+        return None
+    contract_addr = txn_receipt['contractAddress']
+    return contract_addr 
 
 def kill(self, contract_name):
     conf = self.chain_config

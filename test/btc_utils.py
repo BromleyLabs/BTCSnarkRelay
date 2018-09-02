@@ -5,6 +5,7 @@
 # Copyright (c) Bromley Labs Inc.        
 
 import datetime as dt
+import hashlib
 
 DIFFICULTY_ADJUSTMENT_INTERVAL = 2016  # Bitcoin adjusts every 2 weeks
 TARGET_TIMESPAN =  14 * 24 * 60 * 60  # 2 weeks
@@ -21,6 +22,13 @@ class BTCBlockHeader:
         self.timestamp = None
         self.nbits = None 
         self.nonce = None
+
+# @ dev get Bitcoin hash of input bytes. Basically, double sha256. Note that
+# bytes are not swapped after hash
+def get_btc_hash(input_bytes):
+    hash1 = hashlib.sha256(input_bytes).digest()
+    hash2 = hashlib.sha256(hash1).digest()
+    return hash2 
 
 # @dev Read a block header from a file that contains multiple block headers
 # in raw format - 80 bytes per block.
@@ -52,6 +60,12 @@ def get_header(block_number, headers_file):
 def swap32(x):
     return int.from_bytes(x.to_bytes(4, byteorder='little'), 
                           byteorder='big', signed=False)
+
+# @ Swap given bytes
+def swap_bytes(b):
+    ba = bytearray(b)
+    ba.reverse()
+    return bytes(ba)
 
 def compact_from_uint256(v):
     """Convert uint256 to compact encoding

@@ -13,14 +13,14 @@ from btc_utils import *
 HEADERS_FILE = './data/btc_headers'
 
 def print_block(b, block_bytes):
-   bh = bytearray(b.hash_prev)
-   bh.reverse()
+   #bh = bytearray(b.hash_prev)
+   #bh.reverse()
 
    htime = int.from_bytes(b.timestamp, 'little') 
    nbits = int.from_bytes(b.nbits, 'little') 
 
    print('Block Number: %d' % b.block_number)
-   print('Prev Hash: %s' % HexBytes(bh).hex())
+   print('Prev Hash: %s' % b.hash_prev.hex())
    print('TimeS: %d' % htime)
    print('NBits: %d' % nbits)
  
