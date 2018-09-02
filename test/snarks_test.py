@@ -93,9 +93,9 @@ def main():
         logger.error('Could not deploy contracts')
         return 1
 
-    store_header(block_number, HEADERS_DATA, contract_h, txn_params, w3) 
-
     set_addresses(contract_s, contract_h, addr_s, addr_h, txn_params, w3)
+
+    store_header(block_number, HEADERS_DATA, contract_h, txn_params, w3) 
 
     _, block_bytes = get_header(block_number, HEADERS_DATA)
     block_hash = get_btc_hash(block_bytes) 
