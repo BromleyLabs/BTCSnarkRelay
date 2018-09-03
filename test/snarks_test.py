@@ -9,7 +9,7 @@
 from hexbytes import HexBytes
 from bitstring import BitArray
 import hashlib
-import sys
+import sys, os
 import re
 from utils import *
 import utils
@@ -18,11 +18,12 @@ from btc_utils import *
 
 GAS_PRICE = int(2.5*1e9) 
 GAS = int(4*1e6)
-SNARK_ABI = '../contracts/target/Verifier.abi' 
-SNARK_BIN  = '../contracts/target/Verifier.bin' 
-HEADERS_ABI = '../contracts/target/BTCHeaderStore.abi'
-HEADERS_BIN = '../contracts/target/BTCHeaderStore.bin'
-PROOF = '../build/proof.txt'
+BUILD_DIR = '../build'
+SNARK_ABI = os.path.join(BUILD_DIR, 'Verifier.abi')
+SNARK_BIN  = os.path.join(BUILD_DIR, 'Verifier.bin')
+HEADERS_ABI = os.path.join(BUILD_DIR, 'BTCHeaderStore.abi')
+HEADERS_BIN = os.path.join(BUILD_DIR, 'BTCHeaderStore.bin')
+PROOF = os.path.join(BUILD_DIR, 'proof.txt')
 LOGFILE = '/tmp/snark.log'
 HEADERS_DATA = './data/btc_headers'
 
