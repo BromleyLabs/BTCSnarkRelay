@@ -5,6 +5,19 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/**
+ * Large portion of this file was auto-generated using ZoKrates tool.   
+ * modifications related to BTCSnarkRelay have been done here which include
+ * fetching bitcoin header from another contract and verifying its hash matches
+ * the hash provided for verification.  
+ *
+ * @author Bon Filey (bon@bromleylabs.io)
+ * @author Anurag Gupta (anurag@bromleylabs.io)
+ * 
+ * Copyright (c) 2018 Bromley Labs Inc. 
+ */
+
+
 pragma solidity ^0.4.14;
 
 import "./btc_store.sol";
