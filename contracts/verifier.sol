@@ -7,9 +7,8 @@
 
 /**
  * Large portion of this file was auto-generated using ZoKrates tool.   
- * modifications related to BTCSnarkRelay have been done here which include
- * fetching bitcoin header from another contract and verifying its hash matches
- * the hash provided for verification.  
+ * Modifications related to BTCSnarkRelay have been done here which include
+ * fetching marking a bitcoin header on BTCHeaderStore contract as verified. 
  *
  * @author Bon Filey (bon@bromleylabs.io)
  * @author Anurag Gupta (anurag@bromleylabs.io)
