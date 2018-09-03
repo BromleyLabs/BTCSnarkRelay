@@ -19,9 +19,8 @@ def main(prevTime, startTime, currTarget, prevTarget, flag):
     UNROUNDEDMAXTARGET = 2**224 - 1 
 
     actualSpan = prevTime - startTime
-    // TODO: temporarily commented out
-    //atualspan = if actualSpan < TARGETSPANDIV4 then TARGETSPANDIV4 else actualSpan fi 
-    //atualspan = if TARGETSPANMUL4 < actualSpan then TARGETSPANMUL4 else actualSpan fi 
+    atualspan = if actualSpan < TARGETSPANDIV4 then TARGETSPANDIV4 else actualSpan fi 
+    atualspan = if TARGETSPANMUL4 < actualSpan then TARGETSPANMUL4 else actualSpan fi 
      
     // It can be verified that the mulitplications below will not exceed the
     // field limit
@@ -31,7 +30,7 @@ def main(prevTime, startTime, currTarget, prevTarget, flag):
     b = actualSpan * prevTarget * flag 
     a == b 
 
-    // TODO: Do we really need to check for the condition below?
+    // TODO: Do we really need to check for the condition below? 
     //currTarget = if UNROUNDEDMAXTARGET  < currTarget then UNROUNDEDMAXTARGET else currTarget fi 
 
     return 1

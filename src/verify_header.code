@@ -7,6 +7,8 @@
 import "./get_header_hash.code" as HEADERHASH
 import "./check_new_target.code" as CHECKNEWTARGET 
 import "./swap4.code" as BIGENDIAN
+import "./target_from_bits.code" as TARGET
+import "./multiple.code" as MULTIPLE
 import "./swap32.code" as SWAP
 import "./bits_to_value256.code" as BITSTOVALUE256
 import "./bits_to_value32.code" as BITSTOVALUE32
@@ -296,38 +298,17 @@ def main(private h639, private h638, private h637, private h636, private h635, p
     // Time of previous block.  Needed for computing new nbits 
     prevTime = getTimeInSec(p95, p94, p93, p92, p91, p90, p89, p88, p87, p86, p85, p84, p83, p82, p81, p80, p79, p78, p77, p76, p75, p74, p73, p72, p71, p70, p69, p68, p67, p66, p65, p64)  
 
-    // Target computation. The code below is same as target_from_bits.code. 
-    // However, if this file is imported, then for some reason the 'if' 
-    // condition in 'for' loop throws errors during witness computation. 
-    // Hence the entire function is included inline here.  Similarly, 
-    // 'multiple' function has been made inline below.
+    // Compute Target 
+    prevTarget = TARGET(p63, p62, p61, p60, p59, p58, p57, p56, p55, p54, p53, p52, p51, p50, p49, p48, p47, p46, p45, p44, p43, p42, p41, p40, p39, p38, p37, p36, p35, p34, p33, p32)
 
-    // Convert to big-endian
-    b31, b30, b29, b28, b27, b26, b25, b24, b23, b22, b21, b20, b19, b18, b17, b16, b15, b14, b13, b12, b11, b10, b9, b8, b7, b6, b5, b4, b3, b2, b1, b0 = BIGENDIAN(p63, p62, p61, p60, p59, p58, p57, p56, p55, p54, p53, p52, p51, p50, p49, p48, p47, p46, p45, p44, p43, p42, p41, p40, p39, p38, p37, p36, p35, p34, p33, p32)
-
-    exp = BITSTOVALUE8(b31, b30, b29, b28, b27, b26, b25, b24)
-
-    mant = BITSTOVALUE24(b23, b22, b21, b20, b19, b18, b17, b16, b15, b14, b13, b12, b11, b10, b9, b8, b7, b6, b5, b4, b3, b2, b1, b0) 
-
-    exp = exp - 3  // See BTC relay code        
-    val = 1
-    for i in 0..256 do
-        y = if i < exp then 256 else 1 fi
-        val = val * y 
-    endfor 
-
-    prevTarget = mant * val
+    currTarget = TARGET(h63, h62, h61, h60, h59, h58, h57, h56, h55, h54, h53, h52, h51, h50, h49, h48, h47, h46, h45, h44, h43, h42, h41, h40, h39, h38, h37, h36, h35, h34, h33, h32)
 
     // Compute new target if applicable - check for multiple of 2016 which 
     // is the difficulty adjustment interval. If multiple, then compute 
     // new target otherwise use previous target.
-    y = 0
-    for i in 0..300 do  // Approx. 2 years from now
-        x = if i * 2016 == (prevBlockNumber + 1) then 1 else 0 fi
-        y = y + x 
-    endfor
+    y = MULTIPLE(prevBlockNumber + 1, 2016)
 
-    currTarget = prevTarget // TODO: Just for testing 
+    // Compute new target if applicable - check for multiple of 2016 which 
 
     r = CHECKNEWTARGET(prevTime, startTime, currTarget, prevTarget, y)  
  
