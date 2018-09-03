@@ -17,10 +17,9 @@
  */
 
 
-pragma solidity ^0.4.14;
-
 import "./btc_store.sol";
 
+pragma solidity ^0.4.14;
 library Pairing {
     struct G1Point {
         uint X;
@@ -158,7 +157,9 @@ library Pairing {
 }
 contract Verifier {
     using Pairing for *;
+
     address m_header_contract_addr = address(0);
+
     struct VerifyingKey {
         Pairing.G2Point A;
         Pairing.G1Point B;
@@ -179,6 +180,7 @@ contract Verifier {
         Pairing.G1Point K;
         Pairing.G1Point H;
     }
+
     /**
      * @dev One time setting
      */
@@ -188,17 +190,17 @@ contract Verifier {
     }
 
     function verifyingKey() pure internal returns (VerifyingKey vk) {
-        vk.A = Pairing.G2Point([0xc27a6174c994065de894a91298c883ac02720416ff8e9295d769f4fc4409328, 0x2ad8f162106451606a56aa263c234e35f28a86f67106f643ad1ae616b0ec7d65], [0x1c22fbc64522a7e0952f9bfad70227247d89fb70ff82a5ce26ba5acdad91f925, 0xa82a623af70cbee5c8bc66a992c8506696b9eb7dd7ac51b32ed955d3ddcb90b]);
-        vk.B = Pairing.G1Point(0x420d7fc3e6c4ccc6532acb8c51d352386c72e44cb59a09aadee141693e0c4f3, 0x1a717a7a2c41b79b2bdb2a7f344f1cf8f0cfc98ba343382b73c7b424775c971f);
-        vk.C = Pairing.G2Point([0x269c5d37b57e0d1403ef0343386d9ddc85ba4ae33e967866f9f4ec36b2c708c8, 0x7d644037652d59c6a7234e6f5d898b4519b3142347f1530cc074cad87d53851], [0x4417a6866f2d91ede16bf29c1648ea1bbb3b0a18a581c193108acea5036e550, 0x19be15c24412b47b96d0da3a5c518b3ea97659742d73e07ec4e4b5e8d9013ef6]);
-        vk.gamma = Pairing.G2Point([0x29ce5626a4dd6ed41c4f8dfc8f9c50f9241f712044002bf53bd3b8b6b331e2c5, 0xcd3b87557fc5fb519acb8f37bb0b9afcb31b767f122b63362c67f8b22a9fcd5], [0x1b10d7848459f795048174e60b185e736f9851fcd9784cdbbd91207ee9691d3, 0x28979780b1ca12f8cd41255c856225a3b3b54b64b98f8660d730ce6808495ab1]);
-        vk.gammaBeta1 = Pairing.G1Point(0xf0e810fc0f003a9305ab3559f740ea6c69f2b36665d550fbbcc4cdb50ec3eee, 0xb94a4ec3ab9b00612e436d69994a6bfa8e0c76ce0003acdb4b84299d9dc8c4e);
-        vk.gammaBeta2 = Pairing.G2Point([0x16fad1b43b116b4cc52e1881231adcf9af24ec524829cc731db9a1adc55d6f71, 0x13c838ad59f57b9ada1a168396a98c91c050c6b6905bf410f380cb6269d0c5a2], [0x21bc4baae79a6fe75de51d09e71a2d196f4a79178b0b1d660715b9b16ceabb5e, 0xe71c53ed08020a1b093188cb8dec288ef26bd573f81e17ee5d55814a4059eb1]);
-        vk.Z = Pairing.G2Point([0x240ae42de961c33abc3ebc5328cb993dd8d379a2394b5ead5dac4b4aa234972, 0x22b072bb9a0347e93e89c1b87a9d838ece6f3058b6dabf4ea5b8af0dad871008], [0xd516ce8c51f2521731a317866535b788e45be01993e7a2cbd629dcc620de910, 0x1c671ca8ef868b70703dee10bec76beb466ae2297c4ef8227305871f1fdb0b90]);
+        vk.A = Pairing.G2Point([0x2f376f2ffdd5ad280a7f3f63639e064f6d687c6b3ec3afc8697daa61872ad696, 0x1c9a12dc04c694e863be3ddd70526ca78599144accafa67f8ee46fd02eae9eec], [0xed6a6297f154a4bbf019bd46488db0f744c869ff52e22b1b919d527a6140b53, 0x19b819922a26823e7d856946492b3c3082aade56096ea2a9434d38fa8a9403f3]);
+        vk.B = Pairing.G1Point(0x2b1f3aebbf12a15078d4cd764b4f68b05a6a72f30f7414c6dbf31dc3b9dce164, 0x2629da953af719b33c303104cbf53508537d1bda0d871c2e85ffb6d30cdeb74c);
+        vk.C = Pairing.G2Point([0xb8426666cd5d83e73abb21584f01cac86bfc7cf2bf378d47e4ba0d6f30e98b2, 0x1e572db7f3629dffa1cc034d1b42d98ea86ceb5df5fa99de7cb6730d36ed4b6b], [0x1b952cd5dd7f87ca3c15cbaa782b8c0fb0233851b920221e7e5e7b4fdfa6459c, 0x2afc8def0256e8d18aefc193eef7ff6e477c93a4c050c88e214094a0b6b98650]);
+        vk.gamma = Pairing.G2Point([0x20046160a00019c039c4face8673ccb3de2476dd8c1f2244f2cccbd04fbaa615, 0x36d6dff92ba5fe5d637607f8a2002ec2dd842e877a12e01c4493ebe8a59b69a], [0x277dbd155095d216cb5e3baaeb12d87e48c7c9f403afe8cd04ece9d483a8e540, 0xe0c4bb92c88cfa22962150d2bddc79a993ec64bd89b0ddeb78cca351d2dd41e]);
+        vk.gammaBeta1 = Pairing.G1Point(0xc1f6dd716361452176579cd4ee2bd0dd479264668a30553af9cb9dda82656ed, 0x12992a0494711c99c9d9879814fced0395c0e6667e9cf6b46078e10e551ad44e);
+        vk.gammaBeta2 = Pairing.G2Point([0x2c1e082abbc2ab5916c64a12c3f7fd3872dce069a0ed702e22da1f0178488ef7, 0x2247a0539271e5e24a6e34591a24316a30f1fe7f618eed40638faad1e6615826], [0x292864c2457cfb6361ec1e99beae8ad9ab7ac3d394dd1429acb971d51f7a121f, 0x1d2adb97948c8138007173b2c94c377f9bbd4602082fce6086d3922ad24f6844]);
+        vk.Z = Pairing.G2Point([0x2a0d506363a68db4803479d68955cef81b2727eef89797513cb179411aa5169a, 0x1bfb05be88855ab2d2c43cf16aefd51fa0ecdcc906a8b6e35a14756a14855cd6], [0x566cc2bc5767e4130457190659fcbb0de43b8c2e483ce9c12091b76e6213759, 0x2b32016db99a85795ed679ffb6e10fcc098936b8520dddf2ba912672074cdc30]);
         vk.IC = new Pairing.G1Point[](3);
-        vk.IC[0] = Pairing.G1Point(0x2c63cb444325d6736b9953910103c61a62c804396ee410e870ca2446ae9958af, 0x24e9ec278d60892353ac8dc66a5580cb0ef897c4f3221a0aa96abc247032bfc0);
-        vk.IC[1] = Pairing.G1Point(0x1aec9beba20e47c4181ec5ba54863e6d6f8d1fd45204d5ace694b806468aa5ef, 0x2a6f13314d701da10af769302666fa8ab823223963bac2f9420d85b1c819f411);
-        vk.IC[2] = Pairing.G1Point(0x2c8c73f2ad9d82c50622e8a4be36a0d079b81d5bd93ae32c4ddb20b13045b95d, 0x1aa3afc796b28b6bb477a46f364d65588b0130e87adf8c553b6efd0d6767e9a3);
+        vk.IC[0] = Pairing.G1Point(0x12e946bb7fb795e7ce073b2768aefa90a328388d81a1042395654d5d3cc82daf, 0x2e29c781f7f1aee03e9c1362f8b91a1d6dd81068a6dc696b77cf8a851ca4923f);
+        vk.IC[1] = Pairing.G1Point(0x2961d22cb4698870a133530a1d39e63819fb7c307efb2de4b2b1d88ee43f2ce4, 0x13ed47c0ad09b54422a1a09af377c64cf38764d7cb8a9382fbd7eadc97f8f97f);
+        vk.IC[2] = Pairing.G1Point(0x1efd96d718739c4c0ef3693fffa012ee13b2cfa7f81c87a7282da16791c74e74, 0x4724c27a1da2cd8495f6626133cbe87cf9900ff217cc4d6ccb0702d4f522acb);
     }
     function verify(uint[] input, Proof proof) internal returns (uint) {
         VerifyingKey memory vk = verifyingKey();
@@ -235,7 +237,6 @@ contract Verifier {
             uint[2] k,
             uint[2] input
         ) public returns (bool r) {
-
         Proof memory proof;
         proof.A = Pairing.G1Point(a[0], a[1]);
         proof.A_p = Pairing.G1Point(a_p[0], a_p[1]);
@@ -250,8 +251,10 @@ contract Verifier {
             inputValues[i] = input[i];
         }
         if (verify(inputValues, proof) == 0) {
+
             /* Mark header verified */
             require(BTCHeaderStore(m_header_contract_addr).mark_verified(input[0]) == true); 
+
             emit Verified("Transaction successfully verified.");
             return true;
         } else {
