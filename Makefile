@@ -1,13 +1,11 @@
 CC=../tools/zokrates
 SOURCE_DIR=../src
-#SOURCE_FILE=verify_header.code
-SOURCE_FILE=simple.code
+SOURCE_FILE=verify_header.code
 DEPS= $(shell find $(SOURCE_DIR) -name '*.code')
 CC_OUT=out
 SETUP=variables.inf verification.key proving.key 
 PROOF=proof.txt
-#WITNESS_INPUT=../test/data/test_verify_header.witness
-WITNESS_INPUT=/tmp/witness.txt
+WITNESS_INPUT=../test/data/test_verify_header.witness
 WITNESS_OUT=witness
 CONTRACT=./verifier.sol
 CONTRACT_EX=../contracts/verifier.sol
