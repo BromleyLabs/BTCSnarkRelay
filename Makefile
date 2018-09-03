@@ -1,11 +1,13 @@
 CC=../tools/zokrates
 SOURCE_DIR=../src
-SOURCE_FILE=verify_header.code
+#SOURCE_FILE=verify_header.code
+SOURCE_FILE=simple.code
 DEPS= $(shell find $(SOURCE_DIR) -name '*.code')
 CC_OUT=out
 SETUP=variables.inf verification.key proving.key 
 PROOF=proof.txt
-WITNESS_INPUT=../test/data/test_verify_header.witness
+#WITNESS_INPUT=../test/data/test_verify_header.witness
+WITNESS_INPUT=/tmp/witness.txt
 WITNESS_OUT=witness
 CONTRACT=./verifier.sol
 CONTRACT_EX=../contracts/verifier.sol
@@ -18,7 +20,7 @@ all: $(WITNESS_OUT) $(SETUP) $(CONTRACT) $(PROOF) $(CONTRACT_EX) $(CONTRACTS_BIN
 $(CONTRACTS_BIN): $(CONTRACT_EX) $(CONTRACT_STORE) 
 	$(SOLC_PATH)/solc --bin --abi --optimize --overwrite -o ./ $(CONTRACT_EX) $(CONTRACT_STORE)
 
-$(PROOF): witness proving.key
+$(PROOF): $(WITNESS_OUT) $(SETUP) 
 	$(CC) generate-proof > $(PROOF) 
 
 $(WITNESS_OUT): $(CC_OUT)
@@ -27,7 +29,7 @@ $(WITNESS_OUT): $(CC_OUT)
 $(CONTRACT_EX): $(CONTRACT)
 	python ../tools/augment.py $(CONTRACT) $(CONTRACT_EX) 
 
-$(CONTRACT): verification.key
+$(CONTRACT): $(SETUP) 
 	$(CC) export-verifier 
 
 $(SETUP): $(CC_OUT) 
