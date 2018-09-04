@@ -1,5 +1,5 @@
 /** 
- * @title BTCSnarkRelay BTC header store contract 
+ * @title BTCSnarkRelay BTC Header Store Contract 
  * @dev Contract on Ethereum that stores the BTC headers.
  * 
  * @author Bon Filey (bon@bromleylabs.io)
@@ -26,10 +26,10 @@ contract BTCHeaderStore {
     mapping (uint => HeaderInfo) public m_headers;
     address m_verifier_addr = address(0); /* Contract address */
    
-    /*
-     * @dev One time setting of contract that is going to call mark_verified() 
-     * method.
-     */
+   /*
+    * @dev One time setting of contract that is going to call mark_verified() 
+    * method.
+    */
     function set_verifier_addr (address addr) public {
        require(m_verifier_addr == address(0));  
        m_verifier_addr = addr;
