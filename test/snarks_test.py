@@ -1,5 +1,5 @@
 # Main script to upload SNARK contract, and send proof for verification. The
-# verification is successfully if generated event can be seen in the 
+# verification is successful if generated event can be seen in the 
 # transaction receipt
 #
 # @author Bon Filey <bon@bromleylabs.io>

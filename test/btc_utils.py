@@ -23,7 +23,7 @@ class BTCBlockHeader:
         self.nbits = None 
         self.nonce = None
 
-# @ dev get Bitcoin hash of input bytes. Basically, double sha256. Note that
+# @dev get Bitcoin hash of input bytes. Basically, double sha256. Note that
 # bytes are not swapped after hash
 def get_btc_hash(input_bytes):
     hash1 = hashlib.sha256(input_bytes).digest()
@@ -61,7 +61,7 @@ def swap32(x):
     return int.from_bytes(x.to_bytes(4, byteorder='little'), 
                           byteorder='big', signed=False)
 
-# @ Swap given bytes
+# @dev Swap given bytes
 def swap_bytes(b):
     ba = bytearray(b)
     ba.reverse()
