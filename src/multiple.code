@@ -4,7 +4,8 @@
 
 //MULTIPLE
 // is 'a' multiple of 'b'. 'a' is block number
-// Need to hard code the for loop here.
+// Need to hard code the for loop here. 
+// Returns 1 if multiple 0 otherwise
 
 def main(a, b):
     y = 0
