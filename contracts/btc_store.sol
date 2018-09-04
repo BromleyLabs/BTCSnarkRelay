@@ -12,8 +12,9 @@ pragma solidity ^0.4.24;
 
 contract BTCHeaderStore {
     
+    /* All values in this struct are little-endian format */
     struct HeaderInfo {
-        bytes4 version; // All values byte-swapped  
+        bytes4 version; 
         bytes32 prev_header_hash;
         bytes32 merkel_root;
         bytes4 timestamp;
@@ -21,7 +22,6 @@ contract BTCHeaderStore {
         bytes4 nonce;
         bool verified; /* Whether this block has been verified to be correct */
     }
-
 
     mapping (uint => HeaderInfo) public m_headers;
     address m_verifier_addr = address(0); /* Contract address */
@@ -48,8 +48,9 @@ contract BTCHeaderStore {
                                                 nonce));
         bytes32 hash2 = sha256(abi.encodePacked(hash1));
         
-        m_headers[uint(hash2)] = HeaderInfo(version, prev_header_hash, merkel_root, 
-                                      timestamp, nbits, nonce, false);
+        m_headers[uint(hash2)] = HeaderInfo(version, prev_header_hash, 
+                                            merkel_root, timestamp, nbits, 
+                                            nonce, false);
     } 
 
     /**
