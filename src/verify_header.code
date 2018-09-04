@@ -29,302 +29,299 @@ def getTimeInSec(t31, t30, t29, t28, t27, t26, t25, t24, t23, t22, t21, t20, t19
 //@param startTime uint Time in seconds (from epoch) of block where difficulty
 //was adjusted. i.e. block_number % 2016 == 0
 //@param currBlockHash uint Hash value of current block byte-swapped
-def main(private h639, private h638, private h637, private h636, private h635, private h634, private h633, private h632, private h631, private h630, private h629, private h628, private h627, private h626, private h625, private h624, private h623, private h622, private h621, private h620, private h619, private h618, private h617, private h616, private h615, private h614, private h613, private h612, private h611, private h610, private h609, private h608, private h607, private h606, private h605, private h604, private h603, private h602, private h601, private h600, private h599, private h598, private h597, private h596, private h595, private h594, private h593, private h592, private h591, private h590, private h589, private h588, private h587, private h586, private h585, private h584, private h583, private h582, private h581, private h580, private h579, private h578, private h577, private h576, private h575, private h574, private h573, private h572, private h571, private h570, private h569, private h568, private h567, private h566, private h565, private h564, private h563, private h562, private h561, private h560, private h559, private h558, private h557, private h556, private h555, private h554, private h553, private h552, private h551, private h550, private h549, private h548, private h547, private h546, private h545, private h544, private h543, private h542, private h541, private h540, private h539, private h538, private h537, private h536, private h535, private h534, private h533, private h532, private h531, private h530, private h529, private h528, private h527, private h526, private h525, private h524, private h523, private h522, private h521, private h520, private h519, private h518, private h517, private h516, private h515, private h514, private h513, private h512, private h511, private h510, private h509, private h508, private h507, private h506, private h505, private h504, private h503, private h502, private h501, private h500, private h499, private h498, private h497, private h496, private h495, private h494, private h493, private h492, private h491, private h490, private h489, private h488, private h487, private h486, private h485, private h484, private h483, private h482, private h481, private h480, private h479, private h478, private h477, private h476, private h475, private h474, private h473, private h472, private h471, private h470, private h469, private h468, private h467, private h466, private h465, private h464, private h463, private h462, private h461, private h460, private h459, private h458, private h457, private h456, private h455, private h454, private h453, private h452, private h451, private h450, private h449, private h448, private h447, private h446, private h445, private h444, private h443, private h442, private h441, private h440, private h439, private h438, private h437, private h436, private h435, private h434, private h433, private h432, private h431, private h430, private h429, private h428, private h427, private h426, private h425, private h424, private h423, private h422, private h421, private h420, private h419, private h418, private h417, private h416, private h415, private h414, private h413, private h412, private h411, private h410, private h409, private h408, private h407, private h406, private h405, private h404, private h403, private h402, private h401, private h400, private h399, private h398, private h397, private h396, private h395, private h394, private h393, private h392, private h391, private h390, private h389, private h388, private h387, private h386, private h385, private h384, private h383, private h382, private h381, private h380, private h379, private h378, private h377, private h376, private h375, private h374, private h373, private h372, private h371, private h370, private h369, private h368, private h367, private h366, private h365, private h364, private h363, private h362, private h361, private h360, private h359, private h358, private h357, private h356, private h355, private h354, private h353, private h352, private h351, private h350, private h349, private h348, private h347, private h346, private h345, private h344, private h343, private h342, private h341, private h340, private h339, private h338, private h337, private h336, private h335, private h334, private h333, private h332, private h331, private h330, private h329, private h328, private h327, private h326, private h325, private h324, private h323, private h322, private h321, private h320, private h319, private h318, private h317, private h316, private h315, private h314, private h313, private h312, private h311, private h310, private h309, private h308, private h307, private h306, private h305, private h304, private h303, private h302, private h301, private h300, private h299, private h298, private h297, private h296, private h295, private h294, private h293, private h292, private h291, private h290, private h289, private h288, private h287, private h286, private h285, private h284, private h283, private h282, private h281, private h280, private h279, private h278, private h277, private h276, private h275, private h274, private h273, private h272, private h271, private h270, private h269, private h268, private h267, private h266, private h265, private h264, private h263, private h262, private h261, private h260, private h259, private h258, private h257, private h256, private h255, private h254, private h253, private h252, private h251, private h250, private h249, private h248, private h247, private h246, private h245, private h244, private h243, private h242, private h241, private h240, private h239, private h238, private h237, private h236, private h235, private h234, private h233, private h232, private h231, private h230, private h229, private h228, private h227, private h226, private h225, private h224, private h223, private h222, private h221, private h220, private h219, private h218, private h217, private h216, private h215, private h214, private h213, private h212, private h211, private h210, private h209, private h208, private h207, private h206, private h205, private h204, private h203, private h202, private h201, private h200, private h199, private h198, private h197, private h196, private h195, private h194, private h193, private h192, private h191, private h190, private h189, private h188, private h187, private h186, private h185, private h184, private h183, private h182, private h181, private h180, private h179, private h178, private h177, private h176, private h175, private h174, private h173, private h172, private h171, private h170, private h169, private h168, private h167, private h166, private h165, private h164, private h163, private h162, private h161, private h160, private h159, private h158, private h157, private h156, private h155, private h154, private h153, private h152, private h151, private h150, private h149, private h148, private h147, private h146, private h145, private h144, private h143, private h142, private h141, private h140, private h139, private h138, private h137, private h136, private h135, private h134, private h133, private h132, private h131, private h130, private h129, private h128, private h127, private h126, private h125, private h124, private h123, private h122, private h121, private h120, private h119, private h118, private h117, private h116, private h115, private h114, private h113, private h112, private h111, private h110, private h109, private h108, private h107, private h106, private h105, private h104, private h103, private h102, private h101, private h100, private h99, private h98, private h97, private h96, private h95, private h94, private h93, private h92, private h91, private h90, private h89, private h88, private h87, private h86, private h85, private h84, private h83, private h82, private h81, private h80, private h79, private h78, private h77, private h76, private h75, private h74, private h73, private h72, private h71, private h70, private h69, private h68, private h67, private h66, private h65, private h64, private h63, private h62, private h61, private h60, private h59, private h58, private h57, private h56, private h55, private h54, private h53, private h52, private h51, private h50, private h49, private h48, private h47, private h46, private h45, private h44, private h43, private h42, private h41, private h40, private h39, private h38, private h37, private h36, private h35, private h34, private h33, private h32, private h31, private h30, private h29, private h28, private h27, private h26, private h25, private h24, private h23, private h22, private h21, private h20, private h19, private h18, private h17, private h16, private h15, private h14, private h13, private h12, private h11, private h10, private h9, private h8, private h7, private h6, private h5, private h4, private h3, private h2, private h1, private h0, private p639, private p638, private p637, private p636, private p635, private p634, private p633, private p632, private p631, private p630, private p629, private p628, private p627, private p626, private p625, private p624, private p623, private p622, private p621, private p620, private p619, private p618, private p617, private p616, private p615, private p614, private p613, private p612, private p611, private p610, private p609, private p608, private p607, private p606, private p605, private p604, private p603, private p602, private p601, private p600, private p599, private p598, private p597, private p596, private p595, private p594, private p593, private p592, private p591, private p590, private p589, private p588, private p587, private p586, private p585, private p584, private p583, private p582, private p581, private p580, private p579, private p578, private p577, private p576, private p575, private p574, private p573, private p572, private p571, private p570, private p569, private p568, private p567, private p566, private p565, private p564, private p563, private p562, private p561, private p560, private p559, private p558, private p557, private p556, private p555, private p554, private p553, private p552, private p551, private p550, private p549, private p548, private p547, private p546, private p545, private p544, private p543, private p542, private p541, private p540, private p539, private p538, private p537, private p536, private p535, private p534, private p533, private p532, private p531, private p530, private p529, private p528, private p527, private p526, private p525, private p524, private p523, private p522, private p521, private p520, private p519, private p518, private p517, private p516, private p515, private p514, private p513, private p512, private p511, private p510, private p509, private p508, private p507, private p506, private p505, private p504, private p503, private p502, private p501, private p500, private p499, private p498, private p497, private p496, private p495, private p494, private p493, private p492, private p491, private p490, private p489, private p488, private p487, private p486, private p485, private p484, private p483, private p482, private p481, private p480, private p479, private p478, private p477, private p476, private p475, private p474, private p473, private p472, private p471, private p470, private p469, private p468, private p467, private p466, private p465, private p464, private p463, private p462, private p461, private p460, private p459, private p458, private p457, private p456, private p455, private p454, private p453, private p452, private p451, private p450, private p449, private p448, private p447, private p446, private p445, private p444, private p443, private p442, private p441, private p440, private p439, private p438, private p437, private p436, private p435, private p434, private p433, private p432, private p431, private p430, private p429, private p428, private p427, private p426, private p425, private p424, private p423, private p422, private p421, private p420, private p419, private p418, private p417, private p416, private p415, private p414, private p413, private p412, private p411, private p410, private p409, private p408, private p407, private p406, private p405, private p404, private p403, private p402, private p401, private p400, private p399, private p398, private p397, private p396, private p395, private p394, private p393, private p392, private p391, private p390, private p389, private p388, private p387, private p386, private p385, private p384, private p383, private p382, private p381, private p380, private p379, private p378, private p377, private p376, private p375, private p374, private p373, private p372, private p371, private p370, private p369, private p368, private p367, private p366, private p365, private p364, private p363, private p362, private p361, private p360, private p359, private p358, private p357, private p356, private p355, private p354, private p353, private p352, private p351, private p350, private p349, private p348, private p347, private p346, private p345, private p344, private p343, private p342, private p341, private p340, private p339, private p338, private p337, private p336, private p335, private p334, private p333, private p332, private p331, private p330, private p329, private p328, private p327, private p326, private p325, private p324, private p323, private p322, private p321, private p320, private p319, private p318, private p317, private p316, private p315, private p314, private p313, private p312, private p311, private p310, private p309, private p308, private p307, private p306, private p305, private p304, private p303, private p302, private p301, private p300, private p299, private p298, private p297, private p296, private p295, private p294, private p293, private p292, private p291, private p290, private p289, private p288, private p287, private p286, private p285, private p284, private p283, private p282, private p281, private p280, private p279, private p278, private p277, private p276, private p275, private p274, private p273, private p272, private p271, private p270, private p269, private p268, private p267, private p266, private p265, private p264, private p263, private p262, private p261, private p260, private p259, private p258, private p257, private p256, private p255, private p254, private p253, private p252, private p251, private p250, private p249, private p248, private p247, private p246, private p245, private p244, private p243, private p242, private p241, private p240, private p239, private p238, private p237, private p236, private p235, private p234, private p233, private p232, private p231, private p230, private p229, private p228, private p227, private p226, private p225, private p224, private p223, private p222, private p221, private p220, private p219, private p218, private p217, private p216, private p215, private p214, private p213, private p212, private p211, private p210, private p209, private p208, private p207, private p206, private p205, private p204, private p203, private p202, private p201, private p200, private p199, private p198, private p197, private p196, private p195, private p194, private p193, private p192, private p191, private p190, private p189, private p188, private p187, private p186, private p185, private p184, private p183, private p182, private p181, private p180, private p179, private p178, private p177, private p176, private p175, private p174, private p173, private p172, private p171, private p170, private p169, private p168, private p167, private p166, private p165, private p164, private p163, private p162, private p161, private p160, private p159, private p158, private p157, private p156, private p155, private p154, private p153, private p152, private p151, private p150, private p149, private p148, private p147, private p146, private p145, private p144, private p143, private p142, private p141, private p140, private p139, private p138, private p137, private p136, private p135, private p134, private p133, private p132, private p131, private p130, private p129, private p128, private p127, private p126, private p125, private p124, private p123, private p122, private p121, private p120, private p119, private p118, private p117, private p116, private p115, private p114, private p113, private p112, private p111, private p110, private p109, private p108, private p107, private p106, private p105, private p104, private p103, private p102, private p101, private p100, private p99, private p98, private p97, private p96, private p95, private p94, private p93, private p92, private p91, private p90, private p89, private p88, private p87, private p86, private p85, private p84, private p83, private p82, private p81, private p80, private p79, private p78, private p77, private p76, private p75, private p74, private p73, private p72, private p71, private p70, private p69, private p68, private p67, private p66, private p65, private p64, private p63, private p62, private p61, private p60, private p59, private p58, private p57, private p56, private p55, private p54, private p53, private p52, private p51, private p50, private p49, private p48, private p47, private p46, private p45, private p44, private p43, private p42, private p41, private p40, private p39, private p38, private p37, private p36, private p35, private p34, private p33, private p32, private p31, private p30, private p29, private p28, private p27, private p26, private p25, private p24, private p23, private p22, private p21, private p20, private p19, private p18, private p17, private p16, private p15, private p14, private p13, private p12, private p11, private p10, private p9, private p8, private p7, private p6, private p5, private p4, private p3, private p2, private p1, private p0, private startTime, private prevBlockNumber, currBlockHash): 
+def main(private h1b639, private h1b638, private h1b637, private h1b636, private h1b635, private h1b634, private h1b633, private h1b632, private h1b631, private h1b630, private h1b629, private h1b628, private h1b627, private h1b626, private h1b625, private h1b624, private h1b623, private h1b622, private h1b621, private h1b620, private h1b619, private h1b618, private h1b617, private h1b616, private h1b615, private h1b614, private h1b613, private h1b612, private h1b611, private h1b610, private h1b609, private h1b608, private h1b607, private h1b606, private h1b605, private h1b604, private h1b603, private h1b602, private h1b601, private h1b600, private h1b599, private h1b598, private h1b597, private h1b596, private h1b595, private h1b594, private h1b593, private h1b592, private h1b591, private h1b590, private h1b589, private h1b588, private h1b587, private h1b586, private h1b585, private h1b584, private h1b583, private h1b582, private h1b581, private h1b580, private h1b579, private h1b578, private h1b577, private h1b576, private h1b575, private h1b574, private h1b573, private h1b572, private h1b571, private h1b570, private h1b569, private h1b568, private h1b567, private h1b566, private h1b565, private h1b564, private h1b563, private h1b562, private h1b561, private h1b560, private h1b559, private h1b558, private h1b557, private h1b556, private h1b555, private h1b554, private h1b553, private h1b552, private h1b551, private h1b550, private h1b549, private h1b548, private h1b547, private h1b546, private h1b545, private h1b544, private h1b543, private h1b542, private h1b541, private h1b540, private h1b539, private h1b538, private h1b537, private h1b536, private h1b535, private h1b534, private h1b533, private h1b532, private h1b531, private h1b530, private h1b529, private h1b528, private h1b527, private h1b526, private h1b525, private h1b524, private h1b523, private h1b522, private h1b521, private h1b520, private h1b519, private h1b518, private h1b517, private h1b516, private h1b515, private h1b514, private h1b513, private h1b512, private h1b511, private h1b510, private h1b509, private h1b508, private h1b507, private h1b506, private h1b505, private h1b504, private h1b503, private h1b502, private h1b501, private h1b500, private h1b499, private h1b498, private h1b497, private h1b496, private h1b495, private h1b494, private h1b493, private h1b492, private h1b491, private h1b490, private h1b489, private h1b488, private h1b487, private h1b486, private h1b485, private h1b484, private h1b483, private h1b482, private h1b481, private h1b480, private h1b479, private h1b478, private h1b477, private h1b476, private h1b475, private h1b474, private h1b473, private h1b472, private h1b471, private h1b470, private h1b469, private h1b468, private h1b467, private h1b466, private h1b465, private h1b464, private h1b463, private h1b462, private h1b461, private h1b460, private h1b459, private h1b458, private h1b457, private h1b456, private h1b455, private h1b454, private h1b453, private h1b452, private h1b451, private h1b450, private h1b449, private h1b448, private h1b447, private h1b446, private h1b445, private h1b444, private h1b443, private h1b442, private h1b441, private h1b440, private h1b439, private h1b438, private h1b437, private h1b436, private h1b435, private h1b434, private h1b433, private h1b432, private h1b431, private h1b430, private h1b429, private h1b428, private h1b427, private h1b426, private h1b425, private h1b424, private h1b423, private h1b422, private h1b421, private h1b420, private h1b419, private h1b418, private h1b417, private h1b416, private h1b415, private h1b414, private h1b413, private h1b412, private h1b411, private h1b410, private h1b409, private h1b408, private h1b407, private h1b406, private h1b405, private h1b404, private h1b403, private h1b402, private h1b401, private h1b400, private h1b399, private h1b398, private h1b397, private h1b396, private h1b395, private h1b394, private h1b393, private h1b392, private h1b391, private h1b390, private h1b389, private h1b388, private h1b387, private h1b386, private h1b385, private h1b384, private h1b383, private h1b382, private h1b381, private h1b380, private h1b379, private h1b378, private h1b377, private h1b376, private h1b375, private h1b374, private h1b373, private h1b372, private h1b371, private h1b370, private h1b369, private h1b368, private h1b367, private h1b366, private h1b365, private h1b364, private h1b363, private h1b362, private h1b361, private h1b360, private h1b359, private h1b358, private h1b357, private h1b356, private h1b355, private h1b354, private h1b353, private h1b352, private h1b351, private h1b350, private h1b349, private h1b348, private h1b347, private h1b346, private h1b345, private h1b344, private h1b343, private h1b342, private h1b341, private h1b340, private h1b339, private h1b338, private h1b337, private h1b336, private h1b335, private h1b334, private h1b333, private h1b332, private h1b331, private h1b330, private h1b329, private h1b328, private h1b327, private h1b326, private h1b325, private h1b324, private h1b323, private h1b322, private h1b321, private h1b320, private h1b319, private h1b318, private h1b317, private h1b316, private h1b315, private h1b314, private h1b313, private h1b312, private h1b311, private h1b310, private h1b309, private h1b308, private h1b307, private h1b306, private h1b305, private h1b304, private h1b303, private h1b302, private h1b301, private h1b300, private h1b299, private h1b298, private h1b297, private h1b296, private h1b295, private h1b294, private h1b293, private h1b292, private h1b291, private h1b290, private h1b289, private h1b288, private h1b287, private h1b286, private h1b285, private h1b284, private h1b283, private h1b282, private h1b281, private h1b280, private h1b279, private h1b278, private h1b277, private h1b276, private h1b275, private h1b274, private h1b273, private h1b272, private h1b271, private h1b270, private h1b269, private h1b268, private h1b267, private h1b266, private h1b265, private h1b264, private h1b263, private h1b262, private h1b261, private h1b260, private h1b259, private h1b258, private h1b257, private h1b256, private h1b255, private h1b254, private h1b253, private h1b252, private h1b251, private h1b250, private h1b249, private h1b248, private h1b247, private h1b246, private h1b245, private h1b244, private h1b243, private h1b242, private h1b241, private h1b240, private h1b239, private h1b238, private h1b237, private h1b236, private h1b235, private h1b234, private h1b233, private h1b232, private h1b231, private h1b230, private h1b229, private h1b228, private h1b227, private h1b226, private h1b225, private h1b224, private h1b223, private h1b222, private h1b221, private h1b220, private h1b219, private h1b218, private h1b217, private h1b216, private h1b215, private h1b214, private h1b213, private h1b212, private h1b211, private h1b210, private h1b209, private h1b208, private h1b207, private h1b206, private h1b205, private h1b204, private h1b203, private h1b202, private h1b201, private h1b200, private h1b199, private h1b198, private h1b197, private h1b196, private h1b195, private h1b194, private h1b193, private h1b192, private h1b191, private h1b190, private h1b189, private h1b188, private h1b187, private h1b186, private h1b185, private h1b184, private h1b183, private h1b182, private h1b181, private h1b180, private h1b179, private h1b178, private h1b177, private h1b176, private h1b175, private h1b174, private h1b173, private h1b172, private h1b171, private h1b170, private h1b169, private h1b168, private h1b167, private h1b166, private h1b165, private h1b164, private h1b163, private h1b162, private h1b161, private h1b160, private h1b159, private h1b158, private h1b157, private h1b156, private h1b155, private h1b154, private h1b153, private h1b152, private h1b151, private h1b150, private h1b149, private h1b148, private h1b147, private h1b146, private h1b145, private h1b144, private h1b143, private h1b142, private h1b141, private h1b140, private h1b139, private h1b138, private h1b137, private h1b136, private h1b135, private h1b134, private h1b133, private h1b132, private h1b131, private h1b130, private h1b129, private h1b128, private h1b127, private h1b126, private h1b125, private h1b124, private h1b123, private h1b122, private h1b121, private h1b120, private h1b119, private h1b118, private h1b117, private h1b116, private h1b115, private h1b114, private h1b113, private h1b112, private h1b111, private h1b110, private h1b109, private h1b108, private h1b107, private h1b106, private h1b105, private h1b104, private h1b103, private h1b102, private h1b101, private h1b100, private h1b99, private h1b98, private h1b97, private h1b96, private h1b95, private h1b94, private h1b93, private h1b92, private h1b91, private h1b90, private h1b89, private h1b88, private h1b87, private h1b86, private h1b85, private h1b84, private h1b83, private h1b82, private h1b81, private h1b80, private h1b79, private h1b78, private h1b77, private h1b76, private h1b75, private h1b74, private h1b73, private h1b72, private h1b71, private h1b70, private h1b69, private h1b68, private h1b67, private h1b66, private h1b65, private h1b64, private h1b63, private h1b62, private h1b61, private h1b60, private h1b59, private h1b58, private h1b57, private h1b56, private h1b55, private h1b54, private h1b53, private h1b52, private h1b51, private h1b50, private h1b49, private h1b48, private h1b47, private h1b46, private h1b45, private h1b44, private h1b43, private h1b42, private h1b41, private h1b40, private h1b39, private h1b38, private h1b37, private h1b36, private h1b35, private h1b34, private h1b33, private h1b32, private h1b31, private h1b30, private h1b29, private h1b28, private h1b27, private h1b26, private h1b25, private h1b24, private h1b23, private h1b22, private h1b21, private h1b20, private h1b19, private h1b18, private h1b17, private h1b16, private h1b15, private h1b14, private h1b13, private h1b12, private h1b11, private h1b10, private h1b9, private h1b8, private h1b7, private h1b6, private h1b5, private h1b4, private h1b3, private h1b2, private h1b1, private h1b0, private h0b639, private h0b638, private h0b637, private h0b636, private h0b635, private h0b634, private h0b633, private h0b632, private h0b631, private h0b630, private h0b629, private h0b628, private h0b627, private h0b626, private h0b625, private h0b624, private h0b623, private h0b622, private h0b621, private h0b620, private h0b619, private h0b618, private h0b617, private h0b616, private h0b615, private h0b614, private h0b613, private h0b612, private h0b611, private h0b610, private h0b609, private h0b608, private h0b607, private h0b606, private h0b605, private h0b604, private h0b603, private h0b602, private h0b601, private h0b600, private h0b599, private h0b598, private h0b597, private h0b596, private h0b595, private h0b594, private h0b593, private h0b592, private h0b591, private h0b590, private h0b589, private h0b588, private h0b587, private h0b586, private h0b585, private h0b584, private h0b583, private h0b582, private h0b581, private h0b580, private h0b579, private h0b578, private h0b577, private h0b576, private h0b575, private h0b574, private h0b573, private h0b572, private h0b571, private h0b570, private h0b569, private h0b568, private h0b567, private h0b566, private h0b565, private h0b564, private h0b563, private h0b562, private h0b561, private h0b560, private h0b559, private h0b558, private h0b557, private h0b556, private h0b555, private h0b554, private h0b553, private h0b552, private h0b551, private h0b550, private h0b549, private h0b548, private h0b547, private h0b546, private h0b545, private h0b544, private h0b543, private h0b542, private h0b541, private h0b540, private h0b539, private h0b538, private h0b537, private h0b536, private h0b535, private h0b534, private h0b533, private h0b532, private h0b531, private h0b530, private h0b529, private h0b528, private h0b527, private h0b526, private h0b525, private h0b524, private h0b523, private h0b522, private h0b521, private h0b520, private h0b519, private h0b518, private h0b517, private h0b516, private h0b515, private h0b514, private h0b513, private h0b512, private h0b511, private h0b510, private h0b509, private h0b508, private h0b507, private h0b506, private h0b505, private h0b504, private h0b503, private h0b502, private h0b501, private h0b500, private h0b499, private h0b498, private h0b497, private h0b496, private h0b495, private h0b494, private h0b493, private h0b492, private h0b491, private h0b490, private h0b489, private h0b488, private h0b487, private h0b486, private h0b485, private h0b484, private h0b483, private h0b482, private h0b481, private h0b480, private h0b479, private h0b478, private h0b477, private h0b476, private h0b475, private h0b474, private h0b473, private h0b472, private h0b471, private h0b470, private h0b469, private h0b468, private h0b467, private h0b466, private h0b465, private h0b464, private h0b463, private h0b462, private h0b461, private h0b460, private h0b459, private h0b458, private h0b457, private h0b456, private h0b455, private h0b454, private h0b453, private h0b452, private h0b451, private h0b450, private h0b449, private h0b448, private h0b447, private h0b446, private h0b445, private h0b444, private h0b443, private h0b442, private h0b441, private h0b440, private h0b439, private h0b438, private h0b437, private h0b436, private h0b435, private h0b434, private h0b433, private h0b432, private h0b431, private h0b430, private h0b429, private h0b428, private h0b427, private h0b426, private h0b425, private h0b424, private h0b423, private h0b422, private h0b421, private h0b420, private h0b419, private h0b418, private h0b417, private h0b416, private h0b415, private h0b414, private h0b413, private h0b412, private h0b411, private h0b410, private h0b409, private h0b408, private h0b407, private h0b406, private h0b405, private h0b404, private h0b403, private h0b402, private h0b401, private h0b400, private h0b399, private h0b398, private h0b397, private h0b396, private h0b395, private h0b394, private h0b393, private h0b392, private h0b391, private h0b390, private h0b389, private h0b388, private h0b387, private h0b386, private h0b385, private h0b384, private h0b383, private h0b382, private h0b381, private h0b380, private h0b379, private h0b378, private h0b377, private h0b376, private h0b375, private h0b374, private h0b373, private h0b372, private h0b371, private h0b370, private h0b369, private h0b368, private h0b367, private h0b366, private h0b365, private h0b364, private h0b363, private h0b362, private h0b361, private h0b360, private h0b359, private h0b358, private h0b357, private h0b356, private h0b355, private h0b354, private h0b353, private h0b352, private h0b351, private h0b350, private h0b349, private h0b348, private h0b347, private h0b346, private h0b345, private h0b344, private h0b343, private h0b342, private h0b341, private h0b340, private h0b339, private h0b338, private h0b337, private h0b336, private h0b335, private h0b334, private h0b333, private h0b332, private h0b331, private h0b330, private h0b329, private h0b328, private h0b327, private h0b326, private h0b325, private h0b324, private h0b323, private h0b322, private h0b321, private h0b320, private h0b319, private h0b318, private h0b317, private h0b316, private h0b315, private h0b314, private h0b313, private h0b312, private h0b311, private h0b310, private h0b309, private h0b308, private h0b307, private h0b306, private h0b305, private h0b304, private h0b303, private h0b302, private h0b301, private h0b300, private h0b299, private h0b298, private h0b297, private h0b296, private h0b295, private h0b294, private h0b293, private h0b292, private h0b291, private h0b290, private h0b289, private h0b288, private h0b287, private h0b286, private h0b285, private h0b284, private h0b283, private h0b282, private h0b281, private h0b280, private h0b279, private h0b278, private h0b277, private h0b276, private h0b275, private h0b274, private h0b273, private h0b272, private h0b271, private h0b270, private h0b269, private h0b268, private h0b267, private h0b266, private h0b265, private h0b264, private h0b263, private h0b262, private h0b261, private h0b260, private h0b259, private h0b258, private h0b257, private h0b256, private h0b255, private h0b254, private h0b253, private h0b252, private h0b251, private h0b250, private h0b249, private h0b248, private h0b247, private h0b246, private h0b245, private h0b244, private h0b243, private h0b242, private h0b241, private h0b240, private h0b239, private h0b238, private h0b237, private h0b236, private h0b235, private h0b234, private h0b233, private h0b232, private h0b231, private h0b230, private h0b229, private h0b228, private h0b227, private h0b226, private h0b225, private h0b224, private h0b223, private h0b222, private h0b221, private h0b220, private h0b219, private h0b218, private h0b217, private h0b216, private h0b215, private h0b214, private h0b213, private h0b212, private h0b211, private h0b210, private h0b209, private h0b208, private h0b207, private h0b206, private h0b205, private h0b204, private h0b203, private h0b202, private h0b201, private h0b200, private h0b199, private h0b198, private h0b197, private h0b196, private h0b195, private h0b194, private h0b193, private h0b192, private h0b191, private h0b190, private h0b189, private h0b188, private h0b187, private h0b186, private h0b185, private h0b184, private h0b183, private h0b182, private h0b181, private h0b180, private h0b179, private h0b178, private h0b177, private h0b176, private h0b175, private h0b174, private h0b173, private h0b172, private h0b171, private h0b170, private h0b169, private h0b168, private h0b167, private h0b166, private h0b165, private h0b164, private h0b163, private h0b162, private h0b161, private h0b160, private h0b159, private h0b158, private h0b157, private h0b156, private h0b155, private h0b154, private h0b153, private h0b152, private h0b151, private h0b150, private h0b149, private h0b148, private h0b147, private h0b146, private h0b145, private h0b144, private h0b143, private h0b142, private h0b141, private h0b140, private h0b139, private h0b138, private h0b137, private h0b136, private h0b135, private h0b134, private h0b133, private h0b132, private h0b131, private h0b130, private h0b129, private h0b128, private h0b127, private h0b126, private h0b125, private h0b124, private h0b123, private h0b122, private h0b121, private h0b120, private h0b119, private h0b118, private h0b117, private h0b116, private h0b115, private h0b114, private h0b113, private h0b112, private h0b111, private h0b110, private h0b109, private h0b108, private h0b107, private h0b106, private h0b105, private h0b104, private h0b103, private h0b102, private h0b101, private h0b100, private h0b99, private h0b98, private h0b97, private h0b96, private h0b95, private h0b94, private h0b93, private h0b92, private h0b91, private h0b90, private h0b89, private h0b88, private h0b87, private h0b86, private h0b85, private h0b84, private h0b83, private h0b82, private h0b81, private h0b80, private h0b79, private h0b78, private h0b77, private h0b76, private h0b75, private h0b74, private h0b73, private h0b72, private h0b71, private h0b70, private h0b69, private h0b68, private h0b67, private h0b66, private h0b65, private h0b64, private h0b63, private h0b62, private h0b61, private h0b60, private h0b59, private h0b58, private h0b57, private h0b56, private h0b55, private h0b54, private h0b53, private h0b52, private h0b51, private h0b50, private h0b49, private h0b48, private h0b47, private h0b46, private h0b45, private h0b44, private h0b43, private h0b42, private h0b41, private h0b40, private h0b39, private h0b38, private h0b37, private h0b36, private h0b35, private h0b34, private h0b33, private h0b32, private h0b31, private h0b30, private h0b29, private h0b28, private h0b27, private h0b26, private h0b25, private h0b24, private h0b23, private h0b22, private h0b21, private h0b20, private h0b19, private h0b18, private h0b17, private h0b16, private h0b15, private h0b14, private h0b13, private h0b12, private h0b11, private h0b10, private h0b9, private h0b8, private h0b7, private h0b6, private h0b5, private h0b4, private h0b3, private h0b2, private h0b1, private h0b0, private startTime, private h0BlockNumber):
 
     // Take hash of previous block 
-    s255, s254, s253, s252, s251, s250, s249, s248, s247, s246, s245, s244, s243, s242, s241, s240, s239, s238, s237, s236, s235, s234, s233, s232, s231, s230, s229, s228, s227, s226, s225, s224, s223, s222, s221, s220, s219, s218, s217, s216, s215, s214, s213, s212, s211, s210, s209, s208, s207, s206, s205, s204, s203, s202, s201, s200, s199, s198, s197, s196, s195, s194, s193, s192, s191, s190, s189, s188, s187, s186, s185, s184, s183, s182, s181, s180, s179, s178, s177, s176, s175, s174, s173, s172, s171, s170, s169, s168, s167, s166, s165, s164, s163, s162, s161, s160, s159, s158, s157, s156, s155, s154, s153, s152, s151, s150, s149, s148, s147, s146, s145, s144, s143, s142, s141, s140, s139, s138, s137, s136, s135, s134, s133, s132, s131, s130, s129, s128, s127, s126, s125, s124, s123, s122, s121, s120, s119, s118, s117, s116, s115, s114, s113, s112, s111, s110, s109, s108, s107, s106, s105, s104, s103, s102, s101, s100, s99, s98, s97, s96, s95, s94, s93, s92, s91, s90, s89, s88, s87, s86, s85, s84, s83, s82, s81, s80, s79, s78, s77, s76, s75, s74, s73, s72, s71, s70, s69, s68, s67, s66, s65, s64, s63, s62, s61, s60, s59, s58, s57, s56, s55, s54, s53, s52, s51, s50, s49, s48, s47, s46, s45, s44, s43, s42, s41, s40, s39, s38, s37, s36, s35, s34, s33, s32, s31, s30, s29, s28, s27, s26, s25, s24, s23, s22, s21, s20, s19, s18, s17, s16, s15, s14, s13, s12, s11, s10, s9, s8, s7, s6, s5, s4, s3, s2, s1, s0 = HEADERHASH(p639, p638, p637, p636, p635, p634, p633, p632, p631, p630, p629, p628, p627, p626, p625, p624, p623, p622, p621, p620, p619, p618, p617, p616, p615, p614, p613, p612, p611, p610, p609, p608, p607, p606, p605, p604, p603, p602, p601, p600, p599, p598, p597, p596, p595, p594, p593, p592, p591, p590, p589, p588, p587, p586, p585, p584, p583, p582, p581, p580, p579, p578, p577, p576, p575, p574, p573, p572, p571, p570, p569, p568, p567, p566, p565, p564, p563, p562, p561, p560, p559, p558, p557, p556, p555, p554, p553, p552, p551, p550, p549, p548, p547, p546, p545, p544, p543, p542, p541, p540, p539, p538, p537, p536, p535, p534, p533, p532, p531, p530, p529, p528, p527, p526, p525, p524, p523, p522, p521, p520, p519, p518, p517, p516, p515, p514, p513, p512, p511, p510, p509, p508, p507, p506, p505, p504, p503, p502, p501, p500, p499, p498, p497, p496, p495, p494, p493, p492, p491, p490, p489, p488, p487, p486, p485, p484, p483, p482, p481, p480, p479, p478, p477, p476, p475, p474, p473, p472, p471, p470, p469, p468, p467, p466, p465, p464, p463, p462, p461, p460, p459, p458, p457, p456, p455, p454, p453, p452, p451, p450, p449, p448, p447, p446, p445, p444, p443, p442, p441, p440, p439, p438, p437, p436, p435, p434, p433, p432, p431, p430, p429, p428, p427, p426, p425, p424, p423, p422, p421, p420, p419, p418, p417, p416, p415, p414, p413, p412, p411, p410, p409, p408, p407, p406, p405, p404, p403, p402, p401, p400, p399, p398, p397, p396, p395, p394, p393, p392, p391, p390, p389, p388, p387, p386, p385, p384, p383, p382, p381, p380, p379, p378, p377, p376, p375, p374, p373, p372, p371, p370, p369, p368, p367, p366, p365, p364, p363, p362, p361, p360, p359, p358, p357, p356, p355, p354, p353, p352, p351, p350, p349, p348, p347, p346, p345, p344, p343, p342, p341, p340, p339, p338, p337, p336, p335, p334, p333, p332, p331, p330, p329, p328, p327, p326, p325, p324, p323, p322, p321, p320, p319, p318, p317, p316, p315, p314, p313, p312, p311, p310, p309, p308, p307, p306, p305, p304, p303, p302, p301, p300, p299, p298, p297, p296, p295, p294, p293, p292, p291, p290, p289, p288, p287, p286, p285, p284, p283, p282, p281, p280, p279, p278, p277, p276, p275, p274, p273, p272, p271, p270, p269, p268, p267, p266, p265, p264, p263, p262, p261, p260, p259, p258, p257, p256, p255, p254, p253, p252, p251, p250, p249, p248, p247, p246, p245, p244, p243, p242, p241, p240, p239, p238, p237, p236, p235, p234, p233, p232, p231, p230, p229, p228, p227, p226, p225, p224, p223, p222, p221, p220, p219, p218, p217, p216, p215, p214, p213, p212, p211, p210, p209, p208, p207, p206, p205, p204, p203, p202, p201, p200, p199, p198, p197, p196, p195, p194, p193, p192, p191, p190, p189, p188, p187, p186, p185, p184, p183, p182, p181, p180, p179, p178, p177, p176, p175, p174, p173, p172, p171, p170, p169, p168, p167, p166, p165, p164, p163, p162, p161, p160, p159, p158, p157, p156, p155, p154, p153, p152, p151, p150, p149, p148, p147, p146, p145, p144, p143, p142, p141, p140, p139, p138, p137, p136, p135, p134, p133, p132, p131, p130, p129, p128, p127, p126, p125, p124, p123, p122, p121, p120, p119, p118, p117, p116, p115, p114, p113, p112, p111, p110, p109, p108, p107, p106, p105, p104, p103, p102, p101, p100, p99, p98, p97, p96, p95, p94, p93, p92, p91, p90, p89, p88, p87, p86, p85, p84, p83, p82, p81, p80, p79, p78, p77, p76, p75, p74, p73, p72, p71, p70, p69, p68, p67, p66, p65, p64, p63, p62, p61, p60, p59, p58, p57, p56, p55, p54, p53, p52, p51, p50, p49, p48, p47, p46, p45, p44, p43, p42, p41, p40, p39, p38, p37, p36, p35, p34, p33, p32, p31, p30, p29, p28, p27, p26, p25, p24, p23, p22, p21, p20, p19, p18, p17, p16, p15, p14, p13, p12, p11, p10, p9, p8, p7, p6, p5, p4, p3, p2, p1, p0)
+    s255, s254, s253, s252, s251, s250, s249, s248, s247, s246, s245, s244, s243, s242, s241, s240, s239, s238, s237, s236, s235, s234, s233, s232, s231, s230, s229, s228, s227, s226, s225, s224, s223, s222, s221, s220, s219, s218, s217, s216, s215, s214, s213, s212, s211, s210, s209, s208, s207, s206, s205, s204, s203, s202, s201, s200, s199, s198, s197, s196, s195, s194, s193, s192, s191, s190, s189, s188, s187, s186, s185, s184, s183, s182, s181, s180, s179, s178, s177, s176, s175, s174, s173, s172, s171, s170, s169, s168, s167, s166, s165, s164, s163, s162, s161, s160, s159, s158, s157, s156, s155, s154, s153, s152, s151, s150, s149, s148, s147, s146, s145, s144, s143, s142, s141, s140, s139, s138, s137, s136, s135, s134, s133, s132, s131, s130, s129, s128, s127, s126, s125, s124, s123, s122, s121, s120, s119, s118, s117, s116, s115, s114, s113, s112, s111, s110, s109, s108, s107, s106, s105, s104, s103, s102, s101, s100, s99, s98, s97, s96, s95, s94, s93, s92, s91, s90, s89, s88, s87, s86, s85, s84, s83, s82, s81, s80, s79, s78, s77, s76, s75, s74, s73, s72, s71, s70, s69, s68, s67, s66, s65, s64, s63, s62, s61, s60, s59, s58, s57, s56, s55, s54, s53, s52, s51, s50, s49, s48, s47, s46, s45, s44, s43, s42, s41, s40, s39, s38, s37, s36, s35, s34, s33, s32, s31, s30, s29, s28, s27, s26, s25, s24, s23, s22, s21, s20, s19, s18, s17, s16, s15, s14, s13, s12, s11, s10, s9, s8, s7, s6, s5, s4, s3, s2, s1, s0 = HEADERHASH(h0b639, h0b638, h0b637, h0b636, h0b635, h0b634, h0b633, h0b632, h0b631, h0b630, h0b629, h0b628, h0b627, h0b626, h0b625, h0b624, h0b623, h0b622, h0b621, h0b620, h0b619, h0b618, h0b617, h0b616, h0b615, h0b614, h0b613, h0b612, h0b611, h0b610, h0b609, h0b608, h0b607, h0b606, h0b605, h0b604, h0b603, h0b602, h0b601, h0b600, h0b599, h0b598, h0b597, h0b596, h0b595, h0b594, h0b593, h0b592, h0b591, h0b590, h0b589, h0b588, h0b587, h0b586, h0b585, h0b584, h0b583, h0b582, h0b581, h0b580, h0b579, h0b578, h0b577, h0b576, h0b575, h0b574, h0b573, h0b572, h0b571, h0b570, h0b569, h0b568, h0b567, h0b566, h0b565, h0b564, h0b563, h0b562, h0b561, h0b560, h0b559, h0b558, h0b557, h0b556, h0b555, h0b554, h0b553, h0b552, h0b551, h0b550, h0b549, h0b548, h0b547, h0b546, h0b545, h0b544, h0b543, h0b542, h0b541, h0b540, h0b539, h0b538, h0b537, h0b536, h0b535, h0b534, h0b533, h0b532, h0b531, h0b530, h0b529, h0b528, h0b527, h0b526, h0b525, h0b524, h0b523, h0b522, h0b521, h0b520, h0b519, h0b518, h0b517, h0b516, h0b515, h0b514, h0b513, h0b512, h0b511, h0b510, h0b509, h0b508, h0b507, h0b506, h0b505, h0b504, h0b503, h0b502, h0b501, h0b500, h0b499, h0b498, h0b497, h0b496, h0b495, h0b494, h0b493, h0b492, h0b491, h0b490, h0b489, h0b488, h0b487, h0b486, h0b485, h0b484, h0b483, h0b482, h0b481, h0b480, h0b479, h0b478, h0b477, h0b476, h0b475, h0b474, h0b473, h0b472, h0b471, h0b470, h0b469, h0b468, h0b467, h0b466, h0b465, h0b464, h0b463, h0b462, h0b461, h0b460, h0b459, h0b458, h0b457, h0b456, h0b455, h0b454, h0b453, h0b452, h0b451, h0b450, h0b449, h0b448, h0b447, h0b446, h0b445, h0b444, h0b443, h0b442, h0b441, h0b440, h0b439, h0b438, h0b437, h0b436, h0b435, h0b434, h0b433, h0b432, h0b431, h0b430, h0b429, h0b428, h0b427, h0b426, h0b425, h0b424, h0b423, h0b422, h0b421, h0b420, h0b419, h0b418, h0b417, h0b416, h0b415, h0b414, h0b413, h0b412, h0b411, h0b410, h0b409, h0b408, h0b407, h0b406, h0b405, h0b404, h0b403, h0b402, h0b401, h0b400, h0b399, h0b398, h0b397, h0b396, h0b395, h0b394, h0b393, h0b392, h0b391, h0b390, h0b389, h0b388, h0b387, h0b386, h0b385, h0b384, h0b383, h0b382, h0b381, h0b380, h0b379, h0b378, h0b377, h0b376, h0b375, h0b374, h0b373, h0b372, h0b371, h0b370, h0b369, h0b368, h0b367, h0b366, h0b365, h0b364, h0b363, h0b362, h0b361, h0b360, h0b359, h0b358, h0b357, h0b356, h0b355, h0b354, h0b353, h0b352, h0b351, h0b350, h0b349, h0b348, h0b347, h0b346, h0b345, h0b344, h0b343, h0b342, h0b341, h0b340, h0b339, h0b338, h0b337, h0b336, h0b335, h0b334, h0b333, h0b332, h0b331, h0b330, h0b329, h0b328, h0b327, h0b326, h0b325, h0b324, h0b323, h0b322, h0b321, h0b320, h0b319, h0b318, h0b317, h0b316, h0b315, h0b314, h0b313, h0b312, h0b311, h0b310, h0b309, h0b308, h0b307, h0b306, h0b305, h0b304, h0b303, h0b302, h0b301, h0b300, h0b299, h0b298, h0b297, h0b296, h0b295, h0b294, h0b293, h0b292, h0b291, h0b290, h0b289, h0b288, h0b287, h0b286, h0b285, h0b284, h0b283, h0b282, h0b281, h0b280, h0b279, h0b278, h0b277, h0b276, h0b275, h0b274, h0b273, h0b272, h0b271, h0b270, h0b269, h0b268, h0b267, h0b266, h0b265, h0b264, h0b263, h0b262, h0b261, h0b260, h0b259, h0b258, h0b257, h0b256, h0b255, h0b254, h0b253, h0b252, h0b251, h0b250, h0b249, h0b248, h0b247, h0b246, h0b245, h0b244, h0b243, h0b242, h0b241, h0b240, h0b239, h0b238, h0b237, h0b236, h0b235, h0b234, h0b233, h0b232, h0b231, h0b230, h0b229, h0b228, h0b227, h0b226, h0b225, h0b224, h0b223, h0b222, h0b221, h0b220, h0b219, h0b218, h0b217, h0b216, h0b215, h0b214, h0b213, h0b212, h0b211, h0b210, h0b209, h0b208, h0b207, h0b206, h0b205, h0b204, h0b203, h0b202, h0b201, h0b200, h0b199, h0b198, h0b197, h0b196, h0b195, h0b194, h0b193, h0b192, h0b191, h0b190, h0b189, h0b188, h0b187, h0b186, h0b185, h0b184, h0b183, h0b182, h0b181, h0b180, h0b179, h0b178, h0b177, h0b176, h0b175, h0b174, h0b173, h0b172, h0b171, h0b170, h0b169, h0b168, h0b167, h0b166, h0b165, h0b164, h0b163, h0b162, h0b161, h0b160, h0b159, h0b158, h0b157, h0b156, h0b155, h0b154, h0b153, h0b152, h0b151, h0b150, h0b149, h0b148, h0b147, h0b146, h0b145, h0b144, h0b143, h0b142, h0b141, h0b140, h0b139, h0b138, h0b137, h0b136, h0b135, h0b134, h0b133, h0b132, h0b131, h0b130, h0b129, h0b128, h0b127, h0b126, h0b125, h0b124, h0b123, h0b122, h0b121, h0b120, h0b119, h0b118, h0b117, h0b116, h0b115, h0b114, h0b113, h0b112, h0b111, h0b110, h0b109, h0b108, h0b107, h0b106, h0b105, h0b104, h0b103, h0b102, h0b101, h0b100, h0b99, h0b98, h0b97, h0b96, h0b95, h0b94, h0b93, h0b92, h0b91, h0b90, h0b89, h0b88, h0b87, h0b86, h0b85, h0b84, h0b83, h0b82, h0b81, h0b80, h0b79, h0b78, h0b77, h0b76, h0b75, h0b74, h0b73, h0b72, h0b71, h0b70, h0b69, h0b68, h0b67, h0b66, h0b65, h0b64, h0b63, h0b62, h0b61, h0b60, h0b59, h0b58, h0b57, h0b56, h0b55, h0b54, h0b53, h0b52, h0b51, h0b50, h0b49, h0b48, h0b47, h0b46, h0b45, h0b44, h0b43, h0b42, h0b41, h0b40, h0b39, h0b38, h0b37, h0b36, h0b35, h0b34, h0b33, h0b32, h0b31, h0b30, h0b29, h0b28, h0b27, h0b26, h0b25, h0b24, h0b23, h0b22, h0b21, h0b20, h0b19, h0b18, h0b17, h0b16, h0b15, h0b14, h0b13, h0b12, h0b11, h0b10, h0b9, h0b8, h0b7, h0b6, h0b5, h0b4, h0b3, h0b2, h0b1, h0b0)
 
-    // Output of the above function is hash which is byte swaped 
-    // (little-endian). See https://en.bitcoin.it/wiki/Block_hashing_algorithm  
+    // Output of the above function is byte-swaped (little-endian) hash 
+    // See https://en.bitcoin.it/wiki/Block_hashing_algorithm  
     // The header hash (and other values in BTC header) are anyway 
     // little-endian, so both must match 
-    s255 == h607 // Start of hash bits in BTC header
-    s254 == h606
-    s253 == h605
-    s252 == h604
-    s251 == h603
-    s250 == h602
-    s249 == h601
-    s248 == h600
-    s247 == h599
-    s246 == h598
-    s245 == h597
-    s244 == h596
-    s243 == h595
-    s242 == h594
-    s241 == h593
-    s240 == h592
-    s239 == h591
-    s238 == h590
-    s237 == h589
-    s236 == h588
-    s235 == h587
-    s234 == h586
-    s233 == h585
-    s232 == h584
-    s231 == h583
-    s230 == h582
-    s229 == h581
-    s228 == h580
-    s227 == h579
-    s226 == h578
-    s225 == h577
-    s224 == h576
-    s223 == h575
-    s222 == h574
-    s221 == h573
-    s220 == h572
-    s219 == h571
-    s218 == h570
-    s217 == h569
-    s216 == h568
-    s215 == h567
-    s214 == h566
-    s213 == h565
-    s212 == h564
-    s211 == h563
-    s210 == h562
-    s209 == h561
-    s208 == h560
-    s207 == h559
-    s206 == h558
-    s205 == h557
-    s204 == h556
-    s203 == h555
-    s202 == h554
-    s201 == h553
-    s200 == h552
-    s199 == h551
-    s198 == h550
-    s197 == h549
-    s196 == h548
-    s195 == h547
-    s194 == h546
-    s193 == h545
-    s192 == h544
-    s191 == h543
-    s190 == h542
-    s189 == h541
-    s188 == h540
-    s187 == h539
-    s186 == h538
-    s185 == h537
-    s184 == h536
-    s183 == h535
-    s182 == h534
-    s181 == h533
-    s180 == h532
-    s179 == h531
-    s178 == h530
-    s177 == h529
-    s176 == h528
-    s175 == h527
-    s174 == h526
-    s173 == h525
-    s172 == h524
-    s171 == h523
-    s170 == h522
-    s169 == h521
-    s168 == h520
-    s167 == h519
-    s166 == h518
-    s165 == h517
-    s164 == h516
-    s163 == h515
-    s162 == h514
-    s161 == h513
-    s160 == h512
-    s159 == h511
-    s158 == h510
-    s157 == h509
-    s156 == h508
-    s155 == h507
-    s154 == h506
-    s153 == h505
-    s152 == h504
-    s151 == h503
-    s150 == h502
-    s149 == h501
-    s148 == h500
-    s147 == h499
-    s146 == h498
-    s145 == h497
-    s144 == h496
-    s143 == h495
-    s142 == h494
-    s141 == h493
-    s140 == h492
-    s139 == h491
-    s138 == h490
-    s137 == h489
-    s136 == h488
-    s135 == h487
-    s134 == h486
-    s133 == h485
-    s132 == h484
-    s131 == h483
-    s130 == h482
-    s129 == h481
-    s128 == h480
-    s127 == h479
-    s126 == h478
-    s125 == h477
-    s124 == h476
-    s123 == h475
-    s122 == h474
-    s121 == h473
-    s120 == h472
-    s119 == h471
-    s118 == h470
-    s117 == h469
-    s116 == h468
-    s115 == h467
-    s114 == h466
-    s113 == h465
-    s112 == h464
-    s111 == h463
-    s110 == h462
-    s109 == h461
-    s108 == h460
-    s107 == h459
-    s106 == h458
-    s105 == h457
-    s104 == h456
-    s103 == h455
-    s102 == h454
-    s101 == h453
-    s100 == h452
-    s99 == h451
-    s98 == h450
-    s97 == h449
-    s96 == h448
-    s95 == h447
-    s94 == h446
-    s93 == h445
-    s92 == h444
-    s91 == h443
-    s90 == h442
-    s89 == h441
-    s88 == h440
-    s87 == h439
-    s86 == h438
-    s85 == h437
-    s84 == h436
-    s83 == h435
-    s82 == h434
-    s81 == h433
-    s80 == h432
-    s79 == h431
-    s78 == h430
-    s77 == h429
-    s76 == h428
-    s75 == h427
-    s74 == h426
-    s73 == h425
-    s72 == h424
-    s71 == h423
-    s70 == h422
-    s69 == h421
-    s68 == h420
-    s67 == h419
-    s66 == h418
-    s65 == h417
-    s64 == h416
-    s63 == h415
-    s62 == h414
-    s61 == h413
-    s60 == h412
-    s59 == h411
-    s58 == h410
-    s57 == h409
-    s56 == h408
-    s55 == h407
-    s54 == h406
-    s53 == h405
-    s52 == h404
-    s51 == h403
-    s50 == h402
-    s49 == h401
-    s48 == h400
-    s47 == h399
-    s46 == h398
-    s45 == h397
-    s44 == h396
-    s43 == h395
-    s42 == h394
-    s41 == h393
-    s40 == h392
-    s39 == h391
-    s38 == h390
-    s37 == h389
-    s36 == h388
-    s35 == h387
-    s34 == h386
-    s33 == h385
-    s32 == h384
-    s31 == h383
-    s30 == h382
-    s29 == h381
-    s28 == h380
-    s27 == h379
-    s26 == h378
-    s25 == h377
-    s24 == h376
-    s23 == h375
-    s22 == h374
-    s21 == h373
-    s20 == h372
-    s19 == h371
-    s18 == h370
-    s17 == h369
-    s16 == h368
-    s15 == h367
-    s14 == h366
-    s13 == h365
-    s12 == h364
-    s11 == h363
-    s10 == h362
-    s9 == h361
-    s8 == h360
-    s7 == h359
-    s6 == h358
-    s5 == h357
-    s4 == h356
-    s3 == h355
-    s2 == h354
-    s1 == h353
-    s0 == h352
+    s255 == h1b607 // Start of h0 hash in h1 
+    s254 == h1b606
+    s253 == h1b605
+    s252 == h1b604
+    s251 == h1b603
+    s250 == h1b602
+    s249 == h1b601
+    s248 == h1b600
+    s247 == h1b599
+    s246 == h1b598
+    s245 == h1b597
+    s244 == h1b596
+    s243 == h1b595
+    s242 == h1b594
+    s241 == h1b593
+    s240 == h1b592
+    s239 == h1b591
+    s238 == h1b590
+    s237 == h1b589
+    s236 == h1b588
+    s235 == h1b587
+    s234 == h1b586
+    s233 == h1b585
+    s232 == h1b584
+    s231 == h1b583
+    s230 == h1b582
+    s229 == h1b581
+    s228 == h1b580
+    s227 == h1b579
+    s226 == h1b578
+    s225 == h1b577
+    s224 == h1b576
+    s223 == h1b575
+    s222 == h1b574
+    s221 == h1b573
+    s220 == h1b572
+    s219 == h1b571
+    s218 == h1b570
+    s217 == h1b569
+    s216 == h1b568
+    s215 == h1b567
+    s214 == h1b566
+    s213 == h1b565
+    s212 == h1b564
+    s211 == h1b563
+    s210 == h1b562
+    s209 == h1b561
+    s208 == h1b560
+    s207 == h1b559
+    s206 == h1b558
+    s205 == h1b557
+    s204 == h1b556
+    s203 == h1b555
+    s202 == h1b554
+    s201 == h1b553
+    s200 == h1b552
+    s199 == h1b551
+    s198 == h1b550
+    s197 == h1b549
+    s196 == h1b548
+    s195 == h1b547
+    s194 == h1b546
+    s193 == h1b545
+    s192 == h1b544
+    s191 == h1b543
+    s190 == h1b542
+    s189 == h1b541
+    s188 == h1b540
+    s187 == h1b539
+    s186 == h1b538
+    s185 == h1b537
+    s184 == h1b536
+    s183 == h1b535
+    s182 == h1b534
+    s181 == h1b533
+    s180 == h1b532
+    s179 == h1b531
+    s178 == h1b530
+    s177 == h1b529
+    s176 == h1b528
+    s175 == h1b527
+    s174 == h1b526
+    s173 == h1b525
+    s172 == h1b524
+    s171 == h1b523
+    s170 == h1b522
+    s169 == h1b521
+    s168 == h1b520
+    s167 == h1b519
+    s166 == h1b518
+    s165 == h1b517
+    s164 == h1b516
+    s163 == h1b515
+    s162 == h1b514
+    s161 == h1b513
+    s160 == h1b512
+    s159 == h1b511
+    s158 == h1b510
+    s157 == h1b509
+    s156 == h1b508
+    s155 == h1b507
+    s154 == h1b506
+    s153 == h1b505
+    s152 == h1b504
+    s151 == h1b503
+    s150 == h1b502
+    s149 == h1b501
+    s148 == h1b500
+    s147 == h1b499
+    s146 == h1b498
+    s145 == h1b497
+    s144 == h1b496
+    s143 == h1b495
+    s142 == h1b494
+    s141 == h1b493
+    s140 == h1b492
+    s139 == h1b491
+    s138 == h1b490
+    s137 == h1b489
+    s136 == h1b488
+    s135 == h1b487
+    s134 == h1b486
+    s133 == h1b485
+    s132 == h1b484
+    s131 == h1b483
+    s130 == h1b482
+    s129 == h1b481
+    s128 == h1b480
+    s127 == h1b479
+    s126 == h1b478
+    s125 == h1b477
+    s124 == h1b476
+    s123 == h1b475
+    s122 == h1b474
+    s121 == h1b473
+    s120 == h1b472
+    s119 == h1b471
+    s118 == h1b470
+    s117 == h1b469
+    s116 == h1b468
+    s115 == h1b467
+    s114 == h1b466
+    s113 == h1b465
+    s112 == h1b464
+    s111 == h1b463
+    s110 == h1b462
+    s109 == h1b461
+    s108 == h1b460
+    s107 == h1b459
+    s106 == h1b458
+    s105 == h1b457
+    s104 == h1b456
+    s103 == h1b455
+    s102 == h1b454
+    s101 == h1b453
+    s100 == h1b452
+    s99 == h1b451
+    s98 == h1b450
+    s97 == h1b449
+    s96 == h1b448
+    s95 == h1b447
+    s94 == h1b446
+    s93 == h1b445
+    s92 == h1b444
+    s91 == h1b443
+    s90 == h1b442
+    s89 == h1b441
+    s88 == h1b440
+    s87 == h1b439
+    s86 == h1b438
+    s85 == h1b437
+    s84 == h1b436
+    s83 == h1b435
+    s82 == h1b434
+    s81 == h1b433
+    s80 == h1b432
+    s79 == h1b431
+    s78 == h1b430
+    s77 == h1b429
+    s76 == h1b428
+    s75 == h1b427
+    s74 == h1b426
+    s73 == h1b425
+    s72 == h1b424
+    s71 == h1b423
+    s70 == h1b422
+    s69 == h1b421
+    s68 == h1b420
+    s67 == h1b419
+    s66 == h1b418
+    s65 == h1b417
+    s64 == h1b416
+    s63 == h1b415
+    s62 == h1b414
+    s61 == h1b413
+    s60 == h1b412
+    s59 == h1b411
+    s58 == h1b410
+    s57 == h1b409
+    s56 == h1b408
+    s55 == h1b407
+    s54 == h1b406
+    s53 == h1b405
+    s52 == h1b404
+    s51 == h1b403
+    s50 == h1b402
+    s49 == h1b401
+    s48 == h1b400
+    s47 == h1b399
+    s46 == h1b398
+    s45 == h1b397
+    s44 == h1b396
+    s43 == h1b395
+    s42 == h1b394
+    s41 == h1b393
+    s40 == h1b392
+    s39 == h1b391
+    s38 == h1b390
+    s37 == h1b389
+    s36 == h1b388
+    s35 == h1b387
+    s34 == h1b386
+    s33 == h1b385
+    s32 == h1b384
+    s31 == h1b383
+    s30 == h1b382
+    s29 == h1b381
+    s28 == h1b380
+    s27 == h1b379
+    s26 == h1b378
+    s25 == h1b377
+    s24 == h1b376
+    s23 == h1b375
+    s22 == h1b374
+    s21 == h1b373
+    s20 == h1b372
+    s19 == h1b371
+    s18 == h1b370
+    s17 == h1b369
+    s16 == h1b368
+    s15 == h1b367
+    s14 == h1b366
+    s13 == h1b365
+    s12 == h1b364
+    s11 == h1b363
+    s10 == h1b362
+    s9 == h1b361
+    s8 == h1b360
+    s7 == h1b359
+    s6 == h1b358
+    s5 == h1b357
+    s4 == h1b356
+    s3 == h1b355
+    s2 == h1b354
+    s1 == h1b353
+    s0 == h1b352
 
     // Time of previous block.  Needed for computing new nbits 
-    prevTime = getTimeInSec(p95, p94, p93, p92, p91, p90, p89, p88, p87, p86, p85, p84, p83, p82, p81, p80, p79, p78, p77, p76, p75, p74, p73, p72, p71, p70, p69, p68, p67, p66, p65, p64)  
+    prevTime = getTimeInSec(h0b95, h0b94, h0b93, h0b92, h0b91, h0b90, h0b89, h0b88, h0b87, h0b86, h0b85, h0b84, h0b83, h0b82, h0b81, h0b80, h0b79, h0b78, h0b77, h0b76, h0b75, h0b74, h0b73, h0b72, h0b71, h0b70, h0b69, h0b68, h0b67, h0b66, h0b65, h0b64)  
 
     // Compute Target 
-    prevTarget = TARGET(p63, p62, p61, p60, p59, p58, p57, p56, p55, p54, p53, p52, p51, p50, p49, p48, p47, p46, p45, p44, p43, p42, p41, p40, p39, p38, p37, p36, p35, p34, p33, p32)
+    prevTarget = TARGET(h0b63, h0b62, h0b61, h0b60, h0b59, h0b58, h0b57, h0b56, h0b55, h0b54, h0b53, h0b52, h0b51, h0b50, h0b49, h0b48, h0b47, h0b46, h0b45, h0b44, h0b43, h0b42, h0b41, h0b40, h0b39, h0b38, h0b37, h0b36, h0b35, h0b34, h0b33, h0b32)
 
-    currTarget = TARGET(h63, h62, h61, h60, h59, h58, h57, h56, h55, h54, h53, h52, h51, h50, h49, h48, h47, h46, h45, h44, h43, h42, h41, h40, h39, h38, h37, h36, h35, h34, h33, h32)
-
-    // Compute new target if applicable - check for multiple of 2016 which 
-    // is the difficulty adjustment interval. If multiple, then compute 
-    // new target otherwise use previous target.
-    y = MULTIPLE(prevBlockNumber + 1, 2016)
+    currTarget = TARGET(h1b63, h1b62, h1b61, h1b60, h1b59, h1b58, h1b57, h1b56, h1b55, h1b54, h1b53, h1b52, h1b51, h1b50, h1b49, h1b48, h1b47, h1b46, h1b45, h1b44, h1b43, h1b42, h1b41, h1b40, h1b39, h1b38, h1b37, h1b36, h1b35, h1b34, h1b33, h1b32)
 
     // Compute new target if applicable - check for multiple of 2016 which 
+    // is the difficulty adjustment interval. If multiple, then compute new 
+    // target otherwise use previous target.
+    adjustDifficulty = MULTIPLE(h0BlockNumber + 1, 2016)
 
-    r = CHECKNEWTARGET(prevTime, startTime, currTarget, prevTarget, y)  
+    // Compute new target if applicable - check for multiple of 2016 which 
+
+    r = CHECKNEWTARGET(prevTime, startTime, currTarget, prevTarget, adjustDifficulty) 
  
     r == 1
 
     // Take hash of current header 
-    s255, s254, s253, s252, s251, s250, s249, s248, s247, s246, s245, s244, s243, s242, s241, s240, s239, s238, s237, s236, s235, s234, s233, s232, s231, s230, s229, s228, s227, s226, s225, s224, s223, s222, s221, s220, s219, s218, s217, s216, s215, s214, s213, s212, s211, s210, s209, s208, s207, s206, s205, s204, s203, s202, s201, s200, s199, s198, s197, s196, s195, s194, s193, s192, s191, s190, s189, s188, s187, s186, s185, s184, s183, s182, s181, s180, s179, s178, s177, s176, s175, s174, s173, s172, s171, s170, s169, s168, s167, s166, s165, s164, s163, s162, s161, s160, s159, s158, s157, s156, s155, s154, s153, s152, s151, s150, s149, s148, s147, s146, s145, s144, s143, s142, s141, s140, s139, s138, s137, s136, s135, s134, s133, s132, s131, s130, s129, s128, s127, s126, s125, s124, s123, s122, s121, s120, s119, s118, s117, s116, s115, s114, s113, s112, s111, s110, s109, s108, s107, s106, s105, s104, s103, s102, s101, s100, s99, s98, s97, s96, s95, s94, s93, s92, s91, s90, s89, s88, s87, s86, s85, s84, s83, s82, s81, s80, s79, s78, s77, s76, s75, s74, s73, s72, s71, s70, s69, s68, s67, s66, s65, s64, s63, s62, s61, s60, s59, s58, s57, s56, s55, s54, s53, s52, s51, s50, s49, s48, s47, s46, s45, s44, s43, s42, s41, s40, s39, s38, s37, s36, s35, s34, s33, s32, s31, s30, s29, s28, s27, s26, s25, s24, s23, s22, s21, s20, s19, s18, s17, s16, s15, s14, s13, s12, s11, s10, s9, s8, s7, s6, s5, s4, s3, s2, s1, s0 = HEADERHASH(h639, h638, h637, h636, h635, h634, h633, h632, h631, h630, h629, h628, h627, h626, h625, h624, h623, h622, h621, h620, h619, h618, h617, h616, h615, h614, h613, h612, h611, h610, h609, h608, h607, h606, h605, h604, h603, h602, h601, h600, h599, h598, h597, h596, h595, h594, h593, h592, h591, h590, h589, h588, h587, h586, h585, h584, h583, h582, h581, h580, h579, h578, h577, h576, h575, h574, h573, h572, h571, h570, h569, h568, h567, h566, h565, h564, h563, h562, h561, h560, h559, h558, h557, h556, h555, h554, h553, h552, h551, h550, h549, h548, h547, h546, h545, h544, h543, h542, h541, h540, h539, h538, h537, h536, h535, h534, h533, h532, h531, h530, h529, h528, h527, h526, h525, h524, h523, h522, h521, h520, h519, h518, h517, h516, h515, h514, h513, h512, h511, h510, h509, h508, h507, h506, h505, h504, h503, h502, h501, h500, h499, h498, h497, h496, h495, h494, h493, h492, h491, h490, h489, h488, h487, h486, h485, h484, h483, h482, h481, h480, h479, h478, h477, h476, h475, h474, h473, h472, h471, h470, h469, h468, h467, h466, h465, h464, h463, h462, h461, h460, h459, h458, h457, h456, h455, h454, h453, h452, h451, h450, h449, h448, h447, h446, h445, h444, h443, h442, h441, h440, h439, h438, h437, h436, h435, h434, h433, h432, h431, h430, h429, h428, h427, h426, h425, h424, h423, h422, h421, h420, h419, h418, h417, h416, h415, h414, h413, h412, h411, h410, h409, h408, h407, h406, h405, h404, h403, h402, h401, h400, h399, h398, h397, h396, h395, h394, h393, h392, h391, h390, h389, h388, h387, h386, h385, h384, h383, h382, h381, h380, h379, h378, h377, h376, h375, h374, h373, h372, h371, h370, h369, h368, h367, h366, h365, h364, h363, h362, h361, h360, h359, h358, h357, h356, h355, h354, h353, h352, h351, h350, h349, h348, h347, h346, h345, h344, h343, h342, h341, h340, h339, h338, h337, h336, h335, h334, h333, h332, h331, h330, h329, h328, h327, h326, h325, h324, h323, h322, h321, h320, h319, h318, h317, h316, h315, h314, h313, h312, h311, h310, h309, h308, h307, h306, h305, h304, h303, h302, h301, h300, h299, h298, h297, h296, h295, h294, h293, h292, h291, h290, h289, h288, h287, h286, h285, h284, h283, h282, h281, h280, h279, h278, h277, h276, h275, h274, h273, h272, h271, h270, h269, h268, h267, h266, h265, h264, h263, h262, h261, h260, h259, h258, h257, h256, h255, h254, h253, h252, h251, h250, h249, h248, h247, h246, h245, h244, h243, h242, h241, h240, h239, h238, h237, h236, h235, h234, h233, h232, h231, h230, h229, h228, h227, h226, h225, h224, h223, h222, h221, h220, h219, h218, h217, h216, h215, h214, h213, h212, h211, h210, h209, h208, h207, h206, h205, h204, h203, h202, h201, h200, h199, h198, h197, h196, h195, h194, h193, h192, h191, h190, h189, h188, h187, h186, h185, h184, h183, h182, h181, h180, h179, h178, h177, h176, h175, h174, h173, h172, h171, h170, h169, h168, h167, h166, h165, h164, h163, h162, h161, h160, h159, h158, h157, h156, h155, h154, h153, h152, h151, h150, h149, h148, h147, h146, h145, h144, h143, h142, h141, h140, h139, h138, h137, h136, h135, h134, h133, h132, h131, h130, h129, h128, h127, h126, h125, h124, h123, h122, h121, h120, h119, h118, h117, h116, h115, h114, h113, h112, h111, h110, h109, h108, h107, h106, h105, h104, h103, h102, h101, h100, h99, h98, h97, h96, h95, h94, h93, h92, h91, h90, h89, h88, h87, h86, h85, h84, h83, h82, h81, h80, h79, h78, h77, h76, h75, h74, h73, h72, h71, h70, h69, h68, h67, h66, h65, h64, h63, h62, h61, h60, h59, h58, h57, h56, h55, h54, h53, h52, h51, h50, h49, h48, h47, h46, h45, h44, h43, h42, h41, h40, h39, h38, h37, h36, h35, h34, h33, h32, h31, h30, h29, h28, h27, h26, h25, h24, h23, h22, h21, h20, h19, h18, h17, h16, h15, h14, h13, h12, h11, h10, h9, h8, h7, h6, h5, h4, h3, h2, h1, h0) 
+    s255, s254, s253, s252, s251, s250, s249, s248, s247, s246, s245, s244, s243, s242, s241, s240, s239, s238, s237, s236, s235, s234, s233, s232, s231, s230, s229, s228, s227, s226, s225, s224, s223, s222, s221, s220, s219, s218, s217, s216, s215, s214, s213, s212, s211, s210, s209, s208, s207, s206, s205, s204, s203, s202, s201, s200, s199, s198, s197, s196, s195, s194, s193, s192, s191, s190, s189, s188, s187, s186, s185, s184, s183, s182, s181, s180, s179, s178, s177, s176, s175, s174, s173, s172, s171, s170, s169, s168, s167, s166, s165, s164, s163, s162, s161, s160, s159, s158, s157, s156, s155, s154, s153, s152, s151, s150, s149, s148, s147, s146, s145, s144, s143, s142, s141, s140, s139, s138, s137, s136, s135, s134, s133, s132, s131, s130, s129, s128, s127, s126, s125, s124, s123, s122, s121, s120, s119, s118, s117, s116, s115, s114, s113, s112, s111, s110, s109, s108, s107, s106, s105, s104, s103, s102, s101, s100, s99, s98, s97, s96, s95, s94, s93, s92, s91, s90, s89, s88, s87, s86, s85, s84, s83, s82, s81, s80, s79, s78, s77, s76, s75, s74, s73, s72, s71, s70, s69, s68, s67, s66, s65, s64, s63, s62, s61, s60, s59, s58, s57, s56, s55, s54, s53, s52, s51, s50, s49, s48, s47, s46, s45, s44, s43, s42, s41, s40, s39, s38, s37, s36, s35, s34, s33, s32, s31, s30, s29, s28, s27, s26, s25, s24, s23, s22, s21, s20, s19, s18, s17, s16, s15, s14, s13, s12, s11, s10, s9, s8, s7, s6, s5, s4, s3, s2, s1, s0 = HEADERHASH(h1b639, h1b638, h1b637, h1b636, h1b635, h1b634, h1b633, h1b632, h1b631, h1b630, h1b629, h1b628, h1b627, h1b626, h1b625, h1b624, h1b623, h1b622, h1b621, h1b620, h1b619, h1b618, h1b617, h1b616, h1b615, h1b614, h1b613, h1b612, h1b611, h1b610, h1b609, h1b608, h1b607, h1b606, h1b605, h1b604, h1b603, h1b602, h1b601, h1b600, h1b599, h1b598, h1b597, h1b596, h1b595, h1b594, h1b593, h1b592, h1b591, h1b590, h1b589, h1b588, h1b587, h1b586, h1b585, h1b584, h1b583, h1b582, h1b581, h1b580, h1b579, h1b578, h1b577, h1b576, h1b575, h1b574, h1b573, h1b572, h1b571, h1b570, h1b569, h1b568, h1b567, h1b566, h1b565, h1b564, h1b563, h1b562, h1b561, h1b560, h1b559, h1b558, h1b557, h1b556, h1b555, h1b554, h1b553, h1b552, h1b551, h1b550, h1b549, h1b548, h1b547, h1b546, h1b545, h1b544, h1b543, h1b542, h1b541, h1b540, h1b539, h1b538, h1b537, h1b536, h1b535, h1b534, h1b533, h1b532, h1b531, h1b530, h1b529, h1b528, h1b527, h1b526, h1b525, h1b524, h1b523, h1b522, h1b521, h1b520, h1b519, h1b518, h1b517, h1b516, h1b515, h1b514, h1b513, h1b512, h1b511, h1b510, h1b509, h1b508, h1b507, h1b506, h1b505, h1b504, h1b503, h1b502, h1b501, h1b500, h1b499, h1b498, h1b497, h1b496, h1b495, h1b494, h1b493, h1b492, h1b491, h1b490, h1b489, h1b488, h1b487, h1b486, h1b485, h1b484, h1b483, h1b482, h1b481, h1b480, h1b479, h1b478, h1b477, h1b476, h1b475, h1b474, h1b473, h1b472, h1b471, h1b470, h1b469, h1b468, h1b467, h1b466, h1b465, h1b464, h1b463, h1b462, h1b461, h1b460, h1b459, h1b458, h1b457, h1b456, h1b455, h1b454, h1b453, h1b452, h1b451, h1b450, h1b449, h1b448, h1b447, h1b446, h1b445, h1b444, h1b443, h1b442, h1b441, h1b440, h1b439, h1b438, h1b437, h1b436, h1b435, h1b434, h1b433, h1b432, h1b431, h1b430, h1b429, h1b428, h1b427, h1b426, h1b425, h1b424, h1b423, h1b422, h1b421, h1b420, h1b419, h1b418, h1b417, h1b416, h1b415, h1b414, h1b413, h1b412, h1b411, h1b410, h1b409, h1b408, h1b407, h1b406, h1b405, h1b404, h1b403, h1b402, h1b401, h1b400, h1b399, h1b398, h1b397, h1b396, h1b395, h1b394, h1b393, h1b392, h1b391, h1b390, h1b389, h1b388, h1b387, h1b386, h1b385, h1b384, h1b383, h1b382, h1b381, h1b380, h1b379, h1b378, h1b377, h1b376, h1b375, h1b374, h1b373, h1b372, h1b371, h1b370, h1b369, h1b368, h1b367, h1b366, h1b365, h1b364, h1b363, h1b362, h1b361, h1b360, h1b359, h1b358, h1b357, h1b356, h1b355, h1b354, h1b353, h1b352, h1b351, h1b350, h1b349, h1b348, h1b347, h1b346, h1b345, h1b344, h1b343, h1b342, h1b341, h1b340, h1b339, h1b338, h1b337, h1b336, h1b335, h1b334, h1b333, h1b332, h1b331, h1b330, h1b329, h1b328, h1b327, h1b326, h1b325, h1b324, h1b323, h1b322, h1b321, h1b320, h1b319, h1b318, h1b317, h1b316, h1b315, h1b314, h1b313, h1b312, h1b311, h1b310, h1b309, h1b308, h1b307, h1b306, h1b305, h1b304, h1b303, h1b302, h1b301, h1b300, h1b299, h1b298, h1b297, h1b296, h1b295, h1b294, h1b293, h1b292, h1b291, h1b290, h1b289, h1b288, h1b287, h1b286, h1b285, h1b284, h1b283, h1b282, h1b281, h1b280, h1b279, h1b278, h1b277, h1b276, h1b275, h1b274, h1b273, h1b272, h1b271, h1b270, h1b269, h1b268, h1b267, h1b266, h1b265, h1b264, h1b263, h1b262, h1b261, h1b260, h1b259, h1b258, h1b257, h1b256, h1b255, h1b254, h1b253, h1b252, h1b251, h1b250, h1b249, h1b248, h1b247, h1b246, h1b245, h1b244, h1b243, h1b242, h1b241, h1b240, h1b239, h1b238, h1b237, h1b236, h1b235, h1b234, h1b233, h1b232, h1b231, h1b230, h1b229, h1b228, h1b227, h1b226, h1b225, h1b224, h1b223, h1b222, h1b221, h1b220, h1b219, h1b218, h1b217, h1b216, h1b215, h1b214, h1b213, h1b212, h1b211, h1b210, h1b209, h1b208, h1b207, h1b206, h1b205, h1b204, h1b203, h1b202, h1b201, h1b200, h1b199, h1b198, h1b197, h1b196, h1b195, h1b194, h1b193, h1b192, h1b191, h1b190, h1b189, h1b188, h1b187, h1b186, h1b185, h1b184, h1b183, h1b182, h1b181, h1b180, h1b179, h1b178, h1b177, h1b176, h1b175, h1b174, h1b173, h1b172, h1b171, h1b170, h1b169, h1b168, h1b167, h1b166, h1b165, h1b164, h1b163, h1b162, h1b161, h1b160, h1b159, h1b158, h1b157, h1b156, h1b155, h1b154, h1b153, h1b152, h1b151, h1b150, h1b149, h1b148, h1b147, h1b146, h1b145, h1b144, h1b143, h1b142, h1b141, h1b140, h1b139, h1b138, h1b137, h1b136, h1b135, h1b134, h1b133, h1b132, h1b131, h1b130, h1b129, h1b128, h1b127, h1b126, h1b125, h1b124, h1b123, h1b122, h1b121, h1b120, h1b119, h1b118, h1b117, h1b116, h1b115, h1b114, h1b113, h1b112, h1b111, h1b110, h1b109, h1b108, h1b107, h1b106, h1b105, h1b104, h1b103, h1b102, h1b101, h1b100, h1b99, h1b98, h1b97, h1b96, h1b95, h1b94, h1b93, h1b92, h1b91, h1b90, h1b89, h1b88, h1b87, h1b86, h1b85, h1b84, h1b83, h1b82, h1b81, h1b80, h1b79, h1b78, h1b77, h1b76, h1b75, h1b74, h1b73, h1b72, h1b71, h1b70, h1b69, h1b68, h1b67, h1b66, h1b65, h1b64, h1b63, h1b62, h1b61, h1b60, h1b59, h1b58, h1b57, h1b56, h1b55, h1b54, h1b53, h1b52, h1b51, h1b50, h1b49, h1b48, h1b47, h1b46, h1b45, h1b44, h1b43, h1b42, h1b41, h1b40, h1b39, h1b38, h1b37, h1b36, h1b35, h1b34, h1b33, h1b32, h1b31, h1b30, h1b29, h1b28, h1b27, h1b26, h1b25, h1b24, h1b23, h1b22, h1b21, h1b20, h1b19, h1b18, h1b17, h1b16, h1b15, h1b14, h1b13, h1b12, h1b11, h1b10, h1b9, h1b8, h1b7, h1b6, h1b5, h1b4, h1b3, h1b2, h1b1, h1b0) 
      
     // Byte-swapped hash must be less than target value. 
     // See https://en.bitcoin.it/wiki/Block_hashing_algorithm  
     t255, t254, t253, t252, t251, t250, t249, t248, t247, t246, t245, t244, t243, t242, t241, t240, t239, t238, t237, t236, t235, t234, t233, t232, t231, t230, t229, t228, t227, t226, t225, t224, t223, t222, t221, t220, t219, t218, t217, t216, t215, t214, t213, t212, t211, t210, t209, t208, t207, t206, t205, t204, t203, t202, t201, t200, t199, t198, t197, t196, t195, t194, t193, t192, t191, t190, t189, t188, t187, t186, t185, t184, t183, t182, t181, t180, t179, t178, t177, t176, t175, t174, t173, t172, t171, t170, t169, t168, t167, t166, t165, t164, t163, t162, t161, t160, t159, t158, t157, t156, t155, t154, t153, t152, t151, t150, t149, t148, t147, t146, t145, t144, t143, t142, t141, t140, t139, t138, t137, t136, t135, t134, t133, t132, t131, t130, t129, t128, t127, t126, t125, t124, t123, t122, t121, t120, t119, t118, t117, t116, t115, t114, t113, t112, t111, t110, t109, t108, t107, t106, t105, t104, t103, t102, t101, t100, t99, t98, t97, t96, t95, t94, t93, t92, t91, t90, t89, t88, t87, t86, t85, t84, t83, t82, t81, t80, t79, t78, t77, t76, t75, t74, t73, t72, t71, t70, t69, t68, t67, t66, t65, t64, t63, t62, t61, t60, t59, t58, t57, t56, t55, t54, t53, t52, t51, t50, t49, t48, t47, t46, t45, t44, t43, t42, t41, t40, t39, t38, t37, t36, t35, t34, t33, t32, t31, t30, t29, t28, t27, t26, t25, t24, t23, t22, t21, t20, t19, t18, t17, t16, t15, t14, t13, t12, t11, t10, t9, t8, t7, t6, t5, t4, t3, t2, t1, t0 = SWAP(s255, s254, s253, s252, s251, s250, s249, s248, s247, s246, s245, s244, s243, s242, s241, s240, s239, s238, s237, s236, s235, s234, s233, s232, s231, s230, s229, s228, s227, s226, s225, s224, s223, s222, s221, s220, s219, s218, s217, s216, s215, s214, s213, s212, s211, s210, s209, s208, s207, s206, s205, s204, s203, s202, s201, s200, s199, s198, s197, s196, s195, s194, s193, s192, s191, s190, s189, s188, s187, s186, s185, s184, s183, s182, s181, s180, s179, s178, s177, s176, s175, s174, s173, s172, s171, s170, s169, s168, s167, s166, s165, s164, s163, s162, s161, s160, s159, s158, s157, s156, s155, s154, s153, s152, s151, s150, s149, s148, s147, s146, s145, s144, s143, s142, s141, s140, s139, s138, s137, s136, s135, s134, s133, s132, s131, s130, s129, s128, s127, s126, s125, s124, s123, s122, s121, s120, s119, s118, s117, s116, s115, s114, s113, s112, s111, s110, s109, s108, s107, s106, s105, s104, s103, s102, s101, s100, s99, s98, s97, s96, s95, s94, s93, s92, s91, s90, s89, s88, s87, s86, s85, s84, s83, s82, s81, s80, s79, s78, s77, s76, s75, s74, s73, s72, s71, s70, s69, s68, s67, s66, s65, s64, s63, s62, s61, s60, s59, s58, s57, s56, s55, s54, s53, s52, s51, s50, s49, s48, s47, s46, s45, s44, s43, s42, s41, s40, s39, s38, s37, s36, s35, s34, s33, s32, s31, s30, s29, s28, s27, s26, s25, s24, s23, s22, s21, s20, s19, s18, s17, s16, s15, s14, s13, s12, s11, s10, s9, s8, s7, s6, s5, s4, s3, s2, s1, s0) 
     // Compute integer hash value
     hashValue = BITSTOVALUE256(t255, t254, t253, t252, t251, t250, t249, t248, t247, t246, t245, t244, t243, t242, t241, t240, t239, t238, t237, t236, t235, t234, t233, t232, t231, t230, t229, t228, t227, t226, t225, t224, t223, t222, t221, t220, t219, t218, t217, t216, t215, t214, t213, t212, t211, t210, t209, t208, t207, t206, t205, t204, t203, t202, t201, t200, t199, t198, t197, t196, t195, t194, t193, t192, t191, t190, t189, t188, t187, t186, t185, t184, t183, t182, t181, t180, t179, t178, t177, t176, t175, t174, t173, t172, t171, t170, t169, t168, t167, t166, t165, t164, t163, t162, t161, t160, t159, t158, t157, t156, t155, t154, t153, t152, t151, t150, t149, t148, t147, t146, t145, t144, t143, t142, t141, t140, t139, t138, t137, t136, t135, t134, t133, t132, t131, t130, t129, t128, t127, t126, t125, t124, t123, t122, t121, t120, t119, t118, t117, t116, t115, t114, t113, t112, t111, t110, t109, t108, t107, t106, t105, t104, t103, t102, t101, t100, t99, t98, t97, t96, t95, t94, t93, t92, t91, t90, t89, t88, t87, t86, t85, t84, t83, t82, t81, t80, t79, t78, t77, t76, t75, t74, t73, t72, t71, t70, t69, t68, t67, t66, t65, t64, t63, t62, t61, t60, t59, t58, t57, t56, t55, t54, t53, t52, t51, t50, t49, t48, t47, t46, t45, t44, t43, t42, t41, t40, t39, t38, t37, t36, t35, t34, t33, t32, t31, t30, t29, t28, t27, t26, t25, t24, t23, t22, t21, t20, t19, t18, t17, t16, t15, t14, t13, t12, t11, t10, t9, t8, t7, t6, t5, t4, t3, t2, t1, t0)
-
-    // Computed hash value should match the input byte-swapped hash
-    hashValue == currBlockHash   
 
     // Check if hash is > 0 and < target
     r = if 0 < hashValue then 1 else 0 fi
