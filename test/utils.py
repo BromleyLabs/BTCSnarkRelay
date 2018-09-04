@@ -100,7 +100,7 @@ def wait_to_be_mined(w3, txn_hash):
     logger.debug(txn_receipt)
     return status, txn_receipt
 
-def wait_to_be_mined_batch(txn_hashes):
+def wait_to_be_mined_batch(w3, txn_hashes):
     # txn_hashes: list of txn_hash
     # timeout in nblocks
     logger.info('Tx hashes: %s' % txn_hashes) 
@@ -111,7 +111,7 @@ def wait_to_be_mined_batch(txn_hashes):
         for i, txn_hash in enumerate(txn_hashes):
             if txn_hash in handled: 
                 continue
-            txn_receipt, status = get_transaction_receipt(txn_hash)  
+            txn_receipt, status = get_transaction_receipt(w3, txn_hash)  
             if status == 'error' or status == 'mined':
                 handled.append(txn_hash)
     logger.info('All transactions handled')
@@ -124,7 +124,7 @@ def erc20_approve(w3, erc20_address, from_addr, to_addr, amount,
     txn_hash = concise.approve(to_addr, amount,
                             transact = {'from': from_addr, 'gas': gas, 
                                         'gasPrice': gas_price}) 
-    return wait_to_be_mined(txn_hash)
+    return wait_to_be_mined(w3, txn_hash)
 
 def event_match(event, txn_hash = None, args = None):
     if txn_hash:
@@ -177,7 +177,9 @@ def deploy(w3, abi_path, bin_path, owner, gas, gas_price):
     contract_addr = txn_receipt['contractAddress']
     return contract_addr 
 
-def kill(self, contract_name):
+# TODO: to be updated (old version here).
+'''
+def kill(contract_name):
     conf = self.chain_config
     self.logger.info('Killing contract %s on %s' % (contract_name, conf.name)) 
     abi_file = os.path.join(conf.contract_path, contract_name + '.abi')
@@ -189,3 +191,4 @@ def kill(self, contract_name):
                              'gas' : conf.gas, 'gasPrice' : conf.gas_price}) 
     return self.wait_to_be_mined(txn_hash)
 
+'''
