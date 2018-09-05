@@ -12,13 +12,24 @@ from btc_utils import *
 
 HEADERS_FILE = './data/btc_headers'
 
-def print_block(b, block_bytes):
-   #bh = bytearray(b.hash_prev)
-   #bh.reverse()
+def main():
+   if len(sys.argv) != 2:
+       print('Usage: python get_header.py <block_number>')
+       exit(0) 
+
+   block_number = int(sys.argv[1])
+   b, block_bytes = get_header(block_number, HEADERS_FILE)
+   if b is None: 
+       return 1 
 
    htime = int.from_bytes(b.timestamp, 'little') 
    nbits = int.from_bytes(b.nbits, 'little') 
 
+   block_hash =  get_btc_hash(block_bytes)   
+
+   print('Block Hash (Hex): %s' % block_hash.hex()) 
+   print('Block Hash (Int): %s' % int.from_bytes(block_hash, 'big')) 
+   print('Reverse Block Hash (Int): %s' % int.from_bytes(block_hash, 'little')) 
    print('Block Number: %d' % b.block_number)
    print('Prev Hash: %s' % b.hash_prev.hex())
    print('TimeS: %d' % htime)
@@ -29,17 +40,6 @@ def print_block(b, block_bytes):
    for bit in bits.bin:  
        bits_str += bit + ' '  
    print(bits_str)
-
-def main():
-   if len(sys.argv) != 2:
-       print('Usage: python get_header.py <block_number>')
-       exit(0) 
-   block_number = int(sys.argv[1])
-   b, block_bytes = get_header(block_number, HEADERS_FILE)
-   if b is None: 
-       return 1 
-
-   print_block(b, block_bytes)
    
    return 0 
    
