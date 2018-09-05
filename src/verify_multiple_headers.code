@@ -2,7 +2,7 @@
 //
 // @author Bon Filey <bon@bromleylabs.io>
 // @author Anurag Gupta <anurag@bromleylabs.io>
-// Copyright (c) Bromley Labs Inc.        
+// Copyright (c) 2018 Bromley Labs Inc.        
 
 import "./get_header_hash.code" as HEADERHASH
 import "./verify_header.code" as VERIFYHEADER
