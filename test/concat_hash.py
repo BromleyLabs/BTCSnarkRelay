@@ -10,6 +10,7 @@
 import sys
 import hashlib
 from btc_utils import * 
+from  bitstring import BitArray
 
 HEADERS_FILE = './data/btc_headers'
 
@@ -23,13 +24,16 @@ def main():
      
    concat_hashes = bytes(0) 
    for bn in block_numbers:
-       b, block_bytes = get_header(bn, HEADERS_FILE)
+       _, block_bytes = get_header(bn, HEADERS_FILE)
        concat_hashes += get_btc_hash(block_bytes) 
 
    hash_of_concat = hashlib.sha256(concat_hashes).digest()
+   hash248 = hash_of_concat[1:]  # 32 bytes 
+
    print('Bin: %s' % hash_of_concat)
    print('Hex: %s' % hash_of_concat.hex())
    print('Int: %d' % int.from_bytes(hash_of_concat, 'big'))
+   print('Hash248 Int: %d' % int.from_bytes(hash248, 'big'))
 
    return 0 
    
