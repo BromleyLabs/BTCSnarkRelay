@@ -309,7 +309,6 @@ def main(private h1b639, private h1b638, private h1b637, private h1b636, private
     adjustDifficulty = MULTIPLE(h0BlockNumber + 1, 2016)
 
     // Compute new target if applicable - check for multiple of 2016 which 
-
     r = CHECKNEWTARGET(prevTime, lastDiffAdjustTime, currTarget, prevTarget, adjustDifficulty) 
  
     r == 1
