@@ -105,7 +105,7 @@ def main():
     v = read_proof(PROOF)
     logger.info('Verifying provided header..')
     txn_hash = contract_s.verifyTx(v['A'], v['A_p'], v['B'], v['B_p'], v['C'], 
-                                   v['C_p'], v['H'], v['K'], [block_hash_int, 1],
+                                   v['C_p'], v['H'], v['K'], [1],
                                    transact = txn_params)
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
