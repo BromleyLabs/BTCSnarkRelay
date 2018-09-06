@@ -17,17 +17,16 @@ contract BTCHeaderStore {
      
     struct HeaderInfo { 
         bytes data;  /* Header data */ 
-        uint block_number;
         bool verified; 
     }
 
-    uint m_last_verified_block = 125551;
+    uint m_last_verified_block;
    
     /* block_number => HeaderInfo map */
     mapping (uint => HeaderInfo) public m_headers; 
 
     address m_verifier_addr = address(0); /* Contract address */
-   
+
    /*
     * @dev One time setting of contract that is going to call mark_verified() 
     * method.
@@ -65,7 +64,7 @@ contract BTCHeaderStore {
         /* Not already stored and verified */
         require(m_headers[block_number].verified == false);
 
-        m_headers[block_number] = HeaderInfo(data, block_number, false); 
+        m_headers[block_number] = HeaderInfo(data, false); 
     } 
 
     /**
