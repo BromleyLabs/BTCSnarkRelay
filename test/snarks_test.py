@@ -15,6 +15,9 @@ from utils import *
 import utils
 from web3.auto import w3
 from btc_utils import *
+from btc_store_test import store_headers, set_start_block, \
+                           get_int_hash248, get_int_concat_hash248
+import btc_store_test
 
 GAS_PRICE = int(2.5*1e9) 
 GAS = int(4*1e6)
@@ -37,16 +40,6 @@ def read_proof(proof_file):
         if m: 
             v[m.group(1)] = eval('(' + m.group(2) + ')')    
     return v
-
-# @param contract Contract instance of BTC Headers Contract
-def store_header(block_number, headers_file, contract, txn_params, w3):
-    b, _ = get_header(block_number, headers_file) 
-    txn_hash = contract.store_block_header(b.version, b.hash_prev, 
-                                          b.hash_merkel, b.timestamp, b.nbits, 
-                                          b.nonce, transact = txn_params) 
-
-    status, txn_receipt = wait_to_be_mined(w3, txn_hash)
-    logger.info(txn_receipt)
 
 # @param txn_params dict containing 'from', 'gas', 'gasPrice'
 def deploy_and_init(w3, ABI, BIN, txn_params):     
@@ -74,14 +67,24 @@ def set_addresses(contract_s, contract_h, addr_s, addr_h, txn_params, w3):
     logger.info(txn_receipt)
 
 def main():
-    if len(sys.argv) != 2:
-        print('Usage: python %s <block_number>' % sys.argv[0])
-        exit(0)
+    if len(sys.argv) != 4:
+        print('Usage: python %s <b2> <b1> <b0>' % sys.argv[0])
+        print('bn: block numbers in sequencial order highest first')
+        print('b0: genesis block')
+        return 1 
     global logger
 
     logger = init_logger('TEST', LOGFILE)
     utils.logger = logger 
-    block_number = int(sys.argv[1])
+    btc_store_test.logger = logger
+
+    block2 = int(sys.argv[1])
+    block1 = int(sys.argv[2])
+    block0 = int(sys.argv[3])
+    if (block1 != block0 + 1 or block2 != block1 + 1):
+        print('Incorrect block numbers')
+        return 1  
+
     txn_params = {'from': w3.eth.accounts[0], 
                   'gas': GAS, 
                   'gasPrice': GAS_PRICE}
@@ -96,17 +99,22 @@ def main():
 
     set_addresses(contract_s, contract_h, addr_s, addr_h, txn_params, w3)
 
-    store_header(block_number, HEADERS_DATA, contract_h, txn_params, w3) 
+    _, b0bytes = get_header(block0, HEADERS_DATA)
+    set_start_block(contract_h, b0bytes, block0, txn_params, w3)
 
-    _, block_bytes = get_header(block_number, HEADERS_DATA)
-    block_hash = get_btc_hash(block_bytes) 
-    block_hash = swap_bytes(block_hash)  # Swapped needed for input 
-    block_hash_int = int.from_bytes(block_hash, 'big')
+    store_headers([block1, block2], HEADERS_DATA, contract_h, txn_params, w3) 
+
+    h0hash_int = get_int_hash248(block0)
+    concat_hash_int = get_int_concat_hash248([block2, block1])
+
     v = read_proof(PROOF)
     logger.info('Verifying provided header..')
     txn_hash = contract_s.verifyTx(v['A'], v['A_p'], v['B'], v['B_p'], v['C'], 
-                                   v['C_p'], v['H'], v['K'], [1],
-                                   transact = txn_params)
+                                   v['C_p'], v['H'], v['K'], [125551, 362222075228124323440975452176116135959151765539991078657306363726407925760, 99457748802113952899368401963545431390009651956962153679970886296667461646, 1], transact = txn_params)
+    #txn_hash = contract_s.verifyTx(v['A'], v['A_p'], v['B'], v['B_p'], v['C'], 
+    #                               v['C_p'], v['H'], v['K'], [block0, 
+    #                                h0hash_int, concat_hash_int, 1],
+    #                               transact = txn_params)
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
     

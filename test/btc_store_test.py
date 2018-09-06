@@ -26,13 +26,15 @@ HEADERS_DATA = './data/btc_headers'
 logger = None
 
 # @param contract Contract instance of BTC Headers Contract
-def store_header(block_number, headers_file, contract, txn_params, w3):
-    _, bbytes = get_header(block_number, headers_file) 
-    txn_hash = contract.store_block_header(bbytes, block_number, 
-                                           transact = txn_params) 
-
-    status, txn_receipt = wait_to_be_mined(w3, txn_hash)
-    logger.info(txn_receipt)
+# @param block_numbers List of block numbers
+def store_headers(block_numbers, headers_file, contract, txn_params, w3):
+    for bn in block_numbers:
+        logger.info('Storing block %d' % bn)
+        _, bbytes = get_header(bn, headers_file) 
+        txn_hash = contract.store_block_header(bbytes, bn,
+                                               transact = txn_params) 
+        status, txn_receipt = wait_to_be_mined(w3, txn_hash)
+        logger.info(txn_receipt)
 
 # @param txn_params dict containing 'from', 'gas', 'gasPrice'
 def deploy_and_init(w3, ABI, BIN, txn_params):     
@@ -60,6 +62,24 @@ def set_start_block(contract, bbytes, block_number, txn_params, w3):
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
 
+def get_int_hash248(block_number):
+    _, b0bytes = get_header(block_number, HEADERS_DATA)
+    hash0 = get_btc_hash(b0bytes)  
+    hash0_int = int.from_bytes(hash0[1:], 'big') # Only 31 bytes
+    return hash0_int
+
+# @param blocks Block numbers - concatenation is in order in which they are
+# provided
+def get_int_concat_hash248(blocks):
+    ch = b''
+    for b in blocks:
+        _, bbytes = get_header(b, HEADERS_DATA)
+        ch += bbytes 
+
+    concat_hash = hashlib.sha256(ch).digest()
+    concat_hash_int = int.from_bytes(concat_hash[1:], 'big') # Only 31 bytes
+    return concat_hash_int
+
 def main():
     if len(sys.argv) != 4:
         print('Usage: python %s <b2> <b1> <b0>' % sys.argv[0])
@@ -85,30 +105,22 @@ def main():
         return 1
 
     set_address(contract, w3.eth.accounts[0], txn_params, w3)
-     
     _, b0bytes = get_header(block0, HEADERS_DATA)
     set_start_block(contract, b0bytes, block0, txn_params, w3)
 
-    store_header(block2, HEADERS_DATA, contract, txn_params, w3) 
-    store_header(block1, HEADERS_DATA, contract, txn_params, w3) 
+    store_headers([block1, block2], HEADERS_DATA, contract, txn_params, w3) 
 
     # Verify
     last_verified_block = block0 
-    hash0 = get_btc_hash(b0bytes)  
-    hash0_int = int.from_bytes(hash0[1:], 'big') # Only 31 bytes
-
-    _, b1bytes = get_header(block1, HEADERS_DATA)
-
-    _, b2bytes = get_header(block2, HEADERS_DATA)
- 
-    concat_hash = hashlib.sha256(b2bytes + b1bytes).digest()
-    concat_hash_int = int.from_bytes(concat_hash[1:], 'big') # Only 31 bytes
-    
+    h0hash_int = get_int_hash248(block0)
+    concat_hash_int = get_int_concat_hash248([block2, block1])
     n_headers = 2 
    
     logger.info('Verifying ..')
-    txn_hash = contract.verify(last_verified_block, hash0_int, concat_hash_int,
-                               n_headers, transact = txn_params)
+    txn_hash = contract.verify(125551, 362222075228124323440975452176116135959151765539991078657306363726407925760, 99457748802113952899368401963545431390009651956962153679970886296667461646, n_headers, transact = txn_params)
+
+    #txn_hash = contract.verify(last_verified_block, h0hash_int, concat_hash_int,
+    #                           n_headers, transact = txn_params)
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
 
