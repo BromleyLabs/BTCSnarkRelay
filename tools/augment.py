@@ -3,7 +3,8 @@
 #
 # @author Bon Filey <bon@bromleylabs.io>
 # @author Anurag Gupta <anurag@bromleylabs.io>
-# Copyright (c) Bromley Labs Inc.        
+#
+# Copyright (c) 2018 Bromley Labs Inc.        
 
 import sys
 
@@ -46,9 +47,9 @@ code2 = \
 
 code3 = \
 '''
-            /* Mark header verified */
-            require(BTCHeaderStore(m_header_contract_addr).mark_verified(input[0]) == true); 
-
+            /* Mark group of headers verified. In this case 2 headers */ 
+            require(BTCHeaderStore(m_header_contract_addr).verify(input[0], 
+                                  input[1], input[2], 2) == true);
 '''
 
 def line_with_pattern(lines, pattern):
@@ -70,6 +71,8 @@ def main():
 
     index = line_with_pattern(lines, 'pragma solidity') 
     lines.insert(index-1, header)  
+
+    index = line_with_pattern(lines, 'pragma solidity') 
     lines.insert(index+1, code0)  
 
     index = line_with_pattern(lines, 'contract Verifier {') 
