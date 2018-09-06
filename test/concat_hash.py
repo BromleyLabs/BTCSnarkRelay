@@ -28,7 +28,7 @@ def main():
        concat_hashes += get_btc_hash(block_bytes) 
 
    hash_of_concat = hashlib.sha256(concat_hashes).digest()
-   hash248 = hash_of_concat[1:]  # 32 bytes 
+   hash248 = hash_of_concat[1:]  # 31 bytes 
 
    print('Bin: %s' % hash_of_concat)
    print('Hex: %s' % hash_of_concat.hex())
