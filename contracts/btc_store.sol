@@ -20,24 +20,16 @@ contract BTCHeaderStore {
         bool verified; 
     }
 
-    uint m_last_verified_block;
+    uint m_last_verified_block = 0;
    
     /* block_number => HeaderInfo map */
     mapping (uint => HeaderInfo) public m_headers; 
 
     address m_verifier_addr = address(0); /* Contract address */
 
-   /*
-    * @dev One time setting of contract that is going to call mark_verified() 
-    * method.
-    */
-    function set_verifier_addr (address addr) public {
-       require(m_verifier_addr == address(0));  
-       m_verifier_addr = addr;
-    }
-
     /**
-     * @dev Computes bitcoin header hash by double hashing using sha256. 
+     * @dev Utility function to computes bitcoin header hash by double hashing 
+     * using sha256. 
      */
     function btc_hash(bytes b) internal pure returns(bytes32) {
        bytes32 hash1 = sha256(b);
@@ -46,14 +38,36 @@ contract BTCHeaderStore {
     }
 
     /**
-     * @dev Function to convert first 248 bits (31 bytes) of a given hash 
-     * into uint. This is needed due to field limitations at the verifier 
+     * @dev Utility function to convert first 248 bits (31 bytes) of a given
+     * hash into uint. This is needed due to field limitations at the verifier 
      * contract.
      */
     function hash_to_uint248(bytes32 hash) internal pure returns(uint) {
         bytes memory b = abi.encodePacked(hash);
         b[0] = 0x00;
         return BytesLib.toUint(b, 0); 
+    }
+
+
+    /*
+     * @dev One time setting of contract that is going to call mark_verified() 
+     * method.
+     */
+    function set_verifier_addr (address addr) public {
+       require(m_verifier_addr == address(0));  
+       m_verifier_addr = addr;
+    }
+
+    /**
+     * @dev Initialize the start header. The header is assumed to be verified.
+     * This is one-time setting. 
+     * @param block_number assumed > 0
+     */
+    function store_start_block_header(bytes data, uint block_number) public {
+        require(m_last_verified_block == 0);
+        require(block_number > 0);
+        m_headers[block_number] = HeaderInfo(data, true); 
+        m_last_verified_block = block_number;
     }
 
     /**
