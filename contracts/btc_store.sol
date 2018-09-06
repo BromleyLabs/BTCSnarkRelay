@@ -21,7 +21,7 @@ contract BTCHeaderStore {
         bool verified; 
     }
 
-    uint m_last_verified_block;
+    uint m_last_verified_block = 125551;
    
     /* block_number => HeaderInfo map */
     mapping (uint => HeaderInfo) public m_headers; 
@@ -47,12 +47,14 @@ contract BTCHeaderStore {
     }
 
     /**
-     * @dev Function to convert first 248 bits of a given hash into uint. 
-     * This is needed due to field limitations  at the verifier contract.
+     * @dev Function to convert first 248 bits (31 bytes) of a given hash 
+     * into uint. This is needed due to field limitations at the verifier 
+     * contract.
      */
     function hash_to_uint248(bytes32 hash) internal pure returns(uint) {
-        bytes memory b31 = BytesLib.slice(abi.encodePacked(hash), 1, 31); 
-        return BytesLib.toUint(b31, 0); 
+        bytes memory b = abi.encodePacked(hash);
+        b[0] = 0x00;
+        return BytesLib.toUint(b, 0); 
     }
 
     /**
@@ -83,11 +85,12 @@ contract BTCHeaderStore {
         require(last_verified_block == m_last_verified_block); 
         bytes32 last_block_hash = btc_hash(m_headers[last_verified_block].data); 
         require(hash_to_uint248(last_block_hash) == hash248);
-        
-        bytes memory concat_headers;
+
         uint n_highest = m_last_verified_block + n_headers;
+        bytes memory concat_headers;
         for (uint i = 0; i < n_headers; i++) 
-            concat_headers = BytesLib.concat(concat_headers, m_headers[n_highest].data);
+            concat_headers = BytesLib.concat(concat_headers, 
+                                             m_headers[n_highest - i].data);
 
         bytes32 concatHash = sha256(concat_headers); 
         require(concatHash248 == hash_to_uint248(concatHash));
@@ -95,7 +98,7 @@ contract BTCHeaderStore {
         for (i = 0; i < n_headers; i++) 
             m_headers[m_last_verified_block + i + 1].verified = true;
          
-        m_last_verified_block += i;
+        m_last_verified_block += n_headers;
 
         return true;
     }
