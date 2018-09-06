@@ -1,11 +1,11 @@
 CC=../tools/zokrates
 SOURCE_DIR=../src
-SOURCE_FILE=verify_header.code
+SOURCE_FILE=verify_multiple_headers.code
 DEPS= $(shell find $(SOURCE_DIR) -name '*.code')
 CC_OUT=out
 SETUP=variables.inf verification.key proving.key 
 PROOF=proof.txt
-WITNESS_INPUT=../test/data/test_verify_header.witness
+WITNESS_INPUT=../test/data/test_verify_multiple_headers.witness
 WITNESS_OUT=witness
 CONTRACT=./verifier.sol
 CONTRACT_EX=../contracts/verifier.sol
@@ -22,7 +22,7 @@ $(PROOF): $(WITNESS_OUT) $(SETUP)
 	$(CC) generate-proof > $(PROOF) 
 
 $(WITNESS_OUT): $(CC_OUT)
-	$(CC) compute-witness -a `cat $(WITNESS_INPUT)` > witness.log
+	$(CC) compute-witness -a `cat $(WITNESS_INPUT)` > /dev/null
 
 $(CONTRACT_EX): $(CONTRACT)
 	python ../tools/augment.py $(CONTRACT) $(CONTRACT_EX) 
@@ -34,6 +34,6 @@ $(SETUP): $(CC_OUT)
 	$(CC) setup
 
 $(CC_OUT): $(SOURCE_DIR)/$(SOURCE_FILE) $(DEPS)
-	$(CC) compile -i $< -o $@ --gadgets  
+	$(CC) compile -i $< -o $@ --light --gadgets  
 
 
