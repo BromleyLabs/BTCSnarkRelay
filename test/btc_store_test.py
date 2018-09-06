@@ -1,4 +1,4 @@
-# Main script to test BTCHeaderStore contract. 
+# Main script to test BTCHeaderStore contract as standalone test. 
 #
 # @author Bon Filey <bon@bromleylabs.io>
 # @author Anurag Gupta <anurag@bromleylabs.io>
@@ -53,6 +53,7 @@ def set_address(contract, addr, txn_params, w3):
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
 
+
 def main():
     if len(sys.argv) != 4:
         print('Usage: python %s <b2> <b1> <b0>' % sys.argv[0])
@@ -82,6 +83,30 @@ def main():
     store_header(block2, HEADERS_DATA, contract, txn_params, w3) 
     store_header(block1, HEADERS_DATA, contract, txn_params, w3) 
     store_header(block0, HEADERS_DATA, contract, txn_params, w3) 
+
+    # Verify
+
+    last_verified_block = block0 
+    _, b0bytes = get_header(block0, HEADERS_DATA)
+    hash0 = get_btc_hash(b0bytes)  
+    hash0_int = int.from_bytes(hash0[1:], 'big') # Only 31 bytes
+
+    _, b1bytes = get_header(block1, HEADERS_DATA)
+    #hash1 = get_btc_hash(b1bytes)  
+
+    _, b2bytes = get_header(block2, HEADERS_DATA)
+    #hash2 = get_btc_hash(b2bytes)  
+ 
+    concat_hash = hashlib.sha256(b2bytes + b1bytes).digest()
+    concat_hash_int = int.from_bytes(concat_hash[1:], 'big') # Only 31 bytes
+    
+    n_headers = 2 
+   
+    logger.info('Verifying ..')
+    txn_hash = contract.verify(last_verified_block, hash0_int, concat_hash_int,
+                               n_headers, transact = txn_params)
+    status, txn_receipt = wait_to_be_mined(w3, txn_hash)
+    logger.info(txn_receipt)
 
     return 0
 
