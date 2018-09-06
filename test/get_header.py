@@ -26,10 +26,10 @@ def main():
    nbits = int.from_bytes(b.nbits, 'little') 
 
    block_hash =  get_btc_hash(block_bytes)   
-
-   print('Block Hash (Hex): %s' % block_hash.hex()) 
-   print('Block Hash (Int): %s' % int.from_bytes(block_hash, 'big')) 
-   print('Reverse Block Hash (Int): %s' % int.from_bytes(block_hash, 'little')) 
+   hash248 = block_hash[1:]  # 31 bytes
+   print('Hash (Hex): %s' % block_hash.hex()) 
+   print('Hash (Int): %d' % int.from_bytes(block_hash, 'big')) 
+   print('Hash248 (Int): %d' % int.from_bytes(hash248, 'big')) 
    print('Block Number: %d' % b.block_number)
    print('Prev Hash: %s' % b.hash_prev.hex())
    print('TimeS: %d' % htime)
