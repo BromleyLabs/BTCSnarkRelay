@@ -10,20 +10,22 @@
 
 pragma solidity ^0.4.24;
 
+import "./BytesLib.sol";
+
 contract BTCHeaderStore {
-    
-    /* All values in this struct are little-endian format */
-    struct HeaderInfo {
-        bytes4 version; 
-        bytes32 prev_header_hash;
-        bytes32 merkel_root;
-        bytes4 timestamp;
-        bytes4 nbits;
-        bytes4 nonce;
-        bool verified; /* Whether this block has been verified to be correct */
+    using BytesLib for bytes;
+     
+    struct HeaderInfo { 
+        bytes data;  /* Header data */ 
+        uint block_number;
+        bool verified; 
     }
 
-    mapping (uint => HeaderInfo) public m_headers;
+    uint m_last_verified_block;
+   
+    /* block_number => HeaderInfo map */
+    mapping (uint => HeaderInfo) public m_headers; 
+
     address m_verifier_addr = address(0); /* Contract address */
    
    /*
@@ -36,32 +38,64 @@ contract BTCHeaderStore {
     }
 
     /**
+     * @dev Computes bitcoin header hash by double hashing using sha256. 
+     */
+    function btc_hash(bytes b) internal pure returns(bytes32) {
+       bytes32 hash1 = sha256(b);
+       bytes32 hash2 = sha256(abi.encodePacked(hash1));
+       return hash2;
+    }
+
+    /**
+     * @dev Function to convert first 248 bits of a given hash into uint. 
+     * This is needed due to field limitations  at the verifier contract.
+     */
+    function hash_to_uint248(bytes32 hash) internal pure returns(uint) {
+        bytes memory b31 = BytesLib.slice(abi.encodePacked(hash), 1, 31); 
+        return BytesLib.toUint(b31, 0); 
+    }
+
+    /**
     * @dev The function stores the given BTC header without verifying anything. 
     * Note that all input values in byte-swapped  litte-endian format. 
     */
-    function store_block_header(bytes4 version, bytes32 prev_header_hash, 
-                                bytes32 merkel_root, bytes4 timestamp, 
-                                bytes4 nbits, bytes4 nonce) external { 
+    function store_block_header(bytes data, uint block_number) public { 
+        /* Not already stored and verified */
+        require(m_headers[block_number].verified == false);
 
-        bytes32 hash1 = sha256(abi.encodePacked(version, prev_header_hash, 
-                                                merkel_root, timestamp, nbits, 
-                                                nonce));
-        bytes32 hash2 = sha256(abi.encodePacked(hash1));
-        
-        m_headers[uint(hash2)] = HeaderInfo(version, prev_header_hash, 
-                                            merkel_root, timestamp, nbits, 
-                                            nonce, false);
+        m_headers[block_number] = HeaderInfo(data, block_number, false); 
     } 
 
     /**
-     * @dev Mark a block header verified.  This method can only be called 
-     * by verifier contract.
+     * @dev Verify a group of headers. This method can only be called by 
+     * by SNARK verifier contract. 
+     * @param hash248 Int of lower 248 bits of hash of last verified block
+     * @param concatHash248 Int of lower 248 bits of 
+     * hash(concat(hash of headers to be verified)
+     * @param n_headers Number of headers to be verified. The headers are
+     * ordered - latest first
      */
-    function mark_verified(uint block_hash) public returns (bool) {
+    function verify(uint last_verified_block, uint hash248, uint concatHash248,
+                    uint n_headers) public returns (bool) {
         require(m_verifier_addr != address(0));
         require(msg.sender == m_verifier_addr);
 
-        m_headers[block_hash].verified = true;
+        require(last_verified_block == m_last_verified_block); 
+        bytes32 last_block_hash = btc_hash(m_headers[last_verified_block].data); 
+        require(hash_to_uint248(last_block_hash) == hash248);
+        
+        bytes memory concat_headers;
+        uint n_highest = m_last_verified_block + n_headers;
+        for (uint i = 0; i < n_headers; i++) 
+            concat_headers = BytesLib.concat(concat_headers, m_headers[n_highest].data);
+
+        bytes32 concatHash = sha256(concat_headers); 
+        require(concatHash248 == hash_to_uint248(concatHash));
+
+        for (i = 0; i < n_headers; i++) 
+            m_headers[m_last_verified_block + i + 1].verified = true;
+         
+        m_last_verified_block += i;
 
         return true;
     }
