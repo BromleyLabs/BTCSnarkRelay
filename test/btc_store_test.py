@@ -53,6 +53,12 @@ def set_address(contract, addr, txn_params, w3):
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
 
+def set_start_block(contract, bbytes, block_number, txn_params, w3):
+    logger.info('Setting start block header')
+    txn_hash = contract.store_start_block_header(bbytes, block_number,
+                                                 transact = txn_params)
+    status, txn_receipt = wait_to_be_mined(w3, txn_hash)
+    logger.info(txn_receipt)
 
 def main():
     if len(sys.argv) != 4:
@@ -77,25 +83,23 @@ def main():
     if contract is None:
         logger.error('Could not deploy contract')
         return 1
-    addr = '0x5F088c6280354a62eAeeB6643Adc783Ff0c9F528'  # Some dummy addr
-    set_address(contract, addr, txn_params, w3)
+
+    set_address(contract, w3.eth.accounts[0], txn_params, w3)
+     
+    _, b0bytes = get_header(block0, HEADERS_DATA)
+    set_start_block(contract, b0bytes, block0, txn_params, w3)
 
     store_header(block2, HEADERS_DATA, contract, txn_params, w3) 
     store_header(block1, HEADERS_DATA, contract, txn_params, w3) 
-    store_header(block0, HEADERS_DATA, contract, txn_params, w3) 
 
     # Verify
-
     last_verified_block = block0 
-    _, b0bytes = get_header(block0, HEADERS_DATA)
     hash0 = get_btc_hash(b0bytes)  
     hash0_int = int.from_bytes(hash0[1:], 'big') # Only 31 bytes
 
     _, b1bytes = get_header(block1, HEADERS_DATA)
-    #hash1 = get_btc_hash(b1bytes)  
 
     _, b2bytes = get_header(block2, HEADERS_DATA)
-    #hash2 = get_btc_hash(b2bytes)  
  
     concat_hash = hashlib.sha256(b2bytes + b1bytes).digest()
     concat_hash_int = int.from_bytes(concat_hash[1:], 'big') # Only 31 bytes
