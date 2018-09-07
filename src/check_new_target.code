@@ -1,8 +1,9 @@
+// CHECK_NEW_TARGET
 // @author Bon Filey <bon@bromleylabs.io>
 // @author Anurag Gupta <anurag@bromleylabs.io>
-// Copyright (c) Bromley Labs Inc.        
+//
+// Copyright (c) 2018 Bromley Labs Inc.        
 
-//CHECK_NEW_TARGET
 //@dev Check if new target value for the current block given previous blocks 
 //data is as computed correctly.  This applies to block number that is multiple
 // of 2016. If not, this function just bypasses the check.  'flag' specifies
@@ -25,7 +26,8 @@ def main(prevTime, startTime, currTarget, prevTarget, flag):
     // It can be verified that the mulitplications below will not exceed the
     // field limit
 
-    //currTarget  = (actualSpan * prevTarget) / TARGETSPAN
+    //Equvalent implmentation of:
+    // currTarget  = (actualSpan * prevTarget) / TARGETSPAN
     a = currTarget * TARGETSPAN * flag 
     b = actualSpan * prevTarget * flag 
     a == b 

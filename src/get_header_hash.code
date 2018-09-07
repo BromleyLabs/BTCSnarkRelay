@@ -1,3 +1,9 @@
+// BTC HEADER HASH
+// @author Bon Filey <bon@bromleylabs.io>
+// @author Anurag Gupta <anurag@bromleylabs.io>
+//
+// Copyright (c) 2018 Bromley Labs Inc.        
+
 import "./sha256/pad640.code" as BTCSHAPAD640
 import "./sha256/pad256.code" as BTCSHAPAD256
 import "./sha256/sha256_ex.code" as SHA256COMPRESS2

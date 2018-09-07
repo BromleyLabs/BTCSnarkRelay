@@ -1,6 +1,10 @@
 //BITS_TO_VALUE8
-//@dev given 8 bits convert them to uint value.
+// @author Bon Filey <bon@bromleylabs.io>
+// @author Anurag Gupta <anurag@bromleylabs.io>
+//
+// Copyright (c) 2018 Bromley Labs Inc.        
 
+//@dev given 8 bits convert them to uint value.
 def main(a7, a6, a5, a4, a3, a2, a1, a0): 
     
     val = 0
