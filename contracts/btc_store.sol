@@ -96,7 +96,8 @@ contract BTCHeaderStore {
         require(msg.sender == m_verifier_addr);
         
         require(last_verified_block == m_last_verified_block); 
-        bytes32 last_block_hash = btc_hash(m_headers[last_verified_block].data); 
+
+        bytes32 last_block_hash = btc_hash(m_headers[last_verified_block].data);
         require(hash_to_uint248(last_block_hash) == hash248);
 
         uint n_highest = m_last_verified_block + n_headers;
@@ -107,7 +108,6 @@ contract BTCHeaderStore {
             concat_headers = BytesLib.concat(concat_headers, 
                                              abi.encodePacked(header_hash)); 
         }
-
         bytes32 concatHash = sha256(concat_headers); 
         require(concatHash248 == hash_to_uint248(concatHash));
 
@@ -115,6 +115,7 @@ contract BTCHeaderStore {
             m_headers[m_last_verified_block + i + 1].verified = true;
          
         m_last_verified_block += n_headers;
+
         return true;
     }
 }
