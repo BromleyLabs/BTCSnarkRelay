@@ -13,7 +13,7 @@ header = \
 /**
  * Large portion of this file was auto-generated using ZoKrates tool.   
  * Modifications related to BTCSnarkRelay have been done here which include
- * fetching marking a bitcoin header on BTCHeaderStore contract as verified. 
+ * marking a bitcoin header on BTCHeaderStore contract as verified. 
  *
  * @author Bon Filey (bon@bromleylabs.io)
  * @author Anurag Gupta (anurag@bromleylabs.io)
