@@ -50,7 +50,7 @@ contract BTCHeaderStore {
 
 
     /*
-     * @dev One time setting of contract that is going to call mark_verified() 
+     * @dev One time setting of contract that is going to call verify()
      * method.
      */
     function set_verifier_addr (address addr) public {
