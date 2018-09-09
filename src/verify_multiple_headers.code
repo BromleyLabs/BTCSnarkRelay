@@ -8,7 +8,6 @@ import "./get_header_hash.code" as HEADERHASH
 import "./verify_header.code" as VERIFYHEADER
 import "./bits_to_value256.code" as BITSTOVALUE256
 import "./bits_to_value248.code" as BITSTOVALUE248
-import "./swap32.code" as SWAP
 import "./sha256/hash_512bit_input.code" as HASH512
 
 // @param lastDiffAdjustTime uint Time in seconds (from epoch) of block where 
