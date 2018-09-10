@@ -98,6 +98,11 @@ contract BTCHeaderStore {
         m_headers[block_number] = HeaderInfo(data, false); 
     } 
 
+    /**
+     * @dev The function computes the block where difficulty was adjusted last,
+     * i.e block % 2016 == 0, and extracts the time of the block.  If there is
+     * no previous block present, the initialized time is considered.
+     */
     function get_last_diff_adjust_time(uint last_verified_block) internal
                                        view returns (uint) {
         int last_diff_adjust_block = int(last_verified_block) - 
