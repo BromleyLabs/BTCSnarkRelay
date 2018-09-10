@@ -15,32 +15,35 @@ Implementing zk-SNARKS is quite complex given the number of different parts that
 
 ## BTC Header Validation Process
 
-1. Submission of block headers
+### 1. Submission of block headers
 
 Submission of a batch of n Bitcoin block headers. The following information is submitted to the contract:
 
 n Block headers, ordered
-Concat Hash = Hash( Header1 + Header2 +...+ Header n)  - The hash of the string formed from concatenating all the submitted block headers in sequence.
+Concat Hash = Hash(Hash(Header n) + Hash(Header n-1) +...+ Hash(Header 1))
+The hash of the string formed from concatenating all the submitted block headers in sequence.
 
 The contract saves this information, and also creates a mapping from the Concat Hash to the Headers (one to many mapping)
 
 The contract also auto assigns block numbers sequentially to each Header, starting with the block number of the last verified block header + 1.
 
-2. Snark Function
+### 2. Snark Function
 
 This function takes as private input the following:
 
-The block headers H1, H2,..,Hn (same as in 1. above)
+The block headers Hn, Hn-1,..,H1, H0 
+
+H0 is previous block header which is assumed to be verified.
 
 Public inputs:
 
-Concat Hash (constructed as in 1 above)
-Block Hash stored in the block previous to H1
-Block number of H1
+1. Block number of H0 which is previous block (also the last verified block).
+2. Block Hash of H0.
+3. Concat Hash (constructed as in 1 above)
 
 This function will validate the headers, including difficulty and will also validate the passed Concat Hash against the passed block headers.
 
-3. Verification Contract. This contract will take as input:
+### 3. Verification Contract. This contract will take as input:
 
 The public inputs from 2.
 The proof of the snark function from 2.
@@ -49,8 +52,8 @@ The contract will verify the proof.
 
 It will then verify that the Concat Hash is valid, by concatenating all the onchain headers that map to the supplied concat hash, taking the hash of this string and then comparing this hash to the passed concat hash.
 
-It will then compare the passed previous block hash (i.e. the block hash stored in the header before H1)
+It will then compare the passed previous block hash H0 (i.e. the block hash stored in the header before H1)
 
-It will compare the passed Block Number of H1 to the Block Number assigned to H1 stored on chain.
+It will compare the passed Block Number of H0 to the Block Number assigned to H0 stored on chain.
 
 If all these validations pass, it will mark all of these headers as being valid
