@@ -47,8 +47,8 @@ This function will validate the headers, including difficulty and will also vali
 
 This contract takes in the following inputs:
 
-The public inputs from 2.
-The proof of the snark function from 2.
+1. The public inputs from 2.
+2. The proof of the snark function from 2.
 
 The contract will verify the proof.
 
