@@ -43,7 +43,9 @@ Public inputs:
 
 This function will validate the headers, including difficulty and will also validate the passed Concat Hash against the passed block headers.
 
-### 3. Verification Contract. This contract will take as input:
+### 3. Verification Contract. 
+
+This contract takes in the following inputs:
 
 The public inputs from 2.
 The proof of the snark function from 2.
