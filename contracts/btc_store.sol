@@ -21,6 +21,7 @@ contract BTCHeaderStore {
     }
 
     uint m_last_verified_block = 0;
+    uint m_first_block; /* Block number of first block stored */
     uint m_init_diff_adjust_time; /* Block time when difficulty was adjusted */
    
     /* block_number => HeaderInfo map */
@@ -55,7 +56,6 @@ contract BTCHeaderStore {
      * uint.  The function will raise exception if block number provided as 
      * arugment is not available.
      */
-
     function get_block_time(uint block_number) internal view returns (uint) { 
         bytes memory block_bytes = m_headers[block_number].data;     
         bytes memory time_bytes = BytesLib.slice(block_bytes, 68, 4);
@@ -85,6 +85,7 @@ contract BTCHeaderStore {
         m_headers[block_number] = HeaderInfo(data, true); 
         m_last_verified_block = block_number;
         m_init_diff_adjust_time = diff_adjust_time;
+        m_first_block = block_number;
     }
 
     /**
@@ -104,10 +105,11 @@ contract BTCHeaderStore {
      * no previous block present, the initialized time is considered.
      */
     function get_last_diff_adjust_time(uint last_verified_block) internal
-                                       view returns (uint) {
+                                        view returns (uint) {
         int last_diff_adjust_block = int(last_verified_block) - 
-                                     int((last_verified_block % 2016));
-        if (last_diff_adjust_block < 0) 
+                                     int(last_verified_block % 2016);
+
+        if (last_diff_adjust_block < int(m_first_block)) 
             return m_init_diff_adjust_time;
 
         return get_block_time(uint(last_diff_adjust_block));
@@ -124,16 +126,17 @@ contract BTCHeaderStore {
      * @param n_headers Number of headers to be verified. The headers are
      * ordered - latest first
      */
-    function verify(uint last_diff_adjust_time, uint last_verified_block, uint hash248, uint concatHash248,
-                    uint n_headers) public returns (bool) {
+    function verify(uint last_diff_adjust_time, uint last_verified_block, 
+                    uint hash248, uint concatHash248, uint n_headers) public 
+                    returns (bool) {
         require(m_verifier_addr != address(0));
         require(msg.sender == m_verifier_addr);
         
         require(last_verified_block == m_last_verified_block); 
-
+        
         bytes32 last_block_hash = btc_hash(m_headers[last_verified_block].data);
         require(hash_to_uint248(last_block_hash) == hash248);
-
+         
         uint n_highest = m_last_verified_block + n_headers;
         bytes memory concat_headers;
         bytes32 header_hash;

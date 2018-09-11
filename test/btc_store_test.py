@@ -55,9 +55,12 @@ def set_address(contract, addr, txn_params, w3):
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
 
-def set_start_block(contract, bbytes, block_number, txn_params, w3):
+def set_start_block(contract, bbytes, block_number, last_diff_adjust_time,  
+                    txn_params, w3):
     logger.info('Setting start block header')
-    txn_hash = contract.store_start_block_header(bbytes, block_number,
+
+    txn_hash = contract.store_start_block_header(bbytes, block_number, 
+                                                 last_diff_adjust_time,
                                                  transact = txn_params)
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
@@ -74,7 +77,7 @@ def get_int_concat_hash248(blocks):
     ch = b''
     for b in blocks:
         _, bbytes = get_header(b, HEADERS_DATA)
-        ch += bbytes 
+        ch += get_btc_hash(bbytes) 
 
     concat_hash = hashlib.sha256(ch).digest()
     concat_hash_int = int.from_bytes(concat_hash[1:], 'big') # Only 31 bytes
@@ -105,8 +108,13 @@ def main():
         return 1
 
     set_address(contract, w3.eth.accounts[0], txn_params, w3)
+
+    last_diff_adjust_block = block0 - (block0 % 2016)
+    b,_ = get_header(last_diff_adjust_block, HEADERS_DATA) 
+    timestamp = int.from_bytes(b.timestamp, 'little')
     _, b0bytes = get_header(block0, HEADERS_DATA)
-    set_start_block(contract, b0bytes, block0, txn_params, w3)
+
+    set_start_block(contract, b0bytes, block0, timestamp, txn_params, w3)
 
     store_headers([block1, block2], HEADERS_DATA, contract, txn_params, w3) 
 
@@ -117,10 +125,10 @@ def main():
     n_headers = 2 
    
     logger.info('Verifying ..')
-    txn_hash = contract.verify(125551, 362222075228124323440975452176116135959151765539991078657306363726407925760, 99457748802113952899368401963545431390009651956962153679970886296667461646, n_headers, transact = txn_params)
 
-    #txn_hash = contract.verify(last_verified_block, h0hash_int, concat_hash_int,
-    #                           n_headers, transact = txn_params)
+    txn_hash = contract.verify(timestamp, last_verified_block, h0hash_int, 
+                               concat_hash_int, n_headers, 
+                               transact = txn_params)
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
 
