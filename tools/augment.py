@@ -23,20 +23,21 @@ header = \
 '''
 code0 = \
 '''
-import "./btc_store.sol";
+import "./btc_store.sol"; 
 
 '''
 
 code1 = \
 '''
-    address m_header_contract_addr = address(0);
+    address m_header_contract_addr = address(0);  /* BTC Store contract */
 
 '''
 
 code2 = \
 '''
     /**
-     * @dev One time setting
+     * @dev Set address of contract where BTC headers are stored. This is a
+     * one-time setting. 
      */
     function set_header_contract_addr(address addr) public {
         require(m_header_contract_addr == address(0));    
@@ -49,7 +50,7 @@ code3 = \
 '''
             /* Mark group of headers verified. In this case 2 headers */ 
             require(BTCHeaderStore(m_header_contract_addr).verify(input[0], 
-                                  input[1], input[2], 2) == true);
+                                  input[1], input[2], input[3], 2) == true);
 '''
 
 def line_with_pattern(lines, pattern):

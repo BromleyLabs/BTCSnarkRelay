@@ -8,7 +8,7 @@
 /**
  * Large portion of this file was auto-generated using ZoKrates tool.   
  * Modifications related to BTCSnarkRelay have been done here which include
- * fetching marking a bitcoin header on BTCHeaderStore contract as verified. 
+ * marking a bitcoin header on BTCHeaderStore contract as verified. 
  *
  * @author Bon Filey (bon@bromleylabs.io)
  * @author Anurag Gupta (anurag@bromleylabs.io)
@@ -18,7 +18,7 @@
 
 pragma solidity ^0.4.14;
 
-import "./btc_store.sol";
+import "./btc_store.sol"; 
 
 library Pairing {
     struct G1Point {
@@ -158,7 +158,7 @@ library Pairing {
 contract Verifier {
     using Pairing for *;
 
-    address m_header_contract_addr = address(0);
+    address m_header_contract_addr = address(0);  /* BTC Store contract */
 
     struct VerifyingKey {
         Pairing.G2Point A;
@@ -182,7 +182,8 @@ contract Verifier {
     }
 
     /**
-     * @dev One time setting
+     * @dev Set address of contract where BTC headers are stored. This is a
+     * one-time setting. 
      */
     function set_header_contract_addr(address addr) public {
         require(m_header_contract_addr == address(0));    
@@ -190,19 +191,20 @@ contract Verifier {
     }
 
     function verifyingKey() pure internal returns (VerifyingKey vk) {
-        vk.A = Pairing.G2Point([0x31449d41b58dcb7cf022735b067d1ee501cdb9b57a0027409a0672e092e540f, 0x588b638cf53df53b7d08265523de840a0436b4ce61a37731e4b435a5a1a3a98], [0x8deff0b670ab89f48ec51fda8c193af8bc00347d263ca1abc96fe4078c52e07, 0x1d0816ad1ab5e2e74ac94ed667f559518fff8b970561f63a2f282d07d1ba1aff]);
-        vk.B = Pairing.G1Point(0x162d8108a0a0544fc7ff46123419452fe281e351b6038443729c8c35d7c4e914, 0x1a89e4f944c09a2be20a61a1b505571726fa9d441d2e49a2bd3f87c37774e24e);
-        vk.C = Pairing.G2Point([0x9e336b98f4b0ef636a3cc479b4835a74ad17e41f9e54e54b7e8030c3bf4f3f6, 0x16afee37c742d97db57359d84b3605789f44418bbf923e1de471dde9a9bead18], [0xf518f16001fcaa7c12e2886bdc569c5ba20e205e8b7be6e8ca2d33b3d4735f2, 0x2a649bfa91c97744ed94b9cc2efffcdea6463bd62609095fb322aa0caf7c95a4]);
-        vk.gamma = Pairing.G2Point([0xc2bf2f0f82f32d686ce98d9387bda3ef9d091c68a18dcc33501f1b869203acf, 0x141197402c564177ac4ec7abf06433a00d738fb71436f3ef2538f2166e5023ad], [0x7a0b18eda4ea9f0ba71936182e34ac238bbbc9830c09843845ced90c570b90a, 0x2b7fa3bf9b71ae56595c43c4e46f511d7a6a14903d165a2d55d560468c8ef04]);
-        vk.gammaBeta1 = Pairing.G1Point(0x2cfe8fb255d4eb5a092609e15aceaa73fb64ce8c6054c68d628331d8077c467e, 0x37e9a3fe09ea08a3f1ffd002cae5cce7d3302cf283cb1398e4ac0df0557e3f7);
-        vk.gammaBeta2 = Pairing.G2Point([0x214cb4b0755fe998241cd329a674598f21d7b0c00691c9f2e3658cbc0c62c977, 0x7abc3eacc0912e263656165ea6e1469729698b5e1953fa64c2b17fcc86f07f9], [0x190f01feba3afc8af8c9c589be4f3b47f20b6fd2808d796d1ae2d09063ac068c, 0xb5574469be38c48a9f1267eaa7825281b2fa3cd0b6c62e02c2759e6b4c437cf]);
-        vk.Z = Pairing.G2Point([0xcb0845de6479102e3f683d96d27c7cf1b5614021968d190309798a9ce853288, 0x81b973f198c0001becebe312d06dc6cd4cce6b992a040e567faf5e55bebf651], [0x1e777e094106736222a2a076a40d0a29f6f0228748bb004712b439f9b89989dc, 0xe3b433699a9ffb866bebeb9656cf1e2be919b7a31068585aa2d6c0051b51d5a]);
-        vk.IC = new Pairing.G1Point[](5);
-        vk.IC[0] = Pairing.G1Point(0x2f2f1aaac17bd00435d6b26f39f854676455f8feb78cf1e844d9e14862da74f1, 0x1464fd42819a6cb0f882898f1ff5dfe0233f59ba93a103bbac696d8cb1edbab3);
-        vk.IC[1] = Pairing.G1Point(0xfa8bc2897f8f4c7109c238a0f205e71107045fe1a57df154ab90666f33aded2, 0x22c769f202ff92558127a6152e769ac6767b8b3ce9a0896594fbf6ccc42fcb6f);
-        vk.IC[2] = Pairing.G1Point(0x281abe41f86301d2bc52bf3c9d2f54715d7da4d8d3c243665a4bcefdf624ace, 0x2af5a28566db374330c91f4262643779cdadb861dfcc62b80c7932a498b3b0);
-        vk.IC[3] = Pairing.G1Point(0x1433cbbe7afce4633983b1f5aabdcc79c2f65f347d57a36ac9a18582c8182c7c, 0x2099725ce80115992843b743654042f121f89addad93782d5181a5338d1fbce7);
-        vk.IC[4] = Pairing.G1Point(0x4f6b85d7e97e7c114edd25c1f9c2d83833e9438f60ce0fe72698cd197f2783c, 0x2e7c4259000471ec18c2af0a74ac63c8553880646be6d584bdb44183c85c17f9);
+        vk.A = Pairing.G2Point([0x540b06f7093346dbad9d30d975872d899de98a7a7bb36f8d2222c456a843cfd, 0x24f75c0be7d69cd689551c38df470699149f5d0480e42680af2149b37ed668c0], [0x19139c0eedc2cb111e846638232a4e8b8a8f919597d4c540b243ccdef4cdd515, 0xa8cc14346eeec025274d568b9fc2a86ffe9a0e85cf40f56c7cef2e5e9d31f4e]);
+        vk.B = Pairing.G1Point(0x1da634b1ff60cc66b9873c303e5f8c45907e68a0c6605cf540b267e345956c14, 0x1469122dff9b0d364d1aeef33d61bfdfa3cd62bfeac7e91b9c044ed5f59983fa);
+        vk.C = Pairing.G2Point([0x2eeaf819e206705ee3889a9c06d63cd71cf44ffadb10f705232c4f0c291172f5, 0xec4e2db8918155498110bb813b3245a1d5227a0d698e1e8f5e828ebf0dadbf], [0x129b4b0da2ca84187015704d5b728b67493221609d750038e55257add990473b, 0xbb9852f7e80f510435e3c975b51c52f4483ece661d3e5efe12ce8721f7f5b29]);
+        vk.gamma = Pairing.G2Point([0x5edb8a37ebcd1d101233f6746fdbef3de24278f2c616adcc02f2b983d89fa7c, 0x3a356718a6ab8a7604a7083d8dc4a582779fa0d24ea31d9d4d76ff58650a03c], [0x2ba7bad48a9c23fd00f116744e4c1e4713183b08916c3d302d9bc0feba87c6a6, 0x13a911063228c2b880d3c0ffc10ac5b4769956fd37e46e1bb067f87d5694d1b0]);
+        vk.gammaBeta1 = Pairing.G1Point(0x10af398d2579cf046be0c97ddbbaee6460648ede7481d059ce92a7c128f5f251, 0x1edae91212228b069766d2c28048d9eae3021d0087626575a933594c5ecb17f0);
+        vk.gammaBeta2 = Pairing.G2Point([0x2f144d1bebd39dd1e4d4b81d500d018ec16dea192cb99e2f462a25b31a3cf9ae, 0x2fb5c12f624777df771502d1d1e6c2f740f3836ba4483de5efa4c2a50cbe9314], [0x839e7a85ef3e6878c5dca245dc3dd4bf733dee32ddaf45bb85b78f6b44dc11e, 0x2fa703e42c119124571df3a2ac7e7a96272b9e3b01a7be2f031154f1cacca95b]);
+        vk.Z = Pairing.G2Point([0x22dcfacd5fa28eb55fcad55bc527517ee46ea76f8554c6580339527ef332bdc2, 0x15565455a0991b396f62bfee1265ddc9b21681bf7ab53dfe32c80c13ded87165], [0x1e0497d6ebc2d655cdf9bbe249f14565a15b72a2312beadfacf7a76aefc8e49f, 0x1b959e46df15e63bf025abbce93beacfdc4ff2d43a76d1570efd803accab8f96]);
+        vk.IC = new Pairing.G1Point[](6);
+        vk.IC[0] = Pairing.G1Point(0x27db854535bdbe5a79cb4f126cbd90611b836c291d4910852f4180953e3f3aea, 0x3165888058b8d7fdd28294cb022d9a029058bf9dae618e6fc7b331b2c184435);
+        vk.IC[1] = Pairing.G1Point(0x41bb7dd5111f4267c1fdcbeadd8357939888ae99eb8ffe30b5a50afd598c1c9, 0x26003bb6b7558a9943f7886e9600fdbf7a643ee7edf89f4478194d7c2438aa68);
+        vk.IC[2] = Pairing.G1Point(0x5cdcde1b746caa83ad52b7d8cd19e27495ca384c5ad2000acebcffc14f511e5, 0x11d590872b03cd338c345f05bdda10d3976f50f4ce4796b3696256b2822274c6);
+        vk.IC[3] = Pairing.G1Point(0x180f5715eb80970bf53c7b45f26ac51d8dfc7610ba78aae80ae21555aeec193b, 0x288a742b5628e0ea1c45e5a17b699f1b9392477e67ae6b3717a3014094a98223);
+        vk.IC[4] = Pairing.G1Point(0x13c00a1da1d29aef0234e493c8a03355c064b4e09a8df7fc43d70bbb07764af5, 0x2ccc9fe7c668f41bb6d454d63b695bf654afe0842cc04c553f32cec1ca710760);
+        vk.IC[5] = Pairing.G1Point(0x3e67d216779457b2b74ac299d4ded130162ca4a00f9102b59a9ded3f6a70e2a, 0x21cd83df1869ed2700672e527b673ea90bb2eeb59d48761a836e9dfc089382ea);
     }
     function verify(uint[] input, Proof proof) internal returns (uint) {
         VerifyingKey memory vk = verifyingKey();
@@ -237,7 +239,7 @@ contract Verifier {
             uint[2] c_p,
             uint[2] h,
             uint[2] k,
-            uint[4] input
+            uint[5] input
         ) public returns (bool r) {
         Proof memory proof;
         proof.A = Pairing.G1Point(a[0], a[1]);
@@ -256,7 +258,7 @@ contract Verifier {
 
             /* Mark group of headers verified. In this case 2 headers */ 
             require(BTCHeaderStore(m_header_contract_addr).verify(input[0], 
-                                  input[1], input[2], 2) == true);
+                                  input[1], input[2], input[3], 2) == true);
             emit Verified("Transaction successfully verified.");
             return true;
         } else {

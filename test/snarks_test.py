@@ -16,7 +16,8 @@ import utils
 from web3.auto import w3
 from btc_utils import *
 from btc_store_test import store_headers, set_start_block, \
-                           get_int_hash248, get_int_concat_hash248
+                           get_int_hash248, get_int_concat_hash248, \
+                           get_last_diff_adjust_time
 import btc_store_test
 
 GAS_PRICE = int(2.5*1e9) 
@@ -99,8 +100,10 @@ def main():
 
     set_addresses(contract_s, contract_h, addr_s, addr_h, txn_params, w3)
 
+    
+    timestamp = get_last_diff_adjust_time(block0, HEADERS_DATA) 
     _, b0bytes = get_header(block0, HEADERS_DATA)
-    set_start_block(contract_h, b0bytes, block0, txn_params, w3)
+    set_start_block(contract_h, b0bytes, block0, timestamp, txn_params, w3)
 
     store_headers([block1, block2], HEADERS_DATA, contract_h, txn_params, w3) 
 
@@ -110,11 +113,9 @@ def main():
     v = read_proof(PROOF)
     logger.info('Verifying provided header..')
     txn_hash = contract_s.verifyTx(v['A'], v['A_p'], v['B'], v['B_p'], v['C'], 
-                                   v['C_p'], v['H'], v['K'], [125551, 362222075228124323440975452176116135959151765539991078657306363726407925760, 99457748802113952899368401963545431390009651956962153679970886296667461646, 1], transact = txn_params)
-    #txn_hash = contract_s.verifyTx(v['A'], v['A_p'], v['B'], v['B_p'], v['C'], 
-    #                               v['C_p'], v['H'], v['K'], [block0, 
-    #                                h0hash_int, concat_hash_int, 1],
-    #                               transact = txn_params)
+                                   v['C_p'], v['H'], v['K'], [timestamp, 
+                                   block0, h0hash_int, concat_hash_int, 1],
+                                   transact = txn_params)
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
     

@@ -71,6 +71,12 @@ def get_int_hash248(block_number):
     hash0_int = int.from_bytes(hash0[1:], 'big') # Only 31 bytes
     return hash0_int
 
+def get_last_diff_adjust_time(curr_block, headers_data):
+    last_diff_adjust_block = curr_block - (curr_block % 2016)
+    b,_ = get_header(last_diff_adjust_block, headers_data) 
+    timestamp = int.from_bytes(b.timestamp, 'little')
+    return timestamp
+
 # @param blocks Block numbers - concatenation is in order in which they are
 # provided
 def get_int_concat_hash248(blocks):
@@ -109,11 +115,8 @@ def main():
 
     set_address(contract, w3.eth.accounts[0], txn_params, w3)
 
-    last_diff_adjust_block = block0 - (block0 % 2016)
-    b,_ = get_header(last_diff_adjust_block, HEADERS_DATA) 
-    timestamp = int.from_bytes(b.timestamp, 'little')
+    timestamp = get_last_diff_adjust_time(block0, HEADERS_DATA) 
     _, b0bytes = get_header(block0, HEADERS_DATA)
-
     set_start_block(contract, b0bytes, block0, timestamp, txn_params, w3)
 
     store_headers([block1, block2], HEADERS_DATA, contract, txn_params, w3) 
