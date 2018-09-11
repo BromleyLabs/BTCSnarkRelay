@@ -4,7 +4,7 @@
 //
 // Copyright (c) 2018 Bromley Labs Inc.        
 
-import "./swap4.code" as BIGENDIAN
+import "./flip4.code" as BIGENDIAN
 import "./bits_to_value8.code" as BITSTOVALUE8
 import "./bits_to_value24.code" as BITSTOVALUE24
 
