@@ -15,17 +15,19 @@ import "./BytesLib.sol";
 contract BTCHeaderStore {
     using BytesLib for bytes;
      
-    struct HeaderInfo { 
-        bytes data;  /* Header data */ 
+    struct GroupInfo {  /* Group of headers */
+        bytes data;  /* Concatenated headers data with order: hn, hn-1, ..h0 */ 
         bool verified; 
     }
-
-    uint m_last_verified_block = 0;
+    uint m_group_len = 2; /* Hard coded */
+    uint m_last_verified_group = 0; /* Index */
     uint m_first_block; /* Block number of first block stored */
     uint m_init_diff_adjust_time; /* Block time when difficulty was adjusted */
    
-    /* block_number => HeaderInfo map */
-    mapping (uint => HeaderInfo) public m_headers; 
+    /* group_hash(248 bits) => GroupInfo */
+    mapping(uint => GroupInfo) public m_group_info; 
+    /* group_number -> group_hash(248 bits) */ 
+    mapping (uint => uint) public m_groups;
 
     address m_verifier_addr = address(0); /* Contract address */
 
@@ -41,7 +43,7 @@ contract BTCHeaderStore {
 
     /**
      * @dev Utility function to convert first 248 bits (31 bytes) of a given
-     * hash into uint. This is needed due to field limitations at the verifier 
+     * hash into uint. This is needed due to field limitations of the verifier 
      * contract.
      */
     function hash_to_uint248(bytes32 hash) internal pure returns(uint) {
@@ -51,13 +53,27 @@ contract BTCHeaderStore {
     }
 
     /**
+    * Return data of a block given a block number. The data is actually stored
+    * in group of headers - as concatenated bytes. The block header bytes are 
+    * extracted.
+    */
+    function get_block(uint block_number) internal view returns (bytes) {
+        uint group_number = block_number / m_group_len;
+        bytes memory group_bytes = m_group_info[m_groups[group_number]].data; 
+        uint block_index = block_number % m_group_len;
+        uint start = block_index * 80; /* 80 bytes per header */ 
+        bytes memory block_bytes = BytesLib.slice(group_bytes, start, 80);  
+        return block_bytes;
+    }
+
+    /**
      * @dev Utility function to extract BTC block time. Block time is stored in 
      * 4 bytes. 28 bytes are padded to make it 32 bytes and then converted to
-     * uint.  The function will raise exception if block number provided as 
-     * arugment is not available.
+     * uint. The function raises exception if block number provided as is not 
+     * available.
      */
     function get_block_time(uint block_number) internal view returns (uint) { 
-        bytes memory block_bytes = m_headers[block_number].data;     
+        bytes memory block_bytes = get_block(block_number);
         bytes memory time_bytes = BytesLib.slice(block_bytes, 68, 4);
         bytes memory padding = new bytes(28); /* To make it 32 bytes */ 
         time_bytes = BytesLib.concat(padding, time_bytes);
@@ -65,7 +81,7 @@ contract BTCHeaderStore {
     }
 
     /*
-     * @dev One time setting of contract that is going to call verify()
+     * @dev One time setting of contract address that is going to call verify()
      * method.
      */
     function set_verifier_addr (address addr) public {
@@ -73,35 +89,45 @@ contract BTCHeaderStore {
        m_verifier_addr = addr;
     }
 
-    /**
-     * @dev Initialize the start header. The header is assumed to be verified.
-     * This is one-time setting. 
-     * @param block_number assumed > 0
+    /*
+     * @dev Compute group number given block_number. 
      */
-    function store_start_block_header(bytes data, uint block_number, 
-                                      uint diff_adjust_time) public {
-        require(m_last_verified_block == 0);
-        require(block_number > 0);
-        m_headers[block_number] = HeaderInfo(data, true); 
-        m_last_verified_block = block_number;
-        m_init_diff_adjust_time = diff_adjust_time;
-        m_first_block = block_number;
+    function get_group_number(uint block_number) internal view returns (uint) {
+        return block_number / m_group_len;  
     }
 
     /**
-    * @dev The function stores the given BTC header without verifying anything. 
-    * Note that all input values in byte-swapped  litte-endian format. 
-    */
-    function store_block_header(bytes data, uint block_number) public { 
-        /* Not already stored and verified */
-        require(m_headers[block_number].verified == false);
+     * @dev Initialize the start group. The header group is assumed to be 
+     * verified. This is one-time setting. 
+     * @param block_number of first block (oldest) block in the group
+     */
+    function store_start_group(bytes data,  uint block_number,
+                               uint diff_adjust_time) public {
+        require(m_last_verified_group == 0);
+        require(block_number > 0); /* TODO: Do we really need this */ 
 
-        m_headers[block_number] = HeaderInfo(data, false); 
+        m_last_verified_group = get_group_number(block_number); 
+        m_init_diff_adjust_time = diff_adjust_time;
+        m_first_block = block_number;
+        store_group(data);
+    }
+
+    /**
+    * @dev The function stores the group of BTC headers without verifying 
+    * anything. Only m_group_len number of blocks can be submitted. 
+    * @param data All header bytes concatenated - hn, hn-1, ..h1, h0
+    */
+    function store_group(bytes data) public { 
+        uint hash248 = hash_to_uint248(sha256(data));
+        require(m_group_info[hash248].verified == false);
+        require(data.length == 80 * m_group_len); 
+
+        m_group_info[hash248] = GroupInfo(data, false); 
     } 
 
     /**
      * @dev The function computes the block where difficulty was adjusted last,
-     * i.e block % 2016 == 0, and extracts the time of the block.  If there is
+     * i.e block % 2016 == 0, and extracts the time of the block. If there is
      * no previous block present, the initialized time is considered.
      */
     function get_last_diff_adjust_time(uint last_verified_block) internal
@@ -131,29 +157,17 @@ contract BTCHeaderStore {
                     returns (bool) {
         require(m_verifier_addr != address(0));
         require(msg.sender == m_verifier_addr);
+        require(n_headers == m_group_len);
         
-        require(last_verified_block == m_last_verified_block); 
-        
-        bytes32 last_block_hash = btc_hash(m_headers[last_verified_block].data);
+        require(get_group_number(last_verified_block) == m_last_verified_group); 
+        bytes32 last_block_hash = btc_hash(get_block(last_verified_block));
         require(hash_to_uint248(last_block_hash) == hash248);
          
-        uint n_highest = m_last_verified_block + n_headers;
-        bytes memory concat_headers;
-        bytes32 header_hash;
-        for (uint i = 0; i < n_headers; i++) { 
-            header_hash = btc_hash(m_headers[n_highest - i].data);
-            concat_headers = BytesLib.concat(concat_headers, 
-                                             abi.encodePacked(header_hash)); 
-        }
-        bytes32 concatHash = sha256(concat_headers); 
-        require(concatHash248 == hash_to_uint248(concatHash));
-
         require(get_last_diff_adjust_time(last_verified_block) == last_diff_adjust_time); 
 
-        for (i = 0; i < n_headers; i++) 
-            m_headers[m_last_verified_block + i + 1].verified = true;
-         
-        m_last_verified_block += n_headers;
+        m_group_info[concatHash248].verified = true;
+        m_last_verified_group += 1; 
+        m_groups[m_last_verified_group] = concatHash248;
 
         return true;
     }
