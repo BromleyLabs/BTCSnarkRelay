@@ -116,9 +116,9 @@ def main():
     _, b1bytes = get_header(block1, HEADERS_DATA)
     set_start_group(contract, b1bytes+b0bytes, block0, timestamp, txn_params,
                     w3)
+
     _, b2bytes = get_header(block2, HEADERS_DATA)
     _, b3bytes = get_header(block3, HEADERS_DATA)
-
     store_group(b3bytes+b2bytes, contract, txn_params, w3) 
 
     # Verify

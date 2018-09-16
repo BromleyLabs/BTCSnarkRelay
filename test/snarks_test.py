@@ -15,7 +15,7 @@ from utils import *
 import utils
 from web3.auto import w3
 from btc_utils import *
-from btc_store_test import store_headers, set_start_block, \
+from btc_store_test import store_group, set_start_group, \
                            get_int_hash248, get_int_concat_hash248, \
                            get_last_diff_adjust_time
 import btc_store_test
@@ -68,10 +68,9 @@ def set_addresses(contract_s, contract_h, addr_s, addr_h, txn_params, w3):
     logger.info(txn_receipt)
 
 def main():
-    if len(sys.argv) != 4:
-        print('Usage: python %s <b2> <b1> <b0>' % sys.argv[0])
-        print('bn: block numbers in sequencial order highest first')
-        print('b0: genesis block')
+    if len(sys.argv) != 2:
+        print('Usage: python %s <b0>' % sys.argv[0])
+        print('b0 : start block') 
         return 1 
     global logger
 
@@ -79,12 +78,10 @@ def main():
     utils.logger = logger 
     btc_store_test.logger = logger
 
-    block2 = int(sys.argv[1])
-    block1 = int(sys.argv[2])
-    block0 = int(sys.argv[3])
-    if (block1 != block0 + 1 or block2 != block1 + 1):
-        print('Incorrect block numbers')
-        return 1  
+    block0 = int(sys.argv[1])
+    block1 = block0 + 1
+    block2 = block0 + 2
+    block3 = block0 + 3
 
     txn_params = {'from': w3.eth.accounts[0], 
                   'gas': GAS, 
@@ -100,15 +97,21 @@ def main():
 
     set_addresses(contract_s, contract_h, addr_s, addr_h, txn_params, w3)
 
-    
+    # Initialize headers contract 
     timestamp = get_last_diff_adjust_time(block0, HEADERS_DATA) 
     _, b0bytes = get_header(block0, HEADERS_DATA)
-    set_start_block(contract_h, b0bytes, block0, timestamp, txn_params, w3)
+    _, b1bytes = get_header(block1, HEADERS_DATA)
+    set_start_group(contract_h, b1bytes+b0bytes, block0, timestamp, txn_params,
+                    w3)
 
-    store_headers([block1, block2], HEADERS_DATA, contract_h, txn_params, w3) 
+    # Store a group of headers
+    _, b2bytes = get_header(block2, HEADERS_DATA)
+    _, b3bytes = get_header(block3, HEADERS_DATA)
+    store_group(b3bytes+b2bytes, contract_h, txn_params, w3) 
 
-    h0hash_int = get_int_hash248(block0)
-    concat_hash_int = get_int_concat_hash248([block2, block1])
+
+    h0hash_int = get_int_hash248(block1)
+    concat_hash_int = get_int_concat_hash248([block3, block2])
 
     v = read_proof(PROOF)
     logger.info('Verifying provided header..')
