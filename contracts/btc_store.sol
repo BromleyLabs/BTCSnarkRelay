@@ -31,6 +31,15 @@ contract BTCHeaderStore {
 
     address m_verifier_addr = address(0); /* Contract address */
 
+    /*
+     * @dev One time setting of contract address that is going to call verify()
+     * method.
+     */
+    function set_verifier_addr (address addr) public {
+       require(m_verifier_addr == address(0));  
+       m_verifier_addr = addr;
+    }
+
     /**
      * @dev Utility function to computes bitcoin header hash by double hashing 
      * using sha256. 
@@ -58,9 +67,9 @@ contract BTCHeaderStore {
     * extracted.
     */
     function get_block(uint block_number) internal view returns (bytes) {
-        uint group_number = block_number / m_group_len;
+        uint group_number = get_group_number(block_number); 
         bytes memory group_bytes = m_group_info[m_groups[group_number]].data; 
-        uint block_index = block_number % m_group_len;
+        uint block_index = get_block_index(block_number); 
         uint start = block_index * 80; /* 80 bytes per header */ 
         bytes memory block_bytes = BytesLib.slice(group_bytes, start, 80);  
         return block_bytes;
@@ -81,19 +90,20 @@ contract BTCHeaderStore {
     }
 
     /*
-     * @dev One time setting of contract address that is going to call verify()
-     * method.
-     */
-    function set_verifier_addr (address addr) public {
-       require(m_verifier_addr == address(0));  
-       m_verifier_addr = addr;
-    }
-
-    /*
      * @dev Compute group number given block_number. 
      */
     function get_group_number(uint block_number) internal view returns (uint) {
-        return block_number / m_group_len;  
+        return (block_number - m_first_block) / m_group_len;  
+    }
+
+    /*
+     * @dev Compute position of a block within a group. Note that order of 
+     * headers is reverse - hn,hn-1..h0.  Hence, index obtained after modulo
+     * needs to be reversed.
+     */
+    function get_block_index(uint block_number) internal view returns (uint) {
+        uint i = (block_number - m_first_block) % m_group_len;
+        return (m_group_len - 1) - i;  /* reverse */
     }
 
     /**
@@ -101,15 +111,18 @@ contract BTCHeaderStore {
      * verified. This is one-time setting. 
      * @param block_number of first block (oldest) block in the group
      */
-    function store_start_group(bytes data,  uint block_number,
+    function store_start_group(bytes data, uint block_number,
                                uint diff_adjust_time) public {
         require(m_last_verified_group == 0);
         require(block_number > 0); /* TODO: Do we really need this */ 
 
+        m_first_block = block_number;
         m_last_verified_group = get_group_number(block_number); 
         m_init_diff_adjust_time = diff_adjust_time;
-        m_first_block = block_number;
+
         store_group(data);
+
+        m_groups[m_last_verified_group] =  hash_to_uint248(sha256(data));
     }
 
     /**
@@ -146,9 +159,9 @@ contract BTCHeaderStore {
      * by SNARK verifier contract. 
      * @param last_diff_adjust_time Time of the block when difficulty was
      * adjusted.
-     * @param hash248 Int of lower 248 bits of hash of last verified block
+     * @param hash248 Int of lower 248 bits of BTC hash of last verified block
      * @param concatHash248 Int of lower 248 bits of 
-     * hash(concat(hash of headers to be verified)
+     * hash(concat(headers to be verified))
      * @param n_headers Number of headers to be verified. The headers are
      * ordered - latest first
      */
@@ -162,7 +175,6 @@ contract BTCHeaderStore {
         require(get_group_number(last_verified_block) == m_last_verified_group); 
         bytes32 last_block_hash = btc_hash(get_block(last_verified_block));
         require(hash_to_uint248(last_block_hash) == hash248);
-         
         require(get_last_diff_adjust_time(last_verified_block) == last_diff_adjust_time); 
 
         m_group_info[concatHash248].verified = true;

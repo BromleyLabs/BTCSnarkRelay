@@ -25,16 +25,11 @@ HEADERS_DATA = './data/btc_headers'
 
 logger = None
 
-# @param contract Contract instance of BTC Headers Contract
-# @param block_numbers List of block numbers
-def store_headers(block_numbers, headers_file, contract, txn_params, w3):
-    for bn in block_numbers:
-        logger.info('Storing block %d' % bn)
-        _, bbytes = get_header(bn, headers_file) 
-        txn_hash = contract.store_block_header(bbytes, bn,
-                                               transact = txn_params) 
-        status, txn_receipt = wait_to_be_mined(w3, txn_hash)
-        logger.info(txn_receipt)
+def store_group(bbytes, contract, txn_params, w3):
+    logger.info('Storing group')
+    txn_hash = contract.store_group(bbytes, transact = txn_params) 
+    status, txn_receipt = wait_to_be_mined(w3, txn_hash)
+    logger.info(txn_receipt)
 
 # @param txn_params dict containing 'from', 'gas', 'gasPrice'
 def deploy_and_init(w3, ABI, BIN, txn_params):     
@@ -55,13 +50,13 @@ def set_address(contract, addr, txn_params, w3):
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
 
-def set_start_block(contract, bbytes, block_number, last_diff_adjust_time,  
+def set_start_group(contract, bbytes, block_number, last_diff_adjust_time,  
                     txn_params, w3):
-    logger.info('Setting start block header')
+    logger.info('Setting start block group')
 
-    txn_hash = contract.store_start_block_header(bbytes, block_number, 
-                                                 last_diff_adjust_time,
-                                                 transact = txn_params)
+    txn_hash = contract.store_start_group(bbytes, block_number, 
+                                          last_diff_adjust_time,
+                                          transact = txn_params)
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
 
@@ -83,25 +78,26 @@ def get_int_concat_hash248(blocks):
     ch = b''
     for b in blocks:
         _, bbytes = get_header(b, HEADERS_DATA)
-        ch += get_btc_hash(bbytes) 
+        ch += bbytes 
 
     concat_hash = hashlib.sha256(ch).digest()
     concat_hash_int = int.from_bytes(concat_hash[1:], 'big') # Only 31 bytes
     return concat_hash_int
 
 def main():
-    if len(sys.argv) != 4:
-        print('Usage: python %s <b2> <b1> <b0>' % sys.argv[0])
-        print('bn: block numbers in sequencial order highest first')
+    if len(sys.argv) != 2:
+        print('Usage: python %s <b0>' % sys.argv[0])
+        print('b0: first block number')
         exit(0)
     global logger
 
     logger = init_logger('TEST', LOGFILE)
     utils.logger = logger 
 
-    block2 = int(sys.argv[1])
-    block1 = int(sys.argv[2])
-    block0 = int(sys.argv[3])
+    block0 = int(sys.argv[1])
+    block1 = block0 + 1
+    block2 = block0 + 2
+    block3 = block0 + 3
 
     txn_params = {'from': w3.eth.accounts[0], 
                   'gas': GAS, 
@@ -117,14 +113,18 @@ def main():
 
     timestamp = get_last_diff_adjust_time(block0, HEADERS_DATA) 
     _, b0bytes = get_header(block0, HEADERS_DATA)
-    set_start_block(contract, b0bytes, block0, timestamp, txn_params, w3)
+    _, b1bytes = get_header(block1, HEADERS_DATA)
+    set_start_group(contract, b1bytes+b0bytes, block0, timestamp, txn_params,
+                    w3)
+    _, b2bytes = get_header(block2, HEADERS_DATA)
+    _, b3bytes = get_header(block3, HEADERS_DATA)
 
-    store_headers([block1, block2], HEADERS_DATA, contract, txn_params, w3) 
+    store_group(b3bytes+b2bytes, contract, txn_params, w3) 
 
     # Verify
-    last_verified_block = block0 
-    h0hash_int = get_int_hash248(block0)
-    concat_hash_int = get_int_concat_hash248([block2, block1])
+    last_verified_block = block1 # Part of verified group 
+    h0hash_int = get_int_hash248(block1)
+    concat_hash_int = get_int_concat_hash248([block3, block2])
     n_headers = 2 
    
     logger.info('Verifying ..')
