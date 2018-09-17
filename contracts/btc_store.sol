@@ -21,7 +21,7 @@ contract BTCHeaderStore {
     }
     uint m_group_len = 2; /* Hard coded */
     uint m_last_verified_group = 0; /* Index */
-    uint m_first_block; /* Block number of first block stored */
+    uint m_first_block = 0; /* Block number of first block stored */
     uint m_init_diff_adjust_time; /* Block time when difficulty was adjusted */
    
     /* group_hash(248 bits) => GroupInfo */
@@ -113,7 +113,7 @@ contract BTCHeaderStore {
      */
     function store_start_group(bytes data, uint block_number,
                                uint diff_adjust_time) public {
-        require(m_last_verified_group == 0);
+        require(m_first_block == 0); /* One time */ 
         require(block_number > 0); /* TODO: Do we really need this */ 
 
         m_first_block = block_number;
