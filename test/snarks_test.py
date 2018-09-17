@@ -98,7 +98,8 @@ def main():
     set_addresses(contract_s, contract_h, addr_s, addr_h, txn_params, w3)
 
     # Initialize headers contract 
-    timestamp = get_last_diff_adjust_time(block0, HEADERS_DATA) 
+    timestamp = get_last_diff_adjust_time(block1, HEADERS_DATA) 
+
     _, b0bytes = get_header(block0, HEADERS_DATA)
     _, b1bytes = get_header(block1, HEADERS_DATA)
     set_start_group(contract_h, b1bytes+b0bytes, block0, timestamp, txn_params,
@@ -109,15 +110,14 @@ def main():
     _, b3bytes = get_header(block3, HEADERS_DATA)
     store_group(b3bytes+b2bytes, contract_h, txn_params, w3) 
 
-
-    h0hash_int = get_int_hash248(block1)
+    b1hash_int = get_int_hash248(block1)
     concat_hash_int = get_int_concat_hash248([block3, block2])
 
     v = read_proof(PROOF)
     logger.info('Verifying provided header..')
     txn_hash = contract_s.verifyTx(v['A'], v['A_p'], v['B'], v['B_p'], v['C'], 
                                    v['C_p'], v['H'], v['K'], [timestamp, 
-                                   block0, h0hash_int, concat_hash_int, 1],
+                                   block1, b1hash_int, concat_hash_int, 1],
                                    transact = txn_params)
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
