@@ -81,8 +81,27 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 ### Installing
+Instructions here have been tried on Ubuntu 16.04.  Install the following:
+* `python 3.5`
+* `solc` (solidity compiler)
+* `ganache-cli` (For Ethereum local testing)
+* `zokrates` (as given  at https://github.com/JacobEberhardt/ZoKrates). Copy the binary `zokrates` from docker to a directory accessible from host while running the scripts
+
+From inside Python's virtual environment install following modules using `pip`:
+* `bitstring`
+* `hexbytes`
+
+To build all modules, inside root `BTCSnarkRelay` dir:
+* `> mkdir build`
+* `> cd build`
+* `> make -f ../Makefile`
+This could take several hours.  
 
 ## Running the tests
+* `> cd test`
+* `> python snarks_test.py 125550`
+
+125550 is the start block number used for testing. To change the same, change corresponding witness file  `test/test_verify_multiple_headers.witness` and re-generate witness and proof using `Makefile`.
 
 ## Contributing
 
