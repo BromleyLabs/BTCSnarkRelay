@@ -10,7 +10,7 @@ BTCSnarkRelay is a proof-of-concept implementation of an onchain Bitcoin light c
 
 Relayers submit Bitcoin block headers to the contract. These headers are then verified by the BTC Relay contract and verified headers are stored onchain. The contract can be queried by users/dApps to check for the validity of a Bitcoin transaction, allowing for participation of Bitcoin transactions in Ethereum contracts.
 
-One of the main challenges faced by smart contract platforms such as Ethereum is lack of scalability and costly onchain computation. The validation of a single block header on BTC Relay consumes around [200,000 gas](https://etherscan.io/tx/0x3f84a29f030802bdfda6734eeb3b60ebc4a3d79f92e8249a0733b11c1a5ad85d), which equates to around $150 a day (@ gas price of 21 gwe) for storing and validating BTC headers. These costs can become economically prohibitive for many use cases, and some of the more complex computations are cannot be done on chain at all due to the capacity limitations imposed by the block gas limit. BTCSnarkRelay demonstrates an approach to solving this problem by moving this computation offchain.
+One of the main challenges faced by smart contract platforms such as Ethereum is lack of scalability and costly onchain computation. The validation of a single block header on BTC Relay consumes around [200,000 gas](https://etherscan.io/tx/0x3f84a29f030802bdfda6734eeb3b60ebc4a3d79f92e8249a0733b11c1a5ad85d), which equates to around $150 a day (@ gas price of 21 gwe) for storing and validating BTC headers. These costs can become economically prohibitive for many use cases, and some of the more complex computations cannot be done on chain at all due to the capacity limitations imposed by the block gas limit. BTCSnarkRelay demonstrates an approach to solving this problem by moving this computation offchain.
 
 ## The Technology
 
@@ -79,17 +79,22 @@ If these verifications are successful, all the block headers stored onchain corr
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes
 
 ### Installing
-Instructions here have been tried on Ubuntu 16.04.  Install the following:
+Instructions here have been tried on Ubuntu 16.04.  
+
+Clone this repo.
+
+Install the following:
 * `python 3.5`
 * `solc` (solidity compiler)
 * `ganache-cli` (For Ethereum local testing)
-* `zokrates` (as given  at https://github.com/JacobEberhardt/ZoKrates). Copy the binary `zokrates` from docker to a directory accessible from host while running the scripts
+* `zokrates` (as given  at https://github.com/JacobEberhardt/ZoKrates). Copy the binary `zokrates` from docker to `./tools`.
 
 From inside Python's virtual environment install following modules using `pip`:
 * `bitstring`
 * `hexbytes`
 
-To build all modules, inside root `BTCSnarkRelay` dir:
+To build all modules inside root `BTCSnarkRelay` dir:
+* Set `solc` path in `Makefile`
 * `> mkdir build`
 * `> cd build`
 * `> make -f ../Makefile`
@@ -97,11 +102,11 @@ To build all modules, inside root `BTCSnarkRelay` dir:
 This could take several hours.  
 
 ### Running the tests
-* Run `ganache-cli` in a separate window.
+* Run `ganache-cli` in a separate terminal
 * `> cd test`
 * `> python snarks_test.py 125550`
 
-125550 is the start block number used for testing. To change the same, change corresponding witness file  `test/test_verify_multiple_headers.witness` and re-generate witness and proof using `Makefile`.
+125550 is the start block number used for testing. To change the same, change corresponding witness file  `test/test_verify_multiple_headers.witness` and re-generate witness and proof using `Makefile`
 
 ## Contributing
 
