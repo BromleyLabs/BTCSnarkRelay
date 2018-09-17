@@ -78,8 +78,6 @@ If these verifications are successful, all the block headers stored onchain corr
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes
 
-### Prerequisites
-
 ### Installing
 Instructions here have been tried on Ubuntu 16.04.  Install the following:
 * `python 3.5`
@@ -95,9 +93,11 @@ To build all modules, inside root `BTCSnarkRelay` dir:
 * `> mkdir build`
 * `> cd build`
 * `> make -f ../Makefile`
+
 This could take several hours.  
 
-## Running the tests
+### Running the tests
+* Run `ganache-cli` in a separate window.
 * `> cd test`
 * `> python snarks_test.py 125550`
 
