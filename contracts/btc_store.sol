@@ -27,7 +27,7 @@ contract BTCHeaderStore {
     /* group_hash(248 bits) => GroupInfo */
     mapping(uint => GroupInfo) public m_group_info; 
     /* group_number -> group_hash(248 bits) */ 
-    mapping (uint => uint) public m_groups;
+    mapping (uint => uint) public m_group_hash;
 
     address m_verifier_addr = address(0); /* Contract address */
 
@@ -68,7 +68,7 @@ contract BTCHeaderStore {
     */
     function get_block(uint block_number) internal view returns (bytes) {
         uint group_number = get_group_number(block_number); 
-        bytes memory group_bytes = m_group_info[m_groups[group_number]].data; 
+        bytes memory group_bytes = m_group_info[m_group_hash[group_number]].data; 
         uint block_index = get_block_index(block_number); 
         uint start = block_index * 80; /* 80 bytes per header */ 
         bytes memory block_bytes = BytesLib.slice(group_bytes, start, 80);  
@@ -78,7 +78,7 @@ contract BTCHeaderStore {
     /**
      * @dev Utility function to extract BTC block time. Block time is stored in 
      * 4 bytes. 28 bytes are padded to make it 32 bytes and then converted to
-     * uint. The function raises exception if block number provided as is not 
+     * uint. The function raises exception if block number provided is not 
      * available.
      */
     function get_block_time(uint block_number) internal view returns (uint) { 
@@ -109,7 +109,10 @@ contract BTCHeaderStore {
     /**
      * @dev Initialize the start group. The header group is assumed to be 
      * verified. This is one-time setting. 
+     * @param data All header bytes concatenated. Order hn,hn-1,...h0
      * @param block_number of first block (oldest) block in the group
+     * @param diff_adjust_time Block time when difficulty was adjusted last
+     * starting latest block in submitted block headers.
      */
     function store_start_group(bytes data, uint block_number,
                                uint diff_adjust_time) public {
@@ -122,7 +125,7 @@ contract BTCHeaderStore {
 
         store_group(data);
 
-        m_groups[m_last_verified_group] =  hash_to_uint248(sha256(data));
+        m_group_hash[m_last_verified_group] =  hash_to_uint248(sha256(data));
     }
 
     /**
@@ -157,13 +160,15 @@ contract BTCHeaderStore {
     /**
      * @dev Verify a group of headers. This method can only be called by 
      * by SNARK verifier contract. 
-     * @param last_diff_adjust_time Time of the block when difficulty was
-     * adjusted.
+     * @param last_diff_adjust_time Block time when difficulty was adjusted last
+     *        starting latest block in submitted block headers.
+     * @param last_verified_block Block Number of latest block of last verified
+     *        group.
      * @param hash248 Int of lower 248 bits of BTC hash of last verified block
      * @param concatHash248 Int of lower 248 bits of 
-     * hash(concat(headers to be verified))
+     *        hash(concat(headers to be verified))
      * @param n_headers Number of headers to be verified. The headers are
-     * ordered - latest first
+     *        ordered - latest first
      */
     function verify(uint last_diff_adjust_time, uint last_verified_block, 
                     uint hash248, uint concatHash248, uint n_headers) public 
@@ -179,7 +184,7 @@ contract BTCHeaderStore {
 
         m_group_info[concatHash248].verified = true;
         m_last_verified_group += 1; 
-        m_groups[m_last_verified_group] = concatHash248;
+        m_group_hash[m_last_verified_group] = concatHash248;
 
         return true;
     }
