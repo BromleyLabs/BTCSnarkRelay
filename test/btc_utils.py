@@ -31,11 +31,12 @@ def get_btc_hash(input_bytes):
     return hash2 
 
 # @dev Read a block header from a file that contains multiple block headers
-# in raw format - 80 bytes per block.
+# in raw format - 80 bytes per block. The file is read once and all the header
+# bytes are passed to this function. 
+# @param all_headers All headers read from file as byte sequence.
 # @return All values in sequence of bytes except block number which is integer
 
-def get_header(block_number, headers_file): 
-   all_headers = open(headers_file, 'rb').read()
+def get_header(block_number, all_headers): 
    nblocks = int(len(all_headers) / 80 - 1)  
    if block_number > nblocks - 1 or block_number < 0:
        print('This block number does not exist')

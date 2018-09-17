@@ -95,23 +95,24 @@ def main():
         logger.error('Could not deploy contracts')
         return 1
 
+    all_headers = open(HEADERS_DATA, 'rb').read() 
+    _, b0bytes = get_header(block0, all_headers)
+    _, b1bytes = get_header(block1, all_headers)
+    _, b2bytes = get_header(block2, all_headers)
+    _, b3bytes = get_header(block3, all_headers)
+
     set_addresses(contract_s, contract_h, addr_s, addr_h, txn_params, w3)
 
     # Initialize headers contract 
-    timestamp = get_last_diff_adjust_time(block1, HEADERS_DATA) 
-
-    _, b0bytes = get_header(block0, HEADERS_DATA)
-    _, b1bytes = get_header(block1, HEADERS_DATA)
+    timestamp = get_last_diff_adjust_time(block1, all_headers)
     set_start_group(contract_h, b1bytes+b0bytes, block0, timestamp, txn_params,
                     w3)
 
     # Store a group of headers
-    _, b2bytes = get_header(block2, HEADERS_DATA)
-    _, b3bytes = get_header(block3, HEADERS_DATA)
     store_group(b3bytes+b2bytes, contract_h, txn_params, w3) 
 
-    b1hash_int = get_int_hash248(block1)
-    concat_hash_int = get_int_concat_hash248([block3, block2])
+    b1hash_int = get_int_hash248(b1bytes)
+    concat_hash_int = get_int_concat_hash248([b3bytes, b2bytes])
 
     v = read_proof(PROOF)
     logger.info('Verifying provided header..')

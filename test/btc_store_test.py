@@ -60,25 +60,26 @@ def set_start_group(contract, bbytes, block_number, last_diff_adjust_time,
     status, txn_receipt = wait_to_be_mined(w3, txn_hash)
     logger.info(txn_receipt)
 
-def get_int_hash248(block_number):
-    _, b0bytes = get_header(block_number, HEADERS_DATA)
-    hash0 = get_btc_hash(b0bytes)  
+# @dev Get BTC hash of a block, convert lowest 31 bytes to integer
+# @param bbytes raw 80 bytes of a block header
+def get_int_hash248(bbytes):
+    hash0 = get_btc_hash(bbytes)  
     hash0_int = int.from_bytes(hash0[1:], 'big') # Only 31 bytes
     return hash0_int
 
-def get_last_diff_adjust_time(curr_block, headers_data):
-    last_diff_adjust_block = curr_block - (curr_block % 2016)
-    b,_ = get_header(last_diff_adjust_block, headers_data) 
+def get_last_diff_adjust_time(curr_block_num, all_headers): 
+    last_diff_adjust_block = curr_block_num - (curr_block_num % 2016)
+    b,_ = get_header(last_diff_adjust_block, all_headers) 
     timestamp = int.from_bytes(b.timestamp, 'little')
     return timestamp
 
 # @param blocks Block numbers - concatenation is in order in which they are
-# provided
-def get_int_concat_hash248(blocks):
+# provided. The lowest 31 bytes of the result are converted to integer.
+# @param List of block bytes to be concatenated. [bytesN, bytesN-1, .. bytes0]
+def get_int_concat_hash248(bbytes):
     ch = b''
-    for b in blocks:
-        _, bbytes = get_header(b, HEADERS_DATA)
-        ch += bbytes 
+    for b in bbytes:
+        ch += b
 
     concat_hash = hashlib.sha256(ch).digest()
     concat_hash_int = int.from_bytes(concat_hash[1:], 'big') # Only 31 bytes
@@ -109,22 +110,24 @@ def main():
         logger.error('Could not deploy contract')
         return 1
 
+    all_headers = open(HEADERS_DATA, 'rb').read() 
+    _, b0bytes = get_header(block0, all_headers)
+    _, b1bytes = get_header(block1, all_headers)
+    _, b2bytes = get_header(block2, all_headers)
+    _, b3bytes = get_header(block3, all_headers)
+
     set_address(contract, w3.eth.accounts[0], txn_params, w3)
 
-    timestamp = get_last_diff_adjust_time(block0, HEADERS_DATA) 
-    _, b0bytes = get_header(block0, HEADERS_DATA)
-    _, b1bytes = get_header(block1, HEADERS_DATA)
+    timestamp = get_last_diff_adjust_time(block0, all_headers) 
     set_start_group(contract, b1bytes+b0bytes, block0, timestamp, txn_params,
                     w3)
 
-    _, b2bytes = get_header(block2, HEADERS_DATA)
-    _, b3bytes = get_header(block3, HEADERS_DATA)
     store_group(b3bytes+b2bytes, contract, txn_params, w3) 
 
     # Verify
     last_verified_block = block1 # Part of verified group 
-    h0hash_int = get_int_hash248(block1)
-    concat_hash_int = get_int_concat_hash248([block3, block2])
+    h0hash_int = get_int_hash248(b1bytes)
+    concat_hash_int = get_int_concat_hash248([b3bytes, b2bytes])
     n_headers = 2 
    
     logger.info('Verifying ..')
