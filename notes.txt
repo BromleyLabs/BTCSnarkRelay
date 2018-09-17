@@ -52,5 +52,5 @@ field_limit = 218882428718392752222464057452572750885483644004160343436982041865
 field_limit / (target * max_span) == 167.8
 ==================
 Gas consumption:
-Storage of block header: ~110000
-Verification of SNARK proof:  ~1680000
+Storage of group of 2 block headers: 160370 
+Verification of SNARK proof:  1862290 
