@@ -6,8 +6,6 @@
 # @author Anurag Gupta <anurag@bromleylabs.io>
 # Copyright (c) Bromley Labs Inc.        
 
-from hexbytes import HexBytes
-from bitstring import BitArray
 import hashlib
 import sys, os
 import re

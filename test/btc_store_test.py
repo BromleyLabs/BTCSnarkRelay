@@ -5,8 +5,6 @@
 #
 # Copyright (c) 2018 Bromley Labs Inc.        
 
-from hexbytes import HexBytes
-from bitstring import BitArray
 import hashlib
 import sys, os
 import re

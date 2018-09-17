@@ -6,7 +6,6 @@
 # Copyright (c) Bromley Labs Inc.        
 
 import sys
-from hexbytes import HexBytes
 from bitstring import BitArray
 from btc_utils import * 
 

@@ -10,7 +10,6 @@
 import sys
 import hashlib
 from btc_utils import * 
-from  bitstring import BitArray
 
 HEADERS_FILE = './data/btc_headers'
 

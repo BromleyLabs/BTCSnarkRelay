@@ -5,7 +5,6 @@
 # @author Anurag Gupta <anurag@bromleylabs.io>
 # Copyright (c) Bromley Labs Inc.        
 
-from hexbytes import HexBytes
 import sys
 from utils import *
 import utils
