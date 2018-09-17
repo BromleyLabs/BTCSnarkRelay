@@ -31,7 +31,7 @@ contract BTCHeaderStore {
 
     address m_verifier_addr = address(0); /* Contract address */
 
-    /*
+    /**
      * @dev One time setting of contract address that is going to call verify()
      * method.
      */
@@ -89,14 +89,14 @@ contract BTCHeaderStore {
         return BytesLib.toUint(time_bytes, 0); 
     }
 
-    /*
+    /**
      * @dev Compute group number given block_number. 
      */
     function get_group_number(uint block_number) internal view returns (uint) {
         return (block_number - m_first_block) / m_group_len;  
     }
 
-    /*
+    /**
      * @dev Compute position of a block within a group. Note that order of 
      * headers is reverse - hn,hn-1..h0.  Hence, index obtained after modulo
      * needs to be reversed.
@@ -126,10 +126,10 @@ contract BTCHeaderStore {
     }
 
     /**
-    * @dev The function stores the group of BTC headers without verifying 
-    * anything. Only m_group_len number of blocks can be submitted. 
-    * @param data All header bytes concatenated - hn, hn-1, ..h1, h0
-    */
+     * @dev The function stores the group of BTC headers without verifying 
+     * anything. Only m_group_len number of blocks can be submitted. 
+     * @param data All header bytes concatenated - hn, hn-1, ..h1, h0
+     */
     function store_group(bytes data) public { 
         uint hash248 = hash_to_uint248(sha256(data));
         require(m_group_info[hash248].verified == false);
