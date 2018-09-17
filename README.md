@@ -79,7 +79,9 @@ If these verifications are successful, all the block headers stored onchain corr
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes
 
 ### Installing
-Instructions here have been tried on Ubuntu 16.04.  Install the following:
+Instructions here have been tried on Ubuntu 16.04.  
+
+Install the following:
 * `python 3.5`
 * `solc` (solidity compiler)
 * `ganache-cli` (For Ethereum local testing)
@@ -89,7 +91,7 @@ From inside Python's virtual environment install following modules using `pip`:
 * `bitstring`
 * `hexbytes`
 
-To build all modules, inside root `BTCSnarkRelay` dir:
+To build all modules inside root `BTCSnarkRelay` dir:
 * `> mkdir build`
 * `> cd build`
 * `> make -f ../Makefile`
@@ -97,11 +99,11 @@ To build all modules, inside root `BTCSnarkRelay` dir:
 This could take several hours.  
 
 ### Running the tests
-* Run `ganache-cli` in a separate window.
+* Run `ganache-cli` in a separate terminal
 * `> cd test`
 * `> python snarks_test.py 125550`
 
-125550 is the start block number used for testing. To change the same, change corresponding witness file  `test/test_verify_multiple_headers.witness` and re-generate witness and proof using `Makefile`.
+125550 is the start block number used for testing. To change the same, change corresponding witness file  `test/test_verify_multiple_headers.witness` and re-generate witness and proof using `Makefile`
 
 ## Contributing
 
