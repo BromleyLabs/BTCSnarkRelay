@@ -81,17 +81,20 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installing
 Instructions here have been tried on Ubuntu 16.04.  
 
+Clone this repo.
+
 Install the following:
 * `python 3.5`
 * `solc` (solidity compiler)
 * `ganache-cli` (For Ethereum local testing)
-* `zokrates` (as given  at https://github.com/JacobEberhardt/ZoKrates). Copy the binary `zokrates` from docker to a directory accessible from host while running the scripts
+* `zokrates` (as given  at https://github.com/JacobEberhardt/ZoKrates). Copy the binary `zokrates` from docker to `./tools`.
 
 From inside Python's virtual environment install following modules using `pip`:
 * `bitstring`
 * `hexbytes`
 
 To build all modules inside root `BTCSnarkRelay` dir:
+* Set `solc` path in `Makefile`
 * `> mkdir build`
 * `> cd build`
 * `> make -f ../Makefile`
