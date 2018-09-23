@@ -54,3 +54,5 @@ field_limit / (target * max_span) == 167.8
 Gas consumption:
 Storage of group of 2 block headers: 160370 
 Verification of SNARK proof:  1862290 
+Number of constraints: 7693331
+=====
