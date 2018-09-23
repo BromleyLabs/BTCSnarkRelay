@@ -1,7 +1,7 @@
 # BTC SNARK Relay
 
 
-BTCSnarkRelay is a proof-of-concept implementation of an onchain Bitcoin light client (SPV) on Ethereum, that carries out verifiable offchain BTC header verification using zk-SNARKs. It is an implementation similar to BTC Relay, but uses zk-SNARKS for carrying out the Bitcoin block header verification offchain. 
+BTCSnarkRelay is a proof-of-concept implementation of an onchain Bitcoin light client (SPV) on Ethereum, that carries out verifiable offchain BTC header verification using zk-SNARKs. It is an implementation similar to BTC Relay, but uses zk-SNARKS for carrying out the Bitcoin block header verification offchain.
 
 
 ## Background
@@ -10,13 +10,13 @@ BTCSnarkRelay is a proof-of-concept implementation of an onchain Bitcoin light c
 
 Relayers submit Bitcoin block headers to the contract. These headers are then verified by the BTC Relay contract and verified headers are stored onchain. The contract can be queried by users/dApps to check for the validity of a Bitcoin transaction, allowing for participation of Bitcoin transactions in Ethereum contracts.
 
-One of the main challenges faced by smart contract platforms such as Ethereum is lack of scalability and costly onchain computation. The validation of a single block header on BTC Relay consumes around [200,000 gas](https://etherscan.io/tx/0x3f84a29f030802bdfda6734eeb3b60ebc4a3d79f92e8249a0733b11c1a5ad85d), which equates to around $150 a day (@ gas price of 21 gwe) for storing and validating BTC headers. These costs can become economically prohibitive for many use cases, and some of the more complex computations cannot be done on chain at all due to the capacity limitations imposed by the block gas limit. BTCSnarkRelay demonstrates an approach to solving this problem by moving this computation offchain.
+One of the main challenges faced by smart contract platforms such as Ethereum is lack of scalability and costly onchain computation. The cost of validating and storing a single block header on BTC Relay is around [200,000 gas](https://etherscan.io/tx/0x3f84a29f030802bdfda6734eeb3b60ebc4a3d79f92e8249a0733b11c1a5ad85d). These costs can become economically prohibitive for many use cases, and some of the more complex computations are cannot be done on chain at all due to the capacity limitations imposed by the block gas limit. BTCSnarkRelay demonstrates an approach to solving this problem by moving this computation offchain and by batching the verification of BTC headers. Whereas this approach will have a cost benefit vs BTC Relay only if a large number of BTC headers are verified in a single batch ( > 13), it demonstrates how zk-SNARKs can be applied to improve scaling.
 
 ## The Technology
 
 [zk-SNARKs](http://chriseth.github.io/notes/articles/zksnarks/zksnarks.pdf) is a technology based on zero knowledge proofs, that has the potential to dramatically improve blockchain scaling. Computations can be carried out offchain and their correctness can be verified onchain without having to execute them onchain. Furthermore, the amount of onchain computation required for verification is independent of the size and complexity of the computation, allowing for arbitrarily complex computations to be carried out at no incremental onchain cost.
 
-Implementing zk-SNARKs is quite complex given the number of different parts that make up the machinery behind the technology. The computational problem has to be converted into the right form through a sequence of non-trivial steps followed by another intricate process of creating the actual proof. Some excellent work has been done by the [Zokrates](https://github.com/JacobEberhardt/ZoKrates) team in building a toolset that helps convert a computational problem to a form that can be operated upon. The toolset also creates the other parts required for zk-SNARKs verification. BTCSnarkRelay development utilises this toolset.
+Implementing zk-SNARKs is quite complex given the number of different parts that make up the machinery behind the technology. The computational problem has to be converted into the right form through a sequence of non-trivial steps followed by another intricate process of creating the actual proof. Some excellent work has been done by the [ZoKrates](https://github.com/JacobEberhardt/ZoKrates) team in building a toolset that helps convert a computational problem to a form that can be operated upon. The toolset also creates the other parts required for zk-SNARKs verification. BTCSnarkRelay development utilises this toolset.
 
 ## How It Works
 
@@ -30,9 +30,9 @@ Unlike in BTCRelay, where the onchain submission of headers and their verificati
 
 ### Submission of Bitcoin Block Headers
 
-Upto 5 sequential block headers can be submitted to the contract at a time. Multiple calls for submission can be made to submit a larger number of headers, making up a batch. In the following step, verification of these headers is done for an entire batch in one go, as there is no incremental cost in onchain SNARK verification with increase in batch size.
+Multiple sequential block headers can be submitted to the contract at a time. Multiple calls for submission can be made to submit a larger number of headers, making up a batch. In the following step, verification of these headers is done for an entire batch in one go, as there is no incremental cost in onchain SNARK verification with increase in batch size.
 
-The submitted batch of block headers is stored, initialised as unverified, and a mapping between a computed batch hash and the headers is created:
+The submitted batch of block headers is stored, initialised as unverified, and a mapping between a computed batch hash and the headers is created (e.g. with 5 headers):
 
 BatchHash = Hash(Header 1 + Header 2 + ... + Header 5)
 
@@ -43,8 +43,8 @@ For each block header, a sequential block number is assigned continuing from the
 
 The witness generator for the SNARK function is fed the following inputs:
 
-Private Inputs: 
-* All the block headers to be verified. These would be the same headers that were submitted in a single batch, H1 to H5. 
+Private Inputs:
+* All the block headers to be verified. These would be the same headers that were submitted in a single batch, H1 to H5.
 
 Public Inputs:
 * The BatchHash
@@ -118,7 +118,11 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 
 ## Acknowledgements
 
-* ZoKrates
-* BTCRelay
+* [ZoKrates](https://github.com/JacobEberhardt/ZoKrates)
+* [BTC Relay](https://github.com/ethereum/btcrelay)
+
+
+
+
 
 
