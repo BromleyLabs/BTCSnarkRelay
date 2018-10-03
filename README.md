@@ -95,16 +95,16 @@ From inside Python's virtual environment install following modules using `pip`:
 
 To build all modules inside root `BTCSnarkRelay` dir:
 * Set `solc` path in `Makefile`
-* `> mkdir build`
-* `> cd build`
-* `> make -f ../Makefile`
+* `$ mkdir build`
+* `$ cd build`
+* `$ make -f ../Makefile`
 
 This could take several hours.  
 
 ### Running the tests
 * Run `ganache-cli` in a separate terminal
-* `> cd test`
-* `> python snarks_test.py 125550`
+* `$ cd test`
+* `$ python snarks_test.py 125550`
 
 125550 is the start block number used for testing. To change the same, change corresponding witness file  `test/test_verify_multiple_headers.witness` and re-generate witness and proof using `Makefile`
 
