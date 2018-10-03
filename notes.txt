@@ -6,9 +6,11 @@ for testing
 > pip install bitstring
 
 - Build fresh as per build instructions at ZoKrates as https://github.com/JacobEberhardt/ZoKrates
-- change the following line in build.sh to build in release mode:
+- When connected to docker, change the following line in build.sh to build in release mode:
   'cargo build --release'
 - IMPORTANT: first modify Docerfile to include --force-yes flat in apt-get command
+- run ./build.sh to build in release mode
+
 - To start a new docker session for ZoKrates, goto ~/crypto/ZoKrates and run
 > docker run -ti --mount src=/home/puneet,target=/home/puneet,type=bind zokrates
 The above will also mount /home/puneet inside docker container.
